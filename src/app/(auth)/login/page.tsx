@@ -1,0 +1,58 @@
+import Link from "next/link";
+import { User, Shield, ArrowRight } from "lucide-react";
+
+export default function LoginPage() {
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center bg-surface-alt relative overflow-hidden">
+      {/* Decorative background blurs */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-fade-in" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-success/5 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3 animate-fade-in delay-200" />
+      
+      <div className="w-full max-w-[480px] px-6 py-12 flex flex-col items-center relative z-10">
+        
+        {/* Brand */}
+        <div className="animate-fade-in-up flex flex-col items-center">
+          <h1 className="text-4xl font-bold text-navy tracking-tight">
+            Aethon <span className="text-primary font-light">Health</span>
+          </h1>
+          <p className="text-lg text-text-muted mt-2">Choose your portal</p>
+        </div>
+
+        {/* Role Cards */}
+        <div className="w-full mt-10 space-y-4">
+          <Link
+            href="/family"
+            className="group flex items-center gap-4 w-full bg-surface rounded-2xl p-5 card-hover animate-fade-in-up delay-100"
+          >
+            <div className="w-12 h-12 rounded-xl bg-primary-light flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <User className="w-6 h-6 text-primary" />
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-text-primary">Family Portal</p>
+              <p className="text-sm text-text-muted">See how your loved one is doing</p>
+            </div>
+            <ArrowRight className="w-5 h-5 text-text-muted group-hover:text-primary group-hover:translate-x-1 transition-all" />
+          </Link>
+
+          <Link
+            href="/management"
+            className="group flex items-center gap-4 w-full bg-surface rounded-2xl p-5 card-hover animate-fade-in-up delay-200"
+          >
+            <div className="w-12 h-12 rounded-xl bg-navy/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <Shield className="w-6 h-6 text-navy" />
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-text-primary">Facility Management</p>
+              <p className="text-sm text-text-muted">Client overview and operations</p>
+            </div>
+            <ArrowRight className="w-5 h-5 text-text-muted group-hover:text-navy group-hover:translate-x-1 transition-all" />
+          </Link>
+        </div>
+
+        <p className="text-xs text-text-muted mt-12 animate-fade-in delay-300">
+          All data hosted in 🇪🇺 EU (Frankfurt) · GDPR Compliant
+        </p>
+      </div>
+    </div>
+  );
+}

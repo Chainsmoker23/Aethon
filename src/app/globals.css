@@ -1,26 +1,169 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Modern Medical Ocean Blue Palette */
+  --color-primary: #0284c7;
+  --color-primary-dark: #0369a1;
+  --color-primary-light: #e0f2fe;
+  --color-primary-foreground: #ffffff;
+  
+  --color-navy: #0f172a;
+  --color-navy-light: #1e293b;
+  
+  --color-danger: #e11d48;
+  --color-danger-light: #ffe4e6;
+  
+  --color-warning: #d97706;
+  --color-warning-light: #fef3c7;
+  
+  --color-success: #10b981;
+  --color-success-light: #d1fae5;
+  
+  --color-surface: #ffffff;
+  --color-surface-alt: #f8fafc;
+  --color-border: #e2e8f0;
+  
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --background: #f8fafc;
+  --foreground: #1e293b;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* === Motion & Animations === */
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* === Refined Siri Aura - Smooth, Controlled Color Shifting === */
+
+.animate-blob-1 { 
+  animation: blob 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1), shiftColor1 12s infinite alternate ease-in-out; 
+}
+.animate-blob-2 { 
+  animation: blob 12s infinite alternate cubic-bezier(0.4, 0, 0.2, 1), shiftColor2 15s infinite alternate ease-in-out; 
+  animation-delay: 2s; 
+}
+.animate-blob-3 { 
+  animation: blob 14s infinite alternate cubic-bezier(0.4, 0, 0.2, 1), shiftColor3 18s infinite alternate ease-in-out; 
+  animation-delay: 4s; 
+}
+.animate-blob-4 { 
+  animation: blob 11s infinite alternate cubic-bezier(0.4, 0, 0.2, 1), shiftColor4 14s infinite alternate ease-in-out; 
+  animation-delay: 1s; 
+}
+
+/* Original smooth movement */
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+/* Specific, elegant color palettes instead of full rainbow */
+@keyframes shiftColor1 {
+  0% { background-color: rgba(34, 211, 238, 0.25); } /* Cyan */
+  100% { background-color: rgba(129, 140, 248, 0.25); } /* Indigo */
+}
+@keyframes shiftColor2 {
+  0% { background-color: rgba(129, 140, 248, 0.20); } /* Indigo */
+  100% { background-color: rgba(244, 114, 182, 0.20); } /* Soft Pink */
+}
+@keyframes shiftColor3 {
+  0% { background-color: rgba(59, 130, 246, 0.20); } /* Blue */
+  100% { background-color: rgba(45, 212, 191, 0.20); } /* Teal */
+}
+@keyframes shiftColor4 {
+  0% { background-color: rgba(45, 212, 191, 0.25); } /* Teal */
+  100% { background-color: rgba(139, 92, 246, 0.25); } /* Violet */
+}
+
+
+/* === Futuristic Glassmorphism === */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+}
+
+.glass-panel-heavy {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+}
+
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-hover:hover {
+  transform: translateY(-4px) scale(1.01);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.15), 0 1px 3px rgba(2, 132, 199, 0.1);
+  border-color: rgba(255, 255, 255, 1);
+}
+
+.row-hover {
+  transition: all 0.3s ease;
+}
+.row-hover:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.btn-press:active {
+  transform: scale(0.95);
+}
+
+.pulse-dot {
+  animation: pulse-dot 2.5s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.6; }
 }
