@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aethon Health 🏥✨
 
-## Getting Started
+A modern, futuristic dual-portal web application for healthcare facility management and family engagement. 
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 🛡️ Facility Management Dashboard (`/management`)
+Designed for healthcare professionals with a premium "Glassmorphism" UI and dynamic aura backgrounds.
+- **Live Sync Overview:** Real-time stats for clients seen, open escalations, and recorded notes.
+- **Resident Roster:** Expandable data tables tracking client care stages, last visits, and 7-day note history.
+- **Assistance Requests:** Immediate escalation tracking with one-click resolutions and pulsing alerts.
+- **Shift Handover:** Digital coordination board with one-click "copy as text" for seamless shift changes.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 👨‍👩‍👧 Family Portal (`/family`)
+A warm, accessible, and clean interface for families to stay connected with their loved ones' care.
+- **Medication & Wellbeing:** Track daily medication schedules and 14-day mood/wellbeing trends.
+- **Updates Feed:** View recent visits, tasks completed, and personal care goals.
+- **Direct Messaging:** Send secure messages directly to the facility care team with read receipts.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
+- **Framework:** [Next.js](https://nextjs.org/) (App Router)
+- **Library:** React 19
+- **Styling:** Tailwind CSS v4 
+- **Icons:** Lucide React
+- **Backend/Auth:** Supabase *(Coming Soon - Phase 5)*
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎨 Design System
+Aethon utilizes a custom **"Siri Aura" engine**—an infinitely animating, color-shifting mesh gradient background. Combined with heavy frosted glass panels (`backdrop-blur-3xl`), vibrant gradient iconography, and staggered entrance animations, it creates a breathtaking, premium feel while maintaining strict clinical readability and contrast.
 
-## Learn More
+## 💻 Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Chainsmoker23/Aethon.git
+   cd aethon-web
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Explore the Portals:**
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+   - Go to `/login` to see the portal selection.
+   - Go to `/management` for the Facility Dashboard.
+   - Go to `/family` for the Family Dashboard.
