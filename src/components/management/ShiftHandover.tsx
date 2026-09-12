@@ -1,131 +1,147 @@
 "use client";
 
-import { Send, AlertTriangle, CheckCircle2, Copy, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { ClipboardList, Plus, Search, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { createClient } from "@/utils/supabase/client";
 
 export function ShiftHandover() {
-  const [note, setNote] = useState("");
-  const [copied, setCopied] = useState(false);
+  const [notes, setNotes] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [newNote, setNewNote] = useState("");
+  const supabase = createClient();
+  const residentId = '11111111-1111-1111-1111-111111111111';
 
-  const handoverData = {
-    carer: "Sarah Johnson",
-    shiftStart: "06:00",
-    shiftEnd: "14:00",
-    clientsSeen: 12,
-    notesRecorded: 8,
-    escalationsOpen: 1,
-    notes: [
-      {
-        client: "Robert Johnson",
-        time: "13:45",
-        text: "Agitated during dinner. Required additional support. Recommend frequent checks tonight.",
-        isEscalation: true,
-      },
-      {
-        client: "Eleanor Smith",
-        time: "10:30",
-        text: "Good morning. Medication taken. Walked in the garden for 15 minutes.",
-        isEscalation: false,
-      },
-    ],
+  const fetchHandover = async () => {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    
+    const { data } = await supabase
+      .from('visit_notes')
+      .select(`
+        id, visit_type, tasks_completed, created_at, is_escalation,
+        residents(first_name, last_name)
+      `)
+      .gte('created_at', today.toISOString())
+      .order('created_at', { ascending: false });
+      
+    if (data) setNotes(data);
+    setLoading(false);
   };
 
-  const handleCopy = () => {
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  useEffect(() => {
+    fetchHandover();
+
+    // Listen for new notes added by other staff members in real-time
+    const channel = supabase
+      .channel('live-notes')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'visit_notes' }, () => {
+        fetchHandover();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const copyAsText = () => {
+    const text = notes.map(n => 
+      `[${new Date(n.created_at).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}] ${n.residents?.first_name || 'System'}: ${n.tasks_completed}`
+    ).join("\n");
+    navigator.clipboard.writeText(text);
+    alert("Shift handover copied to clipboard!");
   };
+
+  const addNote = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newNote.trim()) return;
+
+    const note = {
+      resident_id: residentId,
+      visit_type: 'Handover Note',
+      tasks_completed: newNote,
+      is_escalation: false
+    };
+
+    setNewNote("");
+    // Note: We don't necessarily need optimistic UI here anymore because realtime will fetch it,
+    // but optimistic UI still makes it feel faster for the person typing.
+    await supabase.from('visit_notes').insert([note]);
+  };
+
+  if (loading) {
+    return (
+      <div className="glass-panel-heavy rounded-3xl h-96 flex items-center justify-center relative z-10">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
-    <div className="glass-panel-heavy rounded-3xl overflow-hidden flex flex-col relative z-10">
-      
-      {/* Header */}
-      <div className="px-6 py-5 border-b border-white/50 bg-white/20">
-        <h2 className="text-xl font-bold text-navy flex items-center gap-2">
-          Shift Handover
-          <Sparkles className="w-4 h-4 text-indigo-500" />
-        </h2>
-        <p className="text-sm font-semibold text-text-secondary mt-1">
-          {handoverData.carer} · {handoverData.shiftStart} – {handoverData.shiftEnd}
-        </p>
-      </div>
-
-      {/* Summary strip */}
-      <div className="grid grid-cols-3 border-b border-white/50 bg-white/30 backdrop-blur-md">
-        <div className="p-4 text-center border-r border-white/50">
-          <p className="text-3xl font-black text-navy">{handoverData.clientsSeen}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wider text-text-secondary mt-1">Clients Seen</p>
+    <div className="glass-panel-heavy rounded-3xl overflow-hidden flex flex-col relative z-10 h-[500px]">
+      <div className="px-6 py-5 border-b border-white/50 flex items-center justify-between bg-white/20">
+        <div>
+          <h2 className="font-bold text-navy text-xl">Shift Handover</h2>
+          <p className="text-sm font-semibold text-text-secondary mt-0.5">Live coordination board</p>
         </div>
-        <div className="p-4 text-center border-r border-white/50">
-          <p className="text-3xl font-black text-navy">{handoverData.notesRecorded}</p>
-          <p className="text-[10px] font-bold uppercase tracking-wider text-text-secondary mt-1">Notes</p>
-        </div>
-        <div className="p-4 text-center">
-          <p className={`text-3xl font-black ${handoverData.escalationsOpen > 0 ? "text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-orange-400" : "text-primary"}`}>
-            {handoverData.escalationsOpen}
-          </p>
-          <p className="text-[10px] font-bold uppercase tracking-wider text-text-secondary mt-1">Escalations</p>
-        </div>
-      </div>
-
-      {/* Notes */}
-      <div className="p-6 space-y-4 flex-1 bg-white/40">
-        {handoverData.notes.map((n, i) => (
-          <div 
-            key={i} 
-            className={`p-5 rounded-2xl text-sm leading-relaxed ${
-              n.isEscalation 
-                ? "bg-rose-50/80 border border-rose-200 shadow-sm shadow-rose-100/50" 
-                : "bg-white/80 border border-white shadow-sm shadow-black/5"
-            }`}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              {n.isEscalation ? (
-                <AlertTriangle className="w-5 h-5 text-rose-500" />
-              ) : (
-                <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-              )}
-              <span className="font-bold text-base text-navy">{n.client}</span>
-              <span className="text-xs font-bold text-text-muted ml-auto bg-white/50 px-2 py-1 rounded-md">{n.time}</span>
-            </div>
-            <p className="text-text-secondary font-medium">{n.text}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Actions */}
-      <div className="p-6 border-t border-white/50 bg-white/30 backdrop-blur-md space-y-4">
         <button 
-          onClick={handleCopy}
-          className="w-full flex items-center justify-center gap-2 py-3 text-sm font-bold text-navy bg-white/80 border border-white rounded-xl hover:bg-white transition-colors shadow-sm btn-press"
+          onClick={copyAsText}
+          className="px-4 py-2 text-sm font-bold bg-white text-navy border border-white/80 rounded-xl hover:bg-surface-alt hover:text-primary transition-colors shadow-sm btn-press flex items-center gap-2"
         >
-          {copied ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> : <Copy className="w-5 h-5" />}
-          {copied ? "Copied to clipboard" : "Copy as text"}
+          <ClipboardList className="w-4 h-4" />
+          Copy as text
         </button>
-        <form 
-          className="flex gap-3"
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (note.trim()) setNote("");
-          }}
-        >
-          <textarea
-            placeholder="Add a note for the next shift..."
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            className="flex-1 bg-white/80 border border-white p-4 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/30 resize-none shadow-sm transition-all"
-            rows={2}
+      </div>
+
+      <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-white/10">
+        {notes.length === 0 ? (
+          <div className="h-full flex flex-col items-center justify-center text-center opacity-70">
+            <Search className="w-10 h-10 text-text-muted mb-3" />
+            <p className="text-navy font-bold">No notes yet today.</p>
+            <p className="text-sm text-text-secondary">Handover notes and completed tasks will appear here.</p>
+          </div>
+        ) : (
+          notes.map((n, i) => (
+            <div key={n.id || i} className="bg-white/70 backdrop-blur-md rounded-2xl p-4 shadow-sm border border-white/80 animate-fade-in-up" style={{animationDelay: `${i * 50}ms`}}>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-sm font-bold text-navy">
+                  {n.residents?.first_name} {n.residents?.last_name}
+                </span>
+                <span className="text-xs font-semibold text-text-muted px-2 py-0.5 bg-surface-alt rounded-full">
+                  {n.visit_type}
+                </span>
+                {n.is_escalation && (
+                  <span className="text-xs font-bold text-danger bg-danger-light px-2 py-0.5 rounded-full">
+                    Escalated
+                  </span>
+                )}
+                <span className="text-xs font-bold text-text-muted ml-auto">
+                  {new Date(n.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              </div>
+              <p className="text-sm text-text-secondary font-medium leading-relaxed">{n.tasks_completed}</p>
+            </div>
+          ))
+        )}
+      </div>
+
+      <div className="p-4 border-t border-white/50 bg-white/30 backdrop-blur-md">
+        <form onSubmit={addNote} className="relative">
+          <input 
+            type="text"
+            value={newNote}
+            onChange={(e) => setNewNote(e.target.value)}
+            placeholder="Type a note for the next shift..."
+            className="w-full h-12 pl-4 pr-12 bg-white/70 border border-white/80 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white transition-all shadow-sm"
           />
           <button 
             type="submit"
-            className="self-end p-4 bg-gradient-to-br from-indigo-500 to-purple-500 text-white rounded-xl hover:opacity-90 transition-opacity shadow-lg shadow-indigo-500/30 btn-press disabled:opacity-40"
-            disabled={!note.trim()}
+            disabled={!newNote.trim()}
+            className="absolute right-1 top-1 w-10 h-10 bg-primary text-white rounded-lg flex items-center justify-center hover:bg-primary-dark transition-colors disabled:opacity-50 shadow-sm"
           >
-            <Send className="w-5 h-5" />
+            <Plus className="w-5 h-5" />
           </button>
         </form>
-        <p className="text-xs text-text-muted italic text-center font-bold">
-          Care coordination summary. Not an official medical record.
-        </p>
       </div>
     </div>
   );

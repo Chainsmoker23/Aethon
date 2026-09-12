@@ -1,28 +1,77 @@
 "use client";
 
-import { AlertTriangle, Check, Clock } from "lucide-react";
-import { useState } from "react";
+import { AlertTriangle, Check, Clock, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { createClient } from "@/utils/supabase/client";
 
 type Escalation = {
-  id: number;
-  client: string;
-  room: string;
+  id: string;
   reason: string;
-  time: string;
-  resolved: boolean;
+  created_at: string;
+  is_resolved: boolean;
+  residents: {
+    first_name: string;
+    last_name: string;
+    room_number: string;
+  };
 };
 
 export function AssistanceRequests() {
-  const [escalations, setEscalations] = useState<Escalation[]>([
-    { id: 1, client: "Robert Johnson", room: "112", reason: "Agitation during dinner — needs frequent checks tonight", time: "45 min ago", resolved: false },
-    { id: 2, client: "Anna Müller", room: "301", reason: "Elevated blood pressure — monitoring closely", time: "2 hours ago", resolved: false },
-  ]);
+  const [escalations, setEscalations] = useState<Escalation[]>([]);
+  const [loading, setLoading] = useState(true);
+  const supabase = createClient();
 
-  const resolve = (id: number) => {
-    setEscalations(prev => prev.map(e => e.id === id ? { ...e, resolved: true } : e));
+  const fetchEscalations = async () => {
+    const { data } = await supabase
+      .from('escalations')
+      .select(`
+        id, reason, created_at, is_resolved,
+        residents (first_name, last_name, room_number)
+      `)
+      .order('created_at', { ascending: false });
+      
+    if (data) setEscalations(data as unknown as Escalation[]);
+    setLoading(false);
   };
 
-  const open = escalations.filter(e => !e.resolved);
+  useEffect(() => {
+    // 1. Initial Fetch
+    fetchEscalations();
+
+    // 2. Realtime Subscription
+    const channel = supabase
+      .channel('live-escalations')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'escalations' }, (payload) => {
+        // Whenever any escalation is added or resolved in the DB, re-fetch the live list
+        fetchEscalations();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const resolve = async (id: string) => {
+    // Optimistic UI update
+    setEscalations(prev => prev.map(e => e.id === id ? { ...e, is_resolved: true } : e));
+    
+    // Database update
+    await supabase
+      .from('escalations')
+      .update({ is_resolved: true, resolved_at: new Date().toISOString() })
+      .eq('id', id);
+  };
+
+  const open = escalations.filter(e => !e.is_resolved);
+
+  if (loading) {
+    return (
+      <div className="glass-panel-heavy rounded-3xl h-64 flex items-center justify-center relative z-10">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="glass-panel-heavy rounded-3xl overflow-hidden flex flex-col relative z-10">
@@ -38,26 +87,30 @@ export function AssistanceRequests() {
         )}
       </div>
 
-      <div className="divide-y divide-white/40 flex-1">
+      <div className="divide-y divide-white/40 flex-1 overflow-y-auto max-h-[400px]">
         {escalations.map((e) => (
           <div 
             key={e.id} 
             className={`p-6 border-l-[6px] transition-all duration-300 ${
-              e.resolved 
+              e.is_resolved 
                 ? "border-success bg-white/30 opacity-70" 
                 : "border-danger bg-white/60 hover:bg-white/80"
             }`}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
-                <p className="text-lg font-bold text-navy">{e.client}</p>
+                <p className="text-lg font-bold text-navy">
+                  {e.residents?.first_name} {e.residents?.last_name}
+                </p>
                 <p className="text-sm font-medium text-text-secondary mt-1.5 leading-relaxed">{e.reason}</p>
                 <div className="flex items-center gap-1.5 mt-3">
                   <Clock className="w-3.5 h-3.5 text-text-muted" />
-                  <span className="text-xs font-bold text-text-muted">Room {e.room} · {e.time}</span>
+                  <span className="text-xs font-bold text-text-muted">
+                    Room {e.residents?.room_number || "N/A"} · {new Date(e.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </span>
                 </div>
               </div>
-              {!e.resolved ? (
+              {!e.is_resolved ? (
                 <button
                   onClick={() => resolve(e.id)}
                   className="shrink-0 px-4 py-2 text-sm font-bold bg-white border border-white/80 rounded-xl text-navy hover:bg-success hover:text-white hover:border-success transition-all shadow-sm btn-press"

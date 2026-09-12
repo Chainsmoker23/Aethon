@@ -1,6 +1,7 @@
 import { ResidentOverview } from "@/components/family/ResidentOverview";
 import { UpdatesFeed } from "@/components/family/UpdatesFeed";
 import { MessagingInterface } from "@/components/family/MessagingInterface";
+import { SignOutButton } from "@/components/auth/SignOutButton";
 
 export default function FamilyDashboard() {
   const firstName = "Eleanor";
@@ -32,9 +33,9 @@ export default function FamilyDashboard() {
         </div>
 
         <div className="mt-10 text-center animate-fade-in delay-400">
-          <button className="text-sm font-semibold text-text-muted hover:text-danger transition-colors">
+          <SignOutButton className="text-sm font-semibold text-text-muted hover:text-danger transition-colors min-w-[80px]">
             Sign out
-          </button>
+          </SignOutButton>
         </div>
       </main>
     </div>

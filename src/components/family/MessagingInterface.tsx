@@ -1,23 +1,59 @@
 "use client";
 
-import { Send, Check } from "lucide-react";
-import { useState } from "react";
+import { Send, Check, Loader2 } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { createClient } from "@/utils/supabase/client";
 
 export function MessagingInterface() {
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
+  const [messages, setMessages] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  const supabase = createClient();
+  const residentId = '11111111-1111-1111-1111-111111111111'; // Eleanor
 
-  const recentMessages = [
-    { body: "Hello! Just checking in — can you bring more of her favorite tea?", time: "Yesterday, 2:00 PM", status: "Seen" },
-    { body: "How was her morning walk today?", time: "Monday, 10:00 AM", status: "Seen" },
-    { body: "Please let me know if she needs warmer socks.", time: "Saturday, 3:30 PM", status: "Sent" },
-  ];
+  const fetchMessages = async () => {
+    const { data } = await supabase
+      .from('messages')
+      .select('*')
+      .eq('resident_id', residentId)
+      .order('created_at', { ascending: false });
+      
+    if (data) setMessages(data);
+    setLoading(false);
+  };
 
-  const handleSend = (e: React.FormEvent) => {
+  useEffect(() => {
+    fetchMessages();
+
+    // Listen for new messages incoming from staff/facility
+    const channel = supabase
+      .channel('live-messages')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, () => {
+        fetchMessages();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim()) return;
-    setMessage("");
+
+    const newMsg = {
+      resident_id: residentId,
+      body: message.trim(),
+      is_read: false
+    };
+
     setSent(true);
+    setMessage("");
+
+    await supabase.from('messages').insert([newMsg]);
     setTimeout(() => setSent(false), 2000);
   };
 
@@ -54,17 +90,25 @@ export function MessagingInterface() {
 
       {/* Recent messages */}
       <div className="mt-6 space-y-3">
-        {recentMessages.map((m, i) => (
-          <div key={i} className="flex items-start justify-between gap-4 p-3 rounded-xl bg-surface-alt/50 border border-border/50 hover:bg-surface-alt transition-colors">
-            <p className="text-sm font-medium text-text-secondary flex-1 leading-relaxed">{m.body}</p>
-            <div className="shrink-0 text-right">
-              <p className="text-xs font-semibold text-text-muted">{m.time}</p>
-              <p className={`text-[10px] font-bold uppercase tracking-wider mt-1 ${m.status === "Seen" ? "text-primary" : "text-text-muted"}`}>
-                {m.status}
-              </p>
+        {loading ? (
+          <div className="flex justify-center p-4"><Loader2 className="w-5 h-5 animate-spin text-primary" /></div>
+        ) : messages.length === 0 ? (
+          <p className="text-sm text-text-muted italic text-center p-4">No messages sent yet.</p>
+        ) : (
+          messages.map((m) => (
+            <div key={m.id} className="flex items-start justify-between gap-4 p-3 rounded-xl bg-surface-alt/50 border border-border/50 hover:bg-surface-alt transition-colors animate-fade-in-up">
+              <p className="text-sm font-medium text-text-secondary flex-1 leading-relaxed">{m.body}</p>
+              <div className="shrink-0 text-right">
+                <p className="text-[11px] font-bold text-text-muted">
+                  {new Date(m.created_at).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                </p>
+                <p className={`text-[10px] font-bold uppercase tracking-wider mt-1 ${m.is_read ? "text-primary" : "text-text-muted"}`}>
+                  {m.is_read ? "Seen" : "Sent"}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

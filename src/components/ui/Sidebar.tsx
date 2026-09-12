@@ -1,12 +1,34 @@
+"use client";
+
 import Link from "next/link";
-import { LayoutDashboard, Users, AlertTriangle, Settings, LogOut, Sparkles } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { LayoutDashboard, Users, AlertTriangle, Settings, LogOut } from "lucide-react";
+import { SignOutButton } from "@/components/auth/SignOutButton";
+import { useEffect, useState } from "react";
+import { createClient } from "@/utils/supabase/client";
 
 export function Sidebar() {
+  const pathname = usePathname();
+  const [escalationCount, setEscalationCount] = useState(0);
+  const supabase = createClient();
+
+  // Fetch real unread escalation count for the badge!
+  useEffect(() => {
+    async function fetchBadge() {
+      const { count } = await supabase
+        .from('escalations')
+        .select('*', { count: 'exact', head: true })
+        .eq('is_resolved', false);
+      if (count !== null) setEscalationCount(count);
+    }
+    fetchBadge();
+  }, []);
+
   const links = [
-    { name: "Overview", href: "/management", icon: <LayoutDashboard className="w-5 h-5" />, active: true },
-    { name: "Clients", href: "#", icon: <Users className="w-5 h-5" />, active: false },
-    { name: "Escalations", href: "#", icon: <AlertTriangle className="w-5 h-5" />, active: false, badge: 2 },
-    { name: "Settings", href: "#", icon: <Settings className="w-5 h-5" />, active: false },
+    { name: "Overview", href: "/management", icon: <LayoutDashboard className="w-5 h-5" /> },
+    { name: "Clients", href: "/management/clients", icon: <Users className="w-5 h-5" /> },
+    { name: "Escalations", href: "/management/escalations", icon: <AlertTriangle className="w-5 h-5" />, badge: escalationCount },
+    { name: "Settings", href: "/management/settings", icon: <Settings className="w-5 h-5" /> },
   ];
 
   return (
@@ -20,27 +42,30 @@ export function Sidebar() {
       
       {/* Nav */}
       <nav className="flex-1 py-8 px-5 space-y-2">
-        {links.map((link) => (
-          <Link 
-            key={link.name} 
-            href={link.href}
-            className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl font-bold text-sm transition-all ${
-              link.active 
-                ? "bg-gradient-to-r from-cyan-500 to-indigo-500 text-white shadow-lg shadow-indigo-500/25" 
-                : "text-text-secondary hover:bg-white/60 hover:text-navy hover:shadow-sm"
-            }`}
-          >
-            {link.icon}
-            <span className="flex-1">{link.name}</span>
-            {link.badge && (
-              <span className={`text-[10px] font-black px-2 py-0.5 rounded-full min-w-[24px] text-center ${
-                link.active ? "bg-white/20 text-white" : "bg-gradient-to-r from-rose-500 to-orange-400 text-white shadow-sm shadow-rose-500/40 pulse-dot"
-              }`}>
-                {link.badge}
-              </span>
-            )}
-          </Link>
-        ))}
+        {links.map((link) => {
+          const isActive = pathname === link.href;
+          return (
+            <Link 
+              key={link.name} 
+              href={link.href}
+              className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl font-bold text-sm transition-all ${
+                isActive 
+                  ? "bg-gradient-to-r from-cyan-500 to-indigo-500 text-white shadow-lg shadow-indigo-500/25" 
+                  : "text-text-secondary hover:bg-white/60 hover:text-navy hover:shadow-sm"
+              }`}
+            >
+              {link.icon}
+              <span className="flex-1">{link.name}</span>
+              {link.badge && link.badge > 0 ? (
+                <span className={`text-[10px] font-black px-2 py-0.5 rounded-full min-w-[24px] text-center ${
+                  isActive ? "bg-white/20 text-white" : "bg-gradient-to-r from-rose-500 to-orange-400 text-white shadow-sm shadow-rose-500/40 pulse-dot"
+                }`}>
+                  {link.badge}
+                </span>
+              ) : null}
+            </Link>
+          );
+        })}
       </nav>
 
       {/* User */}
@@ -54,13 +79,10 @@ export function Sidebar() {
             <p className="text-text-secondary text-[11px] uppercase tracking-wider font-bold mt-0.5">Management</p>
           </div>
         </div>
-        <Link 
-          href="/login"
-          className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-bold text-rose-600 bg-white/60 border border-white/80 hover:bg-rose-50 hover:border-rose-100 transition-all btn-press shadow-sm shadow-black/5"
-        >
+        <SignOutButton className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-bold text-rose-600 bg-white/60 border border-white/80 hover:bg-rose-50 hover:border-rose-100 transition-all btn-press shadow-sm shadow-black/5">
           <LogOut className="w-4 h-4" />
           Secure Sign Out
-        </Link>
+        </SignOutButton>
       </div>
     </aside>
   );

@@ -1,7 +1,23 @@
+"use client";
+
 import Link from "next/link";
 import { User, Shield, ArrowRight } from "lucide-react";
+import { createClient } from "@/utils/supabase/client";
 
 export default function LoginPage() {
+  const supabase = createClient();
+
+  const handleGoogleLogin = async (role: "family" | "staff") => {
+    // In a full production app, we would route to the callback and insert the role.
+    // For now, we will just trigger the Google OAuth flow.
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback?role=${role}`,
+      },
+    });
+  };
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-surface-alt relative overflow-hidden">
       {/* Decorative background blurs */}
@@ -18,38 +34,39 @@ export default function LoginPage() {
           <p className="text-lg text-text-muted mt-2">Choose your portal</p>
         </div>
 
-        {/* Role Cards */}
+        {/* Role Cards (Now triggering Google Auth) */}
         <div className="w-full mt-10 space-y-4">
-          <Link
-            href="/family"
-            className="group flex items-center gap-4 w-full bg-surface rounded-2xl p-5 card-hover animate-fade-in-up delay-100"
+          <button
+            onClick={() => handleGoogleLogin("family")}
+            className="group flex items-center gap-4 w-full bg-surface rounded-2xl p-5 card-hover animate-fade-in-up delay-100 text-left border border-border"
           >
-            <div className="w-12 h-12 rounded-xl bg-primary-light flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <div className="w-12 h-12 rounded-xl bg-primary-light flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shrink-0">
               <User className="w-6 h-6 text-primary" />
             </div>
             <div className="flex-1">
               <p className="font-semibold text-text-primary">Family Portal</p>
-              <p className="text-sm text-text-muted">See how your loved one is doing</p>
+              <p className="text-sm text-text-muted">Sign in with Google to see updates</p>
             </div>
-            <ArrowRight className="w-5 h-5 text-text-muted group-hover:text-primary group-hover:translate-x-1 transition-all" />
-          </Link>
+            <ArrowRight className="w-5 h-5 text-text-muted group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
+          </button>
 
-          <Link
-            href="/management"
-            className="group flex items-center gap-4 w-full bg-surface rounded-2xl p-5 card-hover animate-fade-in-up delay-200"
+          <button
+            onClick={() => handleGoogleLogin("staff")}
+            className="group flex items-center gap-4 w-full bg-surface rounded-2xl p-5 card-hover animate-fade-in-up delay-200 text-left border border-border"
           >
-            <div className="w-12 h-12 rounded-xl bg-navy/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <div className="w-12 h-12 rounded-xl bg-navy/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shrink-0">
               <Shield className="w-6 h-6 text-navy" />
             </div>
             <div className="flex-1">
               <p className="font-semibold text-text-primary">Facility Management</p>
-              <p className="text-sm text-text-muted">Client overview and operations</p>
+              <p className="text-sm text-text-muted">Staff single sign-on (SSO)</p>
             </div>
-            <ArrowRight className="w-5 h-5 text-text-muted group-hover:text-navy group-hover:translate-x-1 transition-all" />
-          </Link>
+            <ArrowRight className="w-5 h-5 text-text-muted group-hover:text-navy group-hover:translate-x-1 transition-all shrink-0" />
+          </button>
         </div>
 
-        <p className="text-xs text-text-muted mt-12 animate-fade-in delay-300">
+        <p className="text-xs text-text-muted mt-12 animate-fade-in delay-300 text-center">
+          By signing in, you agree to our Terms of Service.<br />
           All data hosted in 🇪🇺 EU (Frankfurt) · GDPR Compliant
         </p>
       </div>
