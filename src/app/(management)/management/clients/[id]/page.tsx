@@ -8,6 +8,7 @@ import {
   ArrowLeft, Activity, Pill, Calendar, HeartPulse, 
   AlertTriangle, ClipboardList, Loader2, UserMinus, Edit, Plus, Users, X
 } from "lucide-react";
+import { ResidentChat } from "@/components/management/ResidentChat";
 
 export default function ClientProfilePage() {
   const params = useParams();
@@ -29,6 +30,16 @@ export default function ClientProfilePage() {
   const [isMedModalOpen, setIsMedModalOpen] = useState(false);
   const [isSubmittingMed, setIsSubmittingMed] = useState(false);
   const [newMed, setNewMed] = useState({ name: "", dosage: "", scheduled_time: "" });
+
+  // Family Invite Modal State
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState("");
+  const [isInviting, setIsInviting] = useState(false);
+  const [pendingInvites, setPendingInvites] = useState<string[]>([]);
+  const [activeFamily, setActiveFamily] = useState<any[]>([]);
+
+  // Right Column Tab State
+  const [activeTab, setActiveTab] = useState<"timeline" | "chat">("timeline");
 
   const fetchProfile = async () => {
     // 1. Fetch resident info
@@ -64,6 +75,36 @@ export default function ClientProfilePage() {
     ].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
     setFeed(merged);
+
+    // 4. Fetch real pending invites from the database
+    const { data: invites } = await supabase
+      .from('family_invitations')
+      .select('*')
+      .eq('resident_id', residentId);
+    if (invites) {
+      setPendingInvites(invites.map(i => i.email));
+    }
+
+    // 5. Fetch ACTIVE family members
+    const { data: accessData } = await supabase
+      .from('family_access')
+      .select('user_id')
+      .eq('resident_id', residentId);
+    
+    if (accessData && accessData.length > 0) {
+      const userIds = accessData.map(a => a.user_id);
+      const { data: profiles } = await supabase
+        .from('user_profiles')
+        .select('full_name')
+        .in('id', userIds);
+        
+      if (profiles) {
+        setActiveFamily(profiles);
+      }
+    } else {
+      setActiveFamily([]);
+    }
+
     setLoading(false);
   };
 
@@ -114,6 +155,24 @@ export default function ClientProfilePage() {
     setNewMed({ name: "", dosage: "", scheduled_time: "" });
   };
 
+  const handleInvite = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inviteEmail.trim()) return;
+    setIsInviting(true);
+    
+    // Actually insert the pending invite into the database!
+    await supabase.from('family_invitations').insert([{
+      email: inviteEmail.trim(),
+      resident_id: residentId
+    }]);
+    
+    await fetchProfile(); // Refresh the list from the database
+    
+    setIsInviting(false);
+    setIsInviteModalOpen(false);
+    setInviteEmail("");
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50/50">
@@ -130,7 +189,7 @@ export default function ClientProfilePage() {
         <div className="absolute top-[30%] right-[-10%] w-[600px] h-[600px] rounded-full blur-[150px] animate-blob-3" />
       </div>
 
-      <main className="p-6 lg:p-10 space-y-8 overflow-y-auto h-full max-w-[1200px] mx-auto w-full relative z-10 pb-32">
+      <main className="p-6 lg:p-10 space-y-8 overflow-y-auto h-full max-w-[1200px] mx-auto w-full relative z-10 pb-32 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         
         {/* Header Navigation */}
         <div className="animate-fade-in-up">
@@ -191,7 +250,7 @@ export default function ClientProfilePage() {
                 </button>
               </div>
               
-              <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
+              <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 {medications.length === 0 ? (
                   <p className="text-sm text-text-muted italic">No medications prescribed.</p>
                 ) : (
@@ -221,52 +280,129 @@ export default function ClientProfilePage() {
                   </div>
                   <h2 className="text-lg font-bold text-navy">Family Access</h2>
                 </div>
-                <button className="w-8 h-8 rounded-full bg-white/60 flex items-center justify-center hover:bg-white transition-colors shadow-sm">
+                <button 
+                  onClick={() => setIsInviteModalOpen(true)}
+                  className="w-8 h-8 rounded-full bg-white/60 flex items-center justify-center hover:bg-white transition-colors shadow-sm"
+                >
                   <Plus className="w-4 h-4 text-navy" />
                 </button>
               </div>
-              <div className="text-center p-5 border border-dashed border-border/80 rounded-2xl bg-white/30">
-                <p className="text-sm font-medium text-text-secondary mb-3">No family members connected to this resident.</p>
-                <button className="text-xs font-bold text-primary hover:text-primary-dark transition-colors">
-                  Invite Family Member
-                </button>
-              </div>
-            </div>
 
+              {pendingInvites.length === 0 && activeFamily.length === 0 ? (
+                <div className="text-center p-5 border border-dashed border-border/80 rounded-2xl bg-white/30">
+                  <p className="text-sm font-medium text-text-secondary mb-3">No family members connected to this resident.</p>
+                  <button 
+                    onClick={() => setIsInviteModalOpen(true)}
+                    className="text-xs font-bold text-primary hover:text-primary-dark transition-colors"
+                  >
+                    Invite Family Member
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  
+                  {/* Active Connected Family Members */}
+                  {activeFamily.map((family, idx) => (
+                    <div key={`active-${idx}`} className="flex items-center justify-between p-3 bg-white/70 border border-success/30 rounded-xl animate-fade-in-up">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-400 to-teal-500 flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                          {family.full_name?.[0] || 'F'}
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-navy truncate max-w-[120px] sm:max-w-[150px]">{family.full_name}</p>
+                          <p className="text-[10px] font-bold text-text-muted">Connected Account</p>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-success bg-success/10 px-2 py-0.5 rounded-full shrink-0">
+                        Active
+                      </span>
+                    </div>
+                  ))}
+
+                  {/* Pending Email Invites */}
+                  {pendingInvites.map((email, idx) => (
+                    <div key={`pending-${idx}`} className="flex items-center justify-between p-3 bg-white/50 border border-white/80 rounded-xl animate-fade-in-up">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-surface flex items-center justify-center border border-border">
+                          <Users className="w-4 h-4 text-text-muted" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-navy truncate max-w-[120px] sm:max-w-[150px]">{email}</p>
+                          <p className="text-[10px] font-bold text-text-muted">Invitation Sent</p>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-black uppercase tracking-wider text-warning bg-warning-light px-2 py-0.5 rounded-full shrink-0">
+                        Pending
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+  
           </div>
 
-          {/* Right Column: Complete History Feed */}
+          {/* Right Column: Tabbed Content Area */}
           <div className="lg:col-span-2 glass-panel-heavy rounded-3xl p-6 md:p-8 flex flex-col h-[700px]">
-            <div className="flex items-center justify-between mb-6 shrink-0">
+            
+            {/* Header & Tabs */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 shrink-0 border-b border-border/50 pb-6">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-indigo-500 flex items-center justify-center shadow-md shadow-indigo-500/20">
-                  <Activity className="w-5 h-5 text-white" />
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg transition-colors ${
+                  activeTab === 'timeline' ? 'bg-gradient-to-br from-cyan-400 to-indigo-500 shadow-indigo-500/20 text-white' : 'bg-gradient-to-tr from-primary to-primary-dark shadow-primary/20 text-white'
+                }`}>
+                  {activeTab === 'timeline' ? <Activity className="w-6 h-6" /> : <Users className="w-6 h-6" />}
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-navy">Patient Timeline</h2>
-                  <p className="text-sm font-semibold text-text-secondary">Combined history of notes and escalations</p>
+                  <h2 className="text-2xl font-black text-navy">{activeTab === 'timeline' ? 'Patient Timeline' : 'Family Chat'}</h2>
+                  <p className="text-sm font-semibold text-text-secondary mt-0.5">
+                    {activeTab === 'timeline' ? 'Combined history of notes and escalations' : 'Secure direct messaging with the family'}
+                  </p>
                 </div>
               </div>
               
-              {/* Note / Escalation Toggle */}
-              <div className="flex bg-white/50 backdrop-blur-md p-1 rounded-xl border border-white/80 shadow-sm">
+              {/* Tab Selector */}
+              <div className="flex bg-slate-200/50 p-1.5 rounded-2xl shadow-inner self-start">
                 <button 
-                  onClick={() => setNoteMode("note")}
-                  className={`px-4 py-1.5 text-sm font-bold rounded-lg transition-all ${noteMode === "note" ? "bg-white text-navy shadow-sm" : "text-text-muted hover:text-navy"}`}
+                  onClick={() => setActiveTab("timeline")}
+                  className={`px-5 py-2 text-sm font-bold rounded-xl transition-all ${activeTab === "timeline" ? "bg-white text-navy shadow-sm" : "text-text-muted hover:text-navy"}`}
                 >
-                  Note
+                  Timeline
                 </button>
                 <button 
-                  onClick={() => setNoteMode("escalation")}
-                  className={`px-4 py-1.5 text-sm font-bold rounded-lg transition-all ${noteMode === "escalation" ? "bg-danger text-white shadow-sm" : "text-text-muted hover:text-danger"}`}
+                  onClick={() => setActiveTab("chat")}
+                  className={`px-5 py-2 text-sm font-bold rounded-xl transition-all ${activeTab === "chat" ? "bg-white text-navy shadow-sm" : "text-text-muted hover:text-navy"}`}
                 >
-                  Emergency
+                  Family Chat
                 </button>
               </div>
             </div>
 
-            {/* Quick Note Input */}
-            <form onSubmit={handleAddNote} className="mb-8 flex gap-2 relative shrink-0">
+            {/* Tab Content Wrapper */}
+            <div className="flex-1 overflow-hidden flex flex-col min-h-0">
+              
+              {activeTab === "timeline" && (
+                <>
+                  {/* Note / Escalation Toggle */}
+                  <div className="flex justify-end mb-4">
+                    <div className="flex bg-white/50 backdrop-blur-md p-1 rounded-xl border border-white/80 shadow-sm">
+                      <button 
+                        onClick={() => setNoteMode("note")}
+                        className={`px-4 py-1.5 text-sm font-bold rounded-lg transition-all ${noteMode === "note" ? "bg-white text-navy shadow-sm" : "text-text-muted hover:text-navy"}`}
+                      >
+                        Note
+                      </button>
+                      <button 
+                        onClick={() => setNoteMode("escalation")}
+                        className={`px-4 py-1.5 text-sm font-bold rounded-lg transition-all ${noteMode === "escalation" ? "bg-danger text-white shadow-sm" : "text-text-muted hover:text-danger"}`}
+                      >
+                        Emergency
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Quick Note Input */}
+                  <form onSubmit={handleAddNote} className="mb-6 flex gap-2 relative shrink-0">
               <input 
                 type="text"
                 value={newNote}
@@ -289,7 +425,7 @@ export default function ClientProfilePage() {
               </button>
             </form>
 
-            <div className="flex-1 overflow-y-auto pr-2 space-y-4">
+              <div className="flex-1 overflow-y-auto pr-2 space-y-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {feed.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center opacity-50">
                   <ClipboardList className="w-12 h-12 text-text-muted mb-3" />
@@ -342,6 +478,14 @@ export default function ClientProfilePage() {
                   </div>
                 ))
               )}
+            </div>
+            </>
+            )}
+
+            {activeTab === "chat" && (
+              <ResidentChat residentId={residentId} />
+            )}
+
             </div>
           </div>
         </div>
@@ -406,6 +550,51 @@ export default function ClientProfilePage() {
                   className="w-full py-3 bg-primary text-white text-sm font-bold rounded-xl hover:bg-primary-dark transition-colors shadow-sm shadow-primary/30 flex items-center justify-center gap-2"
                 >
                   {isSubmittingMed ? <Loader2 className="w-5 h-5 animate-spin" /> : "Save Medication"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Invite Family Modal */}
+      {isInviteModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/20 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white/80 backdrop-blur-2xl border border-white w-full max-w-sm rounded-3xl p-6 shadow-2xl relative animate-fade-in-up">
+            <button 
+              onClick={() => setIsInviteModalOpen(false)}
+              className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-surface hover:bg-surface-alt transition-colors"
+            >
+              <X className="w-4 h-4 text-text-muted" />
+            </button>
+            
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center shrink-0">
+                <Users className="w-5 h-5 text-purple-600" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-navy">Invite Family</h2>
+              </div>
+            </div>
+
+            <form onSubmit={handleInvite} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-navy mb-1.5">Family Member's Email</label>
+                <input 
+                  type="email" required placeholder="e.g. sarah@example.com"
+                  value={inviteEmail}
+                  onChange={e => setInviteEmail(e.target.value)}
+                  className="w-full bg-white border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
+                />
+              </div>
+
+              <div className="pt-4">
+                <button 
+                  type="submit" 
+                  disabled={isInviting}
+                  className="w-full py-3 bg-primary text-white text-sm font-bold rounded-xl hover:bg-primary-dark transition-colors shadow-sm shadow-primary/30 flex items-center justify-center gap-2"
+                >
+                  {isInviting ? <Loader2 className="w-5 h-5 animate-spin" /> : "Send Invitation"}
                 </button>
               </div>
             </form>

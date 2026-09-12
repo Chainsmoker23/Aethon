@@ -1,7 +1,26 @@
+"use client";
+
 import { SignOutButton } from "@/components/auth/SignOutButton";
-import { User, Settings, Shield, Bell, ChevronRight, LogOut } from "lucide-react";
+import { User, Settings, Shield, Bell, ChevronRight, LogOut, Loader2 } from "lucide-react";
+import { useFamilyResident } from "@/hooks/useFamilyResident";
+import { createClient } from "@/utils/supabase/client";
+import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
+  const { residentInfo, loading: residentLoading } = useFamilyResident();
+  const [userName, setUserName] = useState("Family Member");
+  const supabase = createClient();
+
+  useEffect(() => {
+    async function loadUser() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUserName(user.user_metadata?.full_name || user.email || "Family Member");
+      }
+    }
+    loadUser();
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="bg-white/80 backdrop-blur-xl border-b border-border/50 sticky top-0 z-20 px-6 py-5 flex items-center justify-between">
@@ -16,11 +35,14 @@ export default function ProfilePage() {
       <main className="flex-1 p-6 space-y-6 pb-32">
         <div className="bg-surface rounded-2xl p-6 shadow-sm border border-border flex items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-indigo-500 flex items-center justify-center text-white text-2xl font-black shadow-md">
-            S
+            {userName[0]?.toUpperCase()}
           </div>
           <div>
-            <h2 className="text-xl font-bold text-navy">Sarah Smith</h2>
-            <p className="text-sm font-medium text-text-secondary mt-0.5">Daughter of Eleanor</p>
+            <h2 className="text-xl font-bold text-navy truncate max-w-[200px]">{userName}</h2>
+            <p className="text-sm font-medium text-text-secondary mt-0.5">
+              {residentLoading ? <Loader2 className="w-3 h-3 animate-spin inline-block" /> : 
+                `Connected to ${residentInfo?.first_name || 'Resident'}`}
+            </p>
           </div>
         </div>
 

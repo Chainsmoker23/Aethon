@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 
@@ -28,25 +30,37 @@ export function useFamilyResident() {
       if (accessData) {
         targetResidentId = accessData.resident_id;
       } else {
-        // --- MVP AUTO-LINKING MAGIC ---
-        // For testing purposes, if you log in and aren't linked to anyone, 
-        // the app will automatically link your Google account to Eleanor 
-        // so the UI works instantly without you having to write manual SQL.
-        
-        targetResidentId = '11111111-1111-1111-1111-111111111111'; // Eleanor's ID
+        // --- REAL INVITE LOGIC ---
+        // Check if this email was invited by the facility
+        const { data: inviteData } = await supabase
+          .from('family_invitations')
+          .select('resident_id')
+          .eq('email', user.email)
+          .single();
 
-        // Create their user profile
-        await supabase.from('user_profiles').upsert({
-          id: user.id,
-          role: 'family',
-          full_name: user.user_metadata?.full_name || user.email || 'Family Member'
-        });
+        if (inviteData) {
+          targetResidentId = inviteData.resident_id;
 
-        // Link them to Eleanor
-        await supabase.from('family_access').upsert({
-          user_id: user.id,
-          resident_id: targetResidentId
-        });
+          // Create their user profile
+          await supabase.from('user_profiles').upsert({
+            id: user.id,
+            role: 'family',
+            full_name: user.user_metadata?.full_name || user.email || 'Family Member'
+          });
+
+          // Link them permanently in family_access
+          await supabase.from('family_access').upsert({
+            user_id: user.id,
+            resident_id: targetResidentId
+          });
+
+          // Consume the invite (delete it)
+          await supabase.from('family_invitations').delete().eq('email', user.email);
+        } else {
+          // --- MVP DEMO FALLBACK ---
+          // If they just log in blindly without being invited, show Eleanor so the app doesn't break
+          targetResidentId = '11111111-1111-1111-1111-111111111111'; // Eleanor's ID
+        }
       }
 
       setResidentId(targetResidentId);
@@ -55,7 +69,7 @@ export function useFamilyResident() {
       if (targetResidentId) {
         const { data: resData } = await supabase
           .from('residents')
-          .select('first_name, last_name')
+          .select('*')
           .eq('id', targetResidentId)
           .single();
         if (resData) setResidentInfo(resData);

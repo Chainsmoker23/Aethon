@@ -15,8 +15,9 @@ export function MobileNav() {
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-xl border-t border-border/50 flex items-center justify-around py-2 z-50">
-      {links.map((link) => {
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
+      <nav className="w-full max-w-[640px] bg-surface/90 backdrop-blur-xl border-t border-border/50 flex items-center justify-around py-2 pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+        {links.map((link) => {
         const isActive = pathname === link.href;
         
         return (
@@ -40,6 +41,7 @@ export function MobileNav() {
           </Link>
         );
       })}
-    </nav>
+      </nav>
+    </div>
   );
 }
