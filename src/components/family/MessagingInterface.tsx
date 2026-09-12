@@ -3,6 +3,7 @@
 import { Send, Check, Loader2 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { createClient } from "@/utils/supabase/client";
+import { useFamilyResident } from "@/hooks/useFamilyResident";
 
 export function MessagingInterface() {
   const [message, setMessage] = useState("");
@@ -11,9 +12,10 @@ export function MessagingInterface() {
   const [loading, setLoading] = useState(true);
   
   const supabase = createClient();
-  const residentId = '11111111-1111-1111-1111-111111111111'; // Eleanor
+  const { residentId } = useFamilyResident();
 
   const fetchMessages = async () => {
+    if (!residentId) return;
     const { data } = await supabase
       .from('messages')
       .select('*')
@@ -27,10 +29,12 @@ export function MessagingInterface() {
   useEffect(() => {
     fetchMessages();
 
+    if (!residentId) return;
+
     // Listen for new messages incoming from staff/facility
     const channel = supabase
       .channel('live-messages')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, () => {
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `resident_id=eq.${residentId}` }, () => {
         fetchMessages();
       })
       .subscribe();
@@ -38,11 +42,11 @@ export function MessagingInterface() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [residentId]);
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!message.trim()) return;
+    if (!message.trim() || !residentId) return;
 
     const newMsg = {
       resident_id: residentId,

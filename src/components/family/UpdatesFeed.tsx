@@ -3,17 +3,17 @@
 import { Calendar, Star, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
+import { useFamilyResident } from "@/hooks/useFamilyResident";
 
 export function UpdatesFeed() {
   const [visits, setVisits] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
-  
-  // Using Eleanor's ID from our seed data
-  const residentId = '11111111-1111-1111-1111-111111111111';
+  const { residentId } = useFamilyResident();
 
   useEffect(() => {
     async function fetchVisits() {
+      if (!residentId) return;
       const { data } = await supabase
         .from('visit_notes')
         .select('*')
@@ -25,7 +25,7 @@ export function UpdatesFeed() {
       setLoading(false);
     }
     fetchVisits();
-  }, []);
+  }, [residentId]);
 
   const goals = [
     "Walk to the garden and back each morning",

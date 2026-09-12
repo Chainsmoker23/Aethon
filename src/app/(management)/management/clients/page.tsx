@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { createClient } from "@/utils/supabase/client";
-import { Search, MapPin, Activity, UserPlus, Loader2, Sparkles, ChevronRight } from "lucide-react";
+import { Search, MapPin, UserPlus, Loader2, X, Check } from "lucide-react";
 
 type ClientData = {
   id: string;
@@ -17,38 +18,67 @@ export default function ClientsPage() {
   const [clients, setClients] = useState<ClientData[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  
+  // Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [newClient, setNewClient] = useState({
+    first_name: "",
+    last_name: "",
+    room_number: "",
+    care_stage: "Independent"
+  });
+
   const supabase = createClient();
 
-  useEffect(() => {
-    async function fetchClients() {
-      const { data } = await supabase.from('residents').select(`
-        id, first_name, last_name, room_number, care_stage,
-        visit_notes ( created_at, tasks_completed )
-      `);
+  const fetchClients = async () => {
+    const { data } = await supabase.from('residents').select(`
+      id, first_name, last_name, room_number, care_stage,
+      visit_notes ( created_at, tasks_completed )
+    `);
 
-      if (data) {
-        const formatted = data.map((r: any) => {
-          const notes = r.visit_notes || [];
-          notes.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-          
-          return {
-            id: r.id,
-            first_name: r.first_name,
-            last_name: r.last_name,
-            room_number: r.room_number,
-            care_stage: r.care_stage,
-            last_note: notes.length > 0 ? {
-              date: new Date(notes[0].created_at).toLocaleDateString([], { month: 'short', day: 'numeric' }),
-              task: notes[0].tasks_completed
-            } : null
-          };
-        });
-        setClients(formatted);
-      }
-      setLoading(false);
+    if (data) {
+      const formatted = data.map((r: any) => {
+        const notes = r.visit_notes || [];
+        notes.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        
+        return {
+          id: r.id,
+          first_name: r.first_name,
+          last_name: r.last_name,
+          room_number: r.room_number,
+          care_stage: r.care_stage,
+          last_note: notes.length > 0 ? {
+            date: new Date(notes[0].created_at).toLocaleDateString([], { month: 'short', day: 'numeric' }),
+            task: notes[0].tasks_completed
+          } : null
+        };
+      });
+      setClients(formatted);
     }
+    setLoading(false);
+  };
+
+  useEffect(() => {
     fetchClients();
   }, []);
+
+  const handleAddClient = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    await supabase.from('residents').insert([{
+      first_name: newClient.first_name,
+      last_name: newClient.last_name,
+      room_number: newClient.room_number,
+      care_stage: newClient.care_stage
+    }]);
+
+    await fetchClients(); // Refresh list to get new client
+    setIsSubmitting(false);
+    setIsModalOpen(false);
+    setNewClient({ first_name: "", last_name: "", room_number: "", care_stage: "Independent" }); // reset
+  };
 
   const filteredClients = clients.filter(c => 
     `${c.first_name} ${c.last_name}`.toLowerCase().includes(search.toLowerCase()) ||
@@ -57,12 +87,12 @@ export default function ClientsPage() {
 
   return (
     <div className="relative min-h-screen flex-1 overflow-hidden bg-slate-50/50 z-0">
-      {/* Siri Aura Background (Consistent with Overview) */}
+      
+      {/* Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
         <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[120px] animate-blob-1" />
         <div className="absolute top-[10%] right-[-5%] w-[600px] h-[600px] rounded-full blur-[120px] animate-blob-2" />
         <div className="absolute bottom-[-20%] left-[20%] w-[800px] h-[800px] rounded-full blur-[150px] animate-blob-3" />
-        <div className="absolute top-[40%] left-[40%] w-[400px] h-[400px] rounded-full blur-[100px] animate-blob-4" />
       </div>
 
       <main className="p-6 lg:p-10 space-y-8 overflow-y-auto h-full max-w-[1200px] mx-auto w-full relative z-10">
@@ -102,9 +132,13 @@ export default function ClientsPage() {
           </div>
         ) : (
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6 animate-fade-in-up delay-100">
+            
             {/* Add New Client Card */}
-            <button className="glass-panel rounded-3xl p-6 flex flex-col items-center justify-center gap-4 hover:bg-white/60 transition-all border-dashed border-2 border-primary/30 min-h-[220px] group">
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary transition-all">
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="glass-panel rounded-3xl p-6 flex flex-col items-center justify-center gap-4 hover:bg-white/60 transition-all border-dashed border-2 border-primary/30 min-h-[220px] group cursor-pointer btn-press"
+            >
+              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary transition-all shadow-sm">
                 <UserPlus className="w-6 h-6 text-primary group-hover:text-white transition-colors" />
               </div>
               <p className="font-bold text-navy">Admit New Client</p>
@@ -112,7 +146,7 @@ export default function ClientsPage() {
 
             {/* Render Clients */}
             {filteredClients.map((c, i) => (
-              <div key={c.id} className="glass-panel-heavy rounded-3xl p-6 card-hover flex flex-col justify-between min-h-[220px]" style={{animationDelay: `${i * 50}ms`}}>
+              <Link href={`/management/clients/${c.id}`} key={c.id} className="glass-panel-heavy rounded-3xl p-6 card-hover flex flex-col justify-between min-h-[220px]" style={{animationDelay: `${i * 50}ms`}}>
                 <div>
                   <div className="flex items-start justify-between mb-4">
                     <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 flex items-center justify-center border border-white/50">
@@ -143,16 +177,104 @@ export default function ClientsPage() {
                     )}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
       </main>
+
+      {/* Admit Client Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/20 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white/80 backdrop-blur-2xl border border-white w-full max-w-md rounded-3xl p-6 shadow-2xl relative animate-fade-in-up">
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-surface hover:bg-surface-alt transition-colors"
+            >
+              <X className="w-4 h-4 text-text-muted" />
+            </button>
+            
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-primary-light flex items-center justify-center shrink-0">
+                <UserPlus className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-navy">Admit New Client</h2>
+                <p className="text-xs font-semibold text-text-muted mt-0.5">Add a resident to the facility.</p>
+              </div>
+            </div>
+
+            <form onSubmit={handleAddClient} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-navy mb-1.5">First Name</label>
+                  <input 
+                    type="text" required
+                    value={newClient.first_name}
+                    onChange={e => setNewClient({...newClient, first_name: e.target.value})}
+                    className="w-full bg-white border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-navy mb-1.5">Last Name</label>
+                  <input 
+                    type="text" required
+                    value={newClient.last_name}
+                    onChange={e => setNewClient({...newClient, last_name: e.target.value})}
+                    className="w-full bg-white border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-navy mb-1.5">Room Number</label>
+                <input 
+                  type="text" required
+                  value={newClient.room_number}
+                  onChange={e => setNewClient({...newClient, room_number: e.target.value})}
+                  className="w-full bg-white border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-navy mb-1.5">Care Stage</label>
+                <select 
+                  value={newClient.care_stage}
+                  onChange={e => setNewClient({...newClient, care_stage: e.target.value})}
+                  className="w-full bg-white border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 appearance-none"
+                >
+                  <option value="Independent">Independent</option>
+                  <option value="Home care">Home care</option>
+                  <option value="Facility">Facility</option>
+                </select>
+              </div>
+
+              <div className="pt-4 flex gap-3">
+                <button 
+                  type="button" 
+                  onClick={() => setIsModalOpen(false)}
+                  className="flex-1 py-3 bg-surface text-navy text-sm font-bold rounded-xl hover:bg-surface-alt transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="flex-1 py-3 bg-primary text-white text-sm font-bold rounded-xl hover:bg-primary-dark transition-colors shadow-sm shadow-primary/30 flex items-center justify-center gap-2"
+                >
+                  {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : "Admit Client"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
 
-// Quick inline icon component to avoid adding another lucide import at the top if missed
+// Inline icon
 function UsersIcon(props: any) {
   return (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

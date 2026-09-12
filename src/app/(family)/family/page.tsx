@@ -1,11 +1,13 @@
-import { ResidentOverview } from "@/components/family/ResidentOverview";
 import { UpdatesFeed } from "@/components/family/UpdatesFeed";
-import { MessagingInterface } from "@/components/family/MessagingInterface";
-import { SignOutButton } from "@/components/auth/SignOutButton";
+import { useFamilyResident } from "@/hooks/useFamilyResident";
 
 export default function FamilyDashboard() {
-  const firstName = "Eleanor";
+  const { residentInfo, loading } = useFamilyResident();
   const today = new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
+
+  if (loading) return <div className="min-h-screen bg-surface-alt" />;
+
+  const firstName = residentInfo?.first_name || "your loved one";
 
   return (
     <div className="min-h-screen bg-surface-alt relative overflow-hidden">
@@ -22,20 +24,8 @@ export default function FamilyDashboard() {
 
         <div className="mt-8 space-y-5">
           <div className="animate-fade-in-up delay-100">
-            <ResidentOverview />
-          </div>
-          <div className="animate-fade-in-up delay-200">
             <UpdatesFeed />
           </div>
-          <div className="animate-fade-in-up delay-300">
-            <MessagingInterface />
-          </div>
-        </div>
-
-        <div className="mt-10 text-center animate-fade-in delay-400">
-          <SignOutButton className="text-sm font-semibold text-text-muted hover:text-danger transition-colors min-w-[80px]">
-            Sign out
-          </SignOutButton>
         </div>
       </main>
     </div>

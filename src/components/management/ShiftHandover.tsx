@@ -6,10 +6,11 @@ import { createClient } from "@/utils/supabase/client";
 
 export function ShiftHandover() {
   const [notes, setNotes] = useState<any[]>([]);
+  const [residents, setResidents] = useState<any[]>([]);
+  const [selectedResident, setSelectedResident] = useState("");
   const [loading, setLoading] = useState(true);
   const [newNote, setNewNote] = useState("");
   const supabase = createClient();
-  const residentId = '11111111-1111-1111-1111-111111111111';
 
   const fetchHandover = async () => {
     const today = new Date();
@@ -29,7 +30,17 @@ export function ShiftHandover() {
   };
 
   useEffect(() => {
-    fetchHandover();
+    async function loadData() {
+      // 1. Load active residents for the dropdown
+      const { data: resData } = await supabase.from('residents').select('id, first_name, last_name').order('first_name');
+      if (resData && resData.length > 0) {
+        setResidents(resData);
+        setSelectedResident(resData[0].id);
+      }
+      // 2. Load handover notes
+      await fetchHandover();
+    }
+    loadData();
 
     // Listen for new notes added by other staff members in real-time
     const channel = supabase
@@ -54,18 +65,16 @@ export function ShiftHandover() {
 
   const addNote = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newNote.trim()) return;
+    if (!newNote.trim() || !selectedResident) return;
 
     const note = {
-      resident_id: residentId,
+      resident_id: selectedResident,
       visit_type: 'Handover Note',
       tasks_completed: newNote,
       is_escalation: false
     };
 
     setNewNote("");
-    // Note: We don't necessarily need optimistic UI here anymore because realtime will fetch it,
-    // but optimistic UI still makes it feel faster for the person typing.
     await supabase.from('visit_notes').insert([note]);
   };
 
@@ -126,21 +135,39 @@ export function ShiftHandover() {
       </div>
 
       <div className="p-4 border-t border-white/50 bg-white/30 backdrop-blur-md">
-        <form onSubmit={addNote} className="relative">
-          <input 
-            type="text"
-            value={newNote}
-            onChange={(e) => setNewNote(e.target.value)}
-            placeholder="Type a note for the next shift..."
-            className="w-full h-12 pl-4 pr-12 bg-white/70 border border-white/80 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white transition-all shadow-sm"
-          />
-          <button 
-            type="submit"
-            disabled={!newNote.trim()}
-            className="absolute right-1 top-1 w-10 h-10 bg-primary text-white rounded-lg flex items-center justify-center hover:bg-primary-dark transition-colors disabled:opacity-50 shadow-sm"
+        <form onSubmit={addNote} className="flex gap-2 relative">
+          <select 
+            value={selectedResident}
+            onChange={(e) => setSelectedResident(e.target.value)}
+            className="w-1/3 h-12 px-3 bg-white/70 border border-white/80 rounded-xl text-sm font-bold text-navy focus:outline-none focus:ring-2 focus:ring-primary/40 appearance-none shadow-sm cursor-pointer"
+            disabled={residents.length === 0}
           >
-            <Plus className="w-5 h-5" />
-          </button>
+            {residents.length === 0 ? (
+              <option value="">No clients</option>
+            ) : (
+              residents.map(r => (
+                <option key={r.id} value={r.id}>{r.first_name} {r.last_name}</option>
+              ))
+            )}
+          </select>
+
+          <div className="relative flex-1">
+            <input 
+              type="text"
+              value={newNote}
+              onChange={(e) => setNewNote(e.target.value)}
+              placeholder="Type note..."
+              className="w-full h-12 pl-4 pr-12 bg-white/70 border border-white/80 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white transition-all shadow-sm"
+              disabled={residents.length === 0}
+            />
+            <button 
+              type="submit"
+              disabled={!newNote.trim() || residents.length === 0}
+              className="absolute right-1 top-1 w-10 h-10 bg-primary text-white rounded-lg flex items-center justify-center hover:bg-primary-dark transition-colors disabled:opacity-50 shadow-sm"
+            >
+              <Plus className="w-5 h-5" />
+            </button>
+          </div>
         </form>
       </div>
     </div>

@@ -3,16 +3,18 @@
 import { HeartPulse, Pill, CheckCircle2, Clock, XCircle, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
+import { useFamilyResident } from "@/hooks/useFamilyResident";
 
 export function ResidentOverview() {
   const [medications, setMedications] = useState<any[]>([]);
   const [moods, setMoods] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
-  const residentId = '11111111-1111-1111-1111-111111111111'; // Eleanor
+  const { residentId } = useFamilyResident();
 
   useEffect(() => {
     async function fetchData() {
+      if (!residentId) return;
       const [medsResponse, moodsResponse] = await Promise.all([
         supabase.from('medications').select('*').eq('resident_id', residentId),
         supabase.from('wellbeing_logs').select('*').eq('resident_id', residentId)
@@ -23,7 +25,7 @@ export function ResidentOverview() {
       setLoading(false);
     }
     fetchData();
-  }, []);
+  }, [residentId]);
 
   const getStatusIcon = (status: string) => {
     switch (status) {
