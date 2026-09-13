@@ -24,8 +24,7 @@ A warm, accessible, and clean interface for families to stay connected with thei
 - **Icons:** Lucide React
 - **Backend/Auth:** Supabase *(Coming Soon - Phase 5)*
 
-## 🎨 Design System
-Aethon utilizes a custom **"Siri Aura" engine**—an infinitely animating, color-shifting mesh gradient background. Combined with heavy frosted glass panels (`backdrop-blur-3xl`), vibrant gradient iconography, and staggered entrance animations, it creates a breathtaking, premium feel while maintaining strict clinical readability and contrast.
+
 
 ## 💻 Getting Started
 
