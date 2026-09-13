@@ -39,7 +39,7 @@ export function UpdatesFeed() {
 
   if (loading) {
     return (
-      <div className="bg-surface rounded-2xl p-5 shadow-sm border border-border/50 border-l-[6px] border-l-primary h-48 flex items-center justify-center">
+      <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 border-l-[6px] border-l-sky-500 h-48 flex items-center justify-center">
          <Loader2 className="w-6 h-6 animate-spin text-primary" />
       </div>
     );
@@ -49,19 +49,19 @@ export function UpdatesFeed() {
 
   return (
     <>
-      <div className="bg-surface rounded-2xl p-5 shadow-sm border border-border/50 border-l-[6px] border-l-primary card-hover">
+      <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 border-l-[6px] border-l-sky-500 card-hover">
         <h2 className="text-lg font-bold text-navy">Recent updates</h2>
         <div className="mt-4 space-y-4">
           {visits.length === 0 ? (
             <p className="text-sm text-text-muted italic">No recent updates logged.</p>
           ) : (
             visits.map((v, i) => (
-              <div key={v.id || i} className="flex items-start gap-4 p-2 rounded-lg hover:bg-surface-alt transition-colors">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${v.type === 'escalation' ? 'bg-danger/10' : 'bg-primary-light'}`}>
+              <div key={v.id || i} className="flex items-start gap-4 p-2 rounded-lg hover:bg-slate-50 transition-colors">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${v.type === 'escalation' ? 'bg-rose-100' : 'bg-sky-100'}`}>
                   {v.type === 'escalation' ? (
-                    <AlertTriangle className="w-4 h-4 text-danger" />
+                    <AlertTriangle className="w-4 h-4 text-rose-600" />
                   ) : (
-                    <Calendar className="w-4 h-4 text-primary" />
+                    <Calendar className="w-4 h-4 text-sky-600" />
                   )}
                 </div>
                 <div>
@@ -69,7 +69,7 @@ export function UpdatesFeed() {
                     <span className="text-sm font-bold text-navy">
                       {new Date(v.created_at).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                     </span>
-                    <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${v.type === 'escalation' ? 'bg-danger/10 text-danger' : 'bg-surface-alt text-text-muted'}`}>
+                    <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${v.type === 'escalation' ? 'bg-rose-100 text-rose-600' : 'bg-slate-100 text-slate-500'}`}>
                       {v.type === 'escalation' ? v.severity || 'Alert' : v.visit_type}
                     </span>
                   </div>
@@ -83,7 +83,7 @@ export function UpdatesFeed() {
         </div>
       </div>
 
-      <div className="bg-surface rounded-2xl p-5 shadow-sm border border-border/50 border-l-[6px] border-l-warning card-hover mt-5">
+      <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 border-l-[6px] border-l-amber-500 card-hover mt-5">
         <h2 className="text-lg font-bold text-navy">What matters to {firstName}</h2>
         <div className="mt-4 space-y-3">
           {goals.map((g, i) => (

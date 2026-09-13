@@ -87,28 +87,28 @@ export function MessagingInterface() {
           <Link href="/family" className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors">
             <ArrowLeft className="w-4 h-4 text-navy" />
           </Link>
-          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-primary-dark flex items-center justify-center shadow-md shadow-primary/20">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-sky-500 to-sky-600 flex items-center justify-center shadow-md shadow-sky-500/20">
             <MessageSquare className="w-5 h-5 text-white" />
           </div>
           <div>
             <h2 className="text-[17px] font-bold text-navy leading-tight tracking-tight">Care Team</h2>
             <div className="flex items-center gap-1 mt-0.5">
-              <ShieldCheck className="w-3 h-3 text-success" />
+              <ShieldCheck className="w-3 h-3 text-emerald-500" />
               <p className="text-[11px] font-bold text-text-muted">Secure & Encrypted</p>
             </div>
           </div>
         </div>
-        <div className="w-2.5 h-2.5 rounded-full bg-success animate-pulse shadow-sm shadow-success/40" />
+        <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-sm shadow-emerald-500/40" />
       </div>
 
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-5 space-y-6 flex flex-col pb-[120px] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {loading ? (
-          <div className="m-auto"><Loader2 className="w-6 h-6 animate-spin text-primary/50" /></div>
+          <div className="m-auto"><Loader2 className="w-6 h-6 animate-spin text-sky-600/50" /></div>
         ) : messages.length === 0 ? (
           <div className="m-auto text-center space-y-3 p-6 max-w-[280px]">
             <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mx-auto shadow-sm border border-slate-100 transform -rotate-6">
-              <MessageSquare className="w-6 h-6 text-primary" />
+              <MessageSquare className="w-6 h-6 text-sky-600" />
             </div>
             <p className="text-base font-bold text-navy">Start the conversation</p>
             <p className="text-xs font-medium text-text-secondary leading-relaxed">Send a message to the facility staff. They usually reply within a few hours.</p>
@@ -126,7 +126,7 @@ export function MessagingInterface() {
                 )}
                 <div className={`px-4 py-2.5 text-[15px] font-medium leading-relaxed ${
                   isFamily 
-                    ? 'bg-gradient-to-tr from-primary to-primary-dark text-white rounded-[20px] rounded-br-sm shadow-md shadow-primary/20' 
+                    ? 'bg-gradient-to-tr from-sky-500 to-sky-600 text-white rounded-[20px] rounded-br-sm shadow-md shadow-sky-500/20' 
                     : 'bg-white border border-slate-200/60 text-navy rounded-[20px] rounded-bl-sm shadow-sm'
                 }`}>
                   {m.content}
@@ -144,12 +144,12 @@ export function MessagingInterface() {
       {/* Input Area (Fixed to bottom, above MobileNav) */}
       <div className="absolute bottom-0 left-0 right-0 p-3 px-4 bg-white/80 backdrop-blur-xl border-t border-slate-200/60 shrink-0">
         {error && (
-          <div className="mb-2 px-4 py-2 bg-danger/10 border border-danger/20 rounded-xl text-sm font-bold text-danger animate-fade-in flex items-center justify-between">
+          <div className="mb-2 px-4 py-2 bg-rose-100 border border-rose-200 rounded-xl text-sm font-bold text-rose-500 animate-fade-in flex items-center justify-between">
             <span>{error}</span>
-            <button onClick={() => setError(null)} className="text-danger/60 hover:text-danger" aria-label="Dismiss error">✕</button>
+            <button onClick={() => setError(null)} className="text-rose-500/60 hover:text-rose-500" aria-label="Dismiss error">✕</button>
           </div>
         )}
-        <form onSubmit={handleSend} className="relative flex items-end gap-2 bg-slate-100/80 p-1.5 rounded-3xl border border-slate-200/80 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary/30 transition-all">
+        <form onSubmit={handleSend} className="relative flex items-end gap-2 bg-slate-100/80 p-1.5 rounded-3xl border border-slate-200/80 focus-within:ring-2 focus-within:ring-sky-500/20 focus-within:border-sky-500/30 transition-all">
           <textarea
             placeholder="Type a message..."
             value={message}
@@ -166,7 +166,7 @@ export function MessagingInterface() {
           <button 
             type="submit"
             disabled={sent || !message.trim()}
-            className="shrink-0 w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary-dark transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm shadow-primary/20"
+            className="shrink-0 w-9 h-9 rounded-full bg-sky-600 text-white flex items-center justify-center hover:bg-sky-700 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm shadow-sky-500/20"
           >
             {sent ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4 ml-0.5" />}
           </button>

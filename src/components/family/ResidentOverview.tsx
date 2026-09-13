@@ -23,9 +23,9 @@ export function ResidentOverview() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "taken": return <CheckCircle2 className="w-5 h-5 text-success" />;
-      case "due": return <Clock className="w-5 h-5 text-warning" />;
-      case "missed": return <XCircle className="w-5 h-5 text-danger" />;
+      case "taken": return <CheckCircle2 className="w-5 h-5 text-emerald-500" />;
+      case "due": return <Clock className="w-5 h-5 text-amber-500" />;
+      case "missed": return <XCircle className="w-5 h-5 text-rose-500" />;
       default: return null;
     }
   };
@@ -92,8 +92,8 @@ export function ResidentOverview() {
                 <div className="flex flex-col items-end gap-1">
                   {getStatusIcon(med.status || "due")}
                   <span className={`text-[10px] font-black uppercase tracking-wider ${
-                    med.status === 'taken' ? 'text-success' :
-                    med.status === 'missed' ? 'text-danger' : 'text-warning'
+                    med.status === 'taken' ? 'text-emerald-500' :
+                    med.status === 'missed' ? 'text-rose-500' : 'text-amber-500'
                   }`}>
                     {med.status || "due"}
                   </span>

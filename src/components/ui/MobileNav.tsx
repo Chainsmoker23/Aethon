@@ -16,33 +16,27 @@ export function MobileNav() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
-      <nav className="w-full max-w-[640px] bg-surface/90 backdrop-blur-xl border-t border-border/50 flex items-center justify-around py-2 pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pb-safe">
+      <nav className="w-full max-w-[640px] bg-white border-t border-slate-200 flex items-center justify-around pb-safe shadow-[0_-4px_24px_rgba(0,0,0,0.02)] pointer-events-auto">
         {links.map((link) => {
-        const isActive = pathname === link.href;
-        
-        return (
-          <Link 
-            key={link.name}
-            href={link.href}
-            className={`flex flex-col items-center gap-1 p-2 min-w-[60px] rounded-xl transition-transform active:scale-90 ${
-              isActive 
-                ? "text-primary" 
-                : "text-text-muted hover:text-text-secondary"
-            }`}
-          >
-            {isActive ? (
-              <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center text-white shadow-md shadow-primary/30 animate-spring-pop">
+          const isActive = pathname === link.href;
+          
+          return (
+            <Link 
+              key={link.name}
+              href={link.href}
+              className={`relative flex flex-col items-center justify-center w-full py-3 gap-1 transition-colors active:scale-95 ${
+                isActive ? "text-sky-600" : "text-slate-400 hover:text-slate-600"
+              }`}
+            >
+              <div className="relative">
                 {link.icon}
               </div>
-            ) : (
-              <div className="w-10 h-10 flex items-center justify-center">
-                {link.icon}
-              </div>
-            )}
-            <span className={`text-[10px] font-semibold mt-0.5 transition-colors ${isActive ? "text-primary" : ""}`}>{link.name}</span>
-          </Link>
-        );
-      })}
+              <span className={`text-[10px] font-bold ${isActive ? "text-slate-900" : "text-slate-500"}`}>
+                {link.name}
+              </span>
+            </Link>
+          );
+        })}
       </nav>
     </div>
   );

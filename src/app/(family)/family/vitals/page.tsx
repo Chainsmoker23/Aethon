@@ -15,8 +15,8 @@ export default function VitalsPage() {
             <p className="text-sm font-semibold text-text-muted mt-0.5">Live health data tracking</p>
           </div>
         </div>
-        <div className="w-10 h-10 rounded-full bg-primary-light flex items-center justify-center">
-          <Activity className="w-5 h-5 text-primary" />
+        <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center">
+          <Activity className="w-5 h-5 text-rose-600" />
         </div>
       </div>
       

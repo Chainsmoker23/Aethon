@@ -33,8 +33,8 @@ export default function ProfilePage() {
             <h1 className="text-2xl font-black text-navy tracking-tight">Family Profile</h1>
           </div>
         </div>
-        <div className="w-10 h-10 rounded-full bg-primary-light flex items-center justify-center">
-          <User className="w-5 h-5 text-primary" />
+        <div className="w-10 h-10 rounded-full bg-sky-100 flex items-center justify-center">
+          <User className="w-5 h-5 text-sky-600" />
         </div>
       </div>
       
@@ -76,8 +76,8 @@ export default function ProfilePage() {
           </button>
         </div>
 
-        <div className="pt-6 border-t border-border/50">
-          <SignOutButton className="w-full flex items-center justify-center gap-2 p-4 bg-white border border-danger/20 text-danger rounded-2xl font-bold hover:bg-danger/5 transition-colors shadow-sm btn-press">
+        <div className="pt-6 border-t border-slate-200/50">
+          <SignOutButton className="w-full flex items-center justify-center gap-2 p-4 bg-white border border-rose-200 text-rose-500 rounded-2xl font-bold hover:bg-rose-50 transition-colors shadow-sm btn-press">
             <LogOut className="w-5 h-5" />
             Sign Out
           </SignOutButton>
