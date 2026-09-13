@@ -24,13 +24,13 @@ export default function ProfilePage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="bg-white/80 backdrop-blur-xl border-b border-border/50 sticky top-0 z-20 px-6 py-5 flex items-center justify-between">
+      <div className="bg-white border-b border-slate-200 sticky top-0 z-20 px-6 py-5 flex items-center justify-between shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
         <div className="flex items-center gap-3">
           <Link href="/family" className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors">
-            <ArrowLeft className="w-4 h-4 text-navy" />
+            <ArrowLeft className="w-4 h-4 text-slate-700" />
           </Link>
           <div>
-            <h1 className="text-2xl font-black text-navy tracking-tight">Family Profile</h1>
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">Family Profile</h1>
           </div>
         </div>
         <div className="w-10 h-10 rounded-full bg-sky-100 flex items-center justify-center">
@@ -39,40 +39,40 @@ export default function ProfilePage() {
       </div>
       
       <main className="flex-1 p-6 space-y-6 pb-32">
-        <div className="bg-surface rounded-2xl p-6 shadow-sm border border-border flex items-center gap-4">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-indigo-500 flex items-center justify-center text-white text-2xl font-black shadow-md">
+        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex items-center gap-4">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center text-white text-2xl font-black shadow-md">
             {userName[0]?.toUpperCase()}
           </div>
           <div>
-            <h2 className="text-xl font-bold text-navy truncate max-w-[200px]">{userName}</h2>
-            <p className="text-sm font-medium text-text-secondary mt-0.5">
-              {residentLoading ? <Loader2 className="w-3 h-3 animate-spin inline-block" /> : 
+            <h2 className="text-xl font-bold text-slate-900 truncate max-w-[200px]">{userName}</h2>
+            <p className="text-sm font-medium text-slate-500 mt-0.5">
+              {residentLoading ? <Loader2 className="w-3 h-3 animate-spin inline-block text-slate-400" /> : 
                 `Connected to ${residentInfo?.first_name || 'Resident'}`}
             </p>
           </div>
         </div>
 
-        <div className="bg-surface rounded-2xl shadow-sm border border-border overflow-hidden">
-          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 opacity-60 border-b border-border/50 cursor-not-allowed">
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50/50 opacity-60 border-b border-slate-200 cursor-not-allowed">
             <div className="flex items-center gap-3">
-              <Bell className="w-5 h-5 text-text-muted" />
-              <span className="font-bold text-navy text-sm">Notification Preferences</span>
+              <Bell className="w-5 h-5 text-slate-500" />
+              <span className="font-bold text-slate-900 text-sm">Notification Preferences</span>
             </div>
-            <span className="text-[10px] font-bold text-text-muted bg-surface-alt px-2 py-1 rounded-md border border-border">Coming Soon</span>
+            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-md border border-slate-200">Coming Soon</span>
           </button>
-          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 opacity-60 border-b border-border/50 cursor-not-allowed">
+          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50/50 opacity-60 border-b border-slate-200 cursor-not-allowed">
             <div className="flex items-center gap-3">
-              <Shield className="w-5 h-5 text-text-muted" />
-              <span className="font-bold text-navy text-sm">Privacy & Security</span>
+              <Shield className="w-5 h-5 text-slate-500" />
+              <span className="font-bold text-slate-900 text-sm">Privacy & Security</span>
             </div>
-            <span className="text-[10px] font-bold text-text-muted bg-surface-alt px-2 py-1 rounded-md border border-border">Coming Soon</span>
+            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-md border border-slate-200">Coming Soon</span>
           </button>
-          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 opacity-60 cursor-not-allowed">
+          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50/50 opacity-60 cursor-not-allowed">
             <div className="flex items-center gap-3">
-              <Settings className="w-5 h-5 text-text-muted" />
-              <span className="font-bold text-navy text-sm">Account Settings</span>
+              <Settings className="w-5 h-5 text-slate-500" />
+              <span className="font-bold text-slate-900 text-sm">Account Settings</span>
             </div>
-            <span className="text-[10px] font-bold text-text-muted bg-surface-alt px-2 py-1 rounded-md border border-border">Coming Soon</span>
+            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-md border border-slate-200">Coming Soon</span>
           </button>
         </div>
 

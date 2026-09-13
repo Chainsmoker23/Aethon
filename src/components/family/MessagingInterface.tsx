@@ -82,19 +82,19 @@ export function MessagingInterface() {
     <div className="flex flex-col h-full bg-slate-50/50 relative">
       
       {/* Header */}
-      <div className="bg-white/95 backdrop-blur-xl border-b border-slate-200/60 p-4 pt-6 shrink-0 flex items-center justify-between z-10 sticky top-0 shadow-sm">
+      <div className="bg-white border-b border-slate-200 p-4 pt-6 shrink-0 flex items-center justify-between z-10 sticky top-0 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
         <div className="flex items-center gap-3">
           <Link href="/family" className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors">
-            <ArrowLeft className="w-4 h-4 text-navy" />
+            <ArrowLeft className="w-4 h-4 text-slate-700" />
           </Link>
           <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-sky-500 to-sky-600 flex items-center justify-center shadow-md shadow-sky-500/20">
             <MessageSquare className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h2 className="text-[17px] font-bold text-navy leading-tight tracking-tight">Care Team</h2>
+            <h2 className="text-[17px] font-bold text-slate-900 leading-tight tracking-tight">Care Team</h2>
             <div className="flex items-center gap-1 mt-0.5">
               <ShieldCheck className="w-3 h-3 text-emerald-500" />
-              <p className="text-[11px] font-bold text-text-muted">Secure & Encrypted</p>
+              <p className="text-[11px] font-bold text-slate-400">Secure & Encrypted</p>
             </div>
           </div>
         </div>
@@ -110,8 +110,8 @@ export function MessagingInterface() {
             <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mx-auto shadow-sm border border-slate-100 transform -rotate-6">
               <MessageSquare className="w-6 h-6 text-sky-600" />
             </div>
-            <p className="text-base font-bold text-navy">Start the conversation</p>
-            <p className="text-xs font-medium text-text-secondary leading-relaxed">Send a message to the facility staff. They usually reply within a few hours.</p>
+            <p className="text-base font-bold text-slate-900">Start the conversation</p>
+            <p className="text-xs font-medium text-slate-500 leading-relaxed">Send a message to the facility staff. They usually reply within a few hours.</p>
           </div>
         ) : (
           messages.map((m, idx) => {
@@ -122,16 +122,16 @@ export function MessagingInterface() {
                 className={`flex flex-col max-w-[85%] animate-fade-in-up ${isFamily ? 'self-end items-end' : 'self-start items-start'}`}
               >
                 {!isFamily && (
-                  <span className="text-[10px] font-black text-text-muted mb-1.5 ml-1 uppercase tracking-wider">Facility Staff</span>
+                  <span className="text-[10px] font-black text-slate-400 mb-1.5 ml-1 uppercase tracking-wider">Facility Staff</span>
                 )}
                 <div className={`px-4 py-2.5 text-[15px] font-medium leading-relaxed ${
                   isFamily 
                     ? 'bg-gradient-to-tr from-sky-500 to-sky-600 text-white rounded-[20px] rounded-br-sm shadow-md shadow-sky-500/20' 
-                    : 'bg-white border border-slate-200/60 text-navy rounded-[20px] rounded-bl-sm shadow-sm'
+                    : 'bg-white border border-slate-200/60 text-slate-900 rounded-[20px] rounded-bl-sm shadow-sm'
                 }`}>
                   {m.content}
                 </div>
-                <span className={`text-[10px] font-bold text-text-muted mt-1.5 ${isFamily ? 'mr-1' : 'ml-1'}`}>
+                <span className={`text-[10px] font-bold text-slate-400 mt-1.5 ${isFamily ? 'mr-1' : 'ml-1'}`}>
                   {new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
               </div>
@@ -160,7 +160,7 @@ export function MessagingInterface() {
                 handleSend(e);
               }
             }}
-            className="w-full bg-transparent pl-4 pr-2 py-2.5 max-h-[120px] min-h-[44px] text-[15px] font-medium focus:outline-none resize-none custom-scrollbar placeholder:text-slate-400 text-navy"
+            className="w-full bg-transparent pl-4 pr-2 py-2.5 max-h-[120px] min-h-[44px] text-[15px] font-medium focus:outline-none resize-none custom-scrollbar placeholder:text-slate-400 text-slate-900"
             rows={1}
           />
           <button 
