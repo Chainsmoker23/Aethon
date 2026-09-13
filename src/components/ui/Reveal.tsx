@@ -15,9 +15,9 @@ export function Reveal({
 }) {
   const getInitial = () => {
     switch (direction) {
-      case "up": return { opacity: 0, y: 40 };
-      case "left": return { opacity: 0, x: 40 };
-      case "right": return { opacity: 0, x: -40 };
+      case "up": return { opacity: 0, y: 20 };
+      case "left": return { opacity: 0, x: 20 };
+      case "right": return { opacity: 0, x: -20 };
       case "none": return { opacity: 0 };
     }
   };

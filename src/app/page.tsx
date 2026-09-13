@@ -18,10 +18,10 @@ export default function LandingPage() {
       
       {/* === Elegant Color-Shifting Siri Aura Background === */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[120px] animate-blob-1" />
-        <div className="absolute top-[20%] right-[-5%] w-[600px] h-[600px] rounded-full blur-[120px] animate-blob-2" />
-        <div className="absolute bottom-[-10%] left-[20%] w-[800px] h-[800px] rounded-full blur-[150px] animate-blob-3" />
-        <div className="absolute top-[50%] left-[50%] w-[400px] h-[400px] rounded-full blur-[100px] animate-blob-4 -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute top-[-10%] left-[-10%] w-[250px] h-[250px] md:w-[500px] md:h-[500px] rounded-full blur-[80px] md:blur-[120px] animate-blob-1" />
+        <div className="absolute top-[20%] right-[-5%] w-[300px] h-[300px] md:w-[600px] md:h-[600px] rounded-full blur-[80px] md:blur-[120px] animate-blob-2" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[350px] h-[350px] md:w-[800px] md:h-[800px] rounded-full blur-[100px] md:blur-[150px] animate-blob-3" />
+        <div className="absolute top-[50%] left-[50%] w-[200px] h-[200px] md:w-[400px] md:h-[400px] rounded-full blur-[60px] md:blur-[100px] animate-blob-4 -translate-x-1/2 -translate-y-1/2" />
       </div>
 
       {/* === Navigation === */}
@@ -62,38 +62,46 @@ export default function LandingPage() {
         </div>
 
         {/* Mobile Dropdown */}
-        {mobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-2xl border-b border-slate-200/50 shadow-2xl p-6 flex flex-col gap-4 origin-top animate-slide-down">
-            <a href="#features" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 opacity-0 animate-slide-down stagger-1 flex items-center justify-between">
-              Features <ChevronRight className="w-4 h-4 text-text-muted" />
-            </a>
-            <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 opacity-0 animate-slide-down stagger-2 flex items-center justify-between">
-              How It Works <ChevronRight className="w-4 h-4 text-text-muted" />
-            </a>
-            <a href="#trust" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 opacity-0 animate-slide-down stagger-3 flex items-center justify-between">
-              Trust & Security <ChevronRight className="w-4 h-4 text-text-muted" />
-            </a>
-            <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="mt-4 px-5 py-3.5 bg-navy text-white text-center text-base font-bold rounded-xl flex items-center justify-center gap-2 opacity-0 animate-slide-down stagger-4 shadow-lg shadow-navy/20 active:scale-95 transition-transform">
-              Sign In <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        )}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-2xl border-b border-slate-200/50 shadow-2xl p-6 flex flex-col gap-4 origin-top"
+            >
+              <a href="#features" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 flex items-center justify-between">
+                Features <ChevronRight className="w-4 h-4 text-text-muted" />
+              </a>
+              <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 flex items-center justify-between">
+                How It Works <ChevronRight className="w-4 h-4 text-text-muted" />
+              </a>
+              <a href="#trust" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 flex items-center justify-between">
+                Trust & Security <ChevronRight className="w-4 h-4 text-text-muted" />
+              </a>
+              <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="mt-4 px-5 py-3.5 bg-navy text-white text-center text-base font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-navy/20 active:scale-95 transition-transform">
+                Sign In <ArrowRight className="w-4 h-4" />
+              </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* === Hero Section === */}
-      <section className="relative max-w-6xl mx-auto px-6 pt-20 pb-28 md:pt-28 md:pb-36 flex flex-col items-center">
+      <section className="relative max-w-6xl mx-auto px-5 md:px-6 pt-14 pb-16 md:pt-28 md:pb-36 flex flex-col items-center">
         <div className="flex flex-col items-center text-center relative z-20">
           <Reveal>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-lg border border-slate-200/60 shadow-sm mb-8 animate-levitate" style={{ animationDelay: '1s' }}>
-              <Sparkles className="w-4 h-4 text-amber-500" />
-              <span className="text-xs font-bold text-navy tracking-wide uppercase">
+            <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/70 backdrop-blur-lg border border-slate-200/60 shadow-sm mb-6 md:mb-8 animate-levitate" style={{ animationDelay: '1s' }}>
+              <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-500" />
+              <span className="text-[10px] md:text-xs font-bold text-navy tracking-wide uppercase">
                 AI-Powered Care Platform
               </span>
             </div>
           </Reveal>
 
           <Reveal delay={100}>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-navy leading-[0.95] tracking-tighter max-w-4xl">
+            <h1 className="text-[2.5rem] md:text-7xl lg:text-8xl font-extrabold text-navy leading-[0.95] tracking-tighter max-w-4xl">
               Care that{" "}
               <span className="gradient-text">families</span>
               <br />
@@ -102,7 +110,7 @@ export default function LandingPage() {
           </Reveal>
 
           <Reveal delay={200}>
-            <p className="text-lg md:text-xl text-text-secondary font-medium mt-8 max-w-2xl leading-relaxed">
+            <p className="text-base md:text-xl text-text-secondary font-medium mt-6 md:mt-8 max-w-lg md:max-w-2xl leading-relaxed px-2 md:px-0">
               The intelligent platform that gives families real-time visibility
               into their loved one's care — while empowering staff with
               tools that actually work.
@@ -110,20 +118,20 @@ export default function LandingPage() {
           </Reveal>
 
           <Reveal delay={300}>
-            <div className="flex flex-col sm:flex-row items-center gap-4 mt-12">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
+            <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 mt-10 md:mt-12 w-full sm:w-auto px-2 sm:px-0">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }} className="w-full sm:w-auto">
                 <Link
                   href="/login"
-                  className="group px-8 py-4 bg-primary text-white text-base font-bold rounded-2xl hover:bg-primary-dark shadow-xl shadow-primary/25 hover:shadow-primary/40 flex items-center gap-2 block"
+                  className="group px-6 md:px-8 py-3.5 md:py-4 bg-primary text-white text-sm md:text-base font-bold rounded-2xl hover:bg-primary-dark shadow-xl shadow-primary/25 hover:shadow-primary/40 flex items-center justify-center gap-2"
                 >
                   Get Started Free
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }} className="w-full sm:w-auto">
                 <a
                   href="#how-it-works"
-                  className="px-8 py-4 bg-white/70 backdrop-blur-lg text-navy text-base font-bold rounded-2xl border border-slate-200/60 hover:bg-white shadow-sm hover:shadow-md block"
+                  className="px-6 md:px-8 py-3.5 md:py-4 bg-white/70 backdrop-blur-lg text-navy text-sm md:text-base font-bold rounded-2xl border border-slate-200/60 hover:bg-white shadow-sm hover:shadow-md flex items-center justify-center"
                 >
                   See How It Works
                 </a>
@@ -132,8 +140,8 @@ export default function LandingPage() {
           </Reveal>
 
           <Reveal delay={400}>
-            <p className="text-xs font-semibold text-text-muted mt-8 flex items-center gap-2">
-              <Shield className="w-3.5 h-3.5" />
+            <p className="text-[10px] md:text-xs font-semibold text-text-muted mt-6 md:mt-8 flex items-center gap-2">
+              <Shield className="w-3 h-3 md:w-3.5 md:h-3.5" />
               HIPAA Compliant · GDPR Ready · SOC 2 Type II
             </p>
           </Reveal>
@@ -194,48 +202,49 @@ export default function LandingPage() {
       </section>
 
       {/* === Features Section (Bento Box) === */}
-      <section id="features" className="relative max-w-6xl mx-auto px-6 py-24">
+      <section id="features" className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24">
         <Reveal>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-navy tracking-tighter">
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-navy tracking-tighter">
               Everything you need,{" "}
               <span className="gradient-text">nothing you don't</span>
             </h2>
-            <p className="text-lg text-text-secondary font-medium mt-4 max-w-xl mx-auto leading-relaxed">
+            <p className="text-sm md:text-lg text-text-secondary font-medium mt-3 md:mt-4 max-w-xl mx-auto leading-relaxed px-2 md:px-0">
               Built from the ground up for modern elderly care facilities
               and the families they serve.
             </p>
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[280px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 md:auto-rows-[280px]">
           
           {/* Bento Item 1: Wide (Family Messaging) */}
           <Reveal delay={100} className="md:col-span-2 h-full">
             <motion.div 
               whileHover={{ scale: 1.02, y: -5 }}
+              whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="h-full glass-panel rounded-[32px] p-8 flex flex-col md:flex-row items-center gap-8 overflow-hidden relative glass-glare shadow-lg"
+              className="h-full glass-panel rounded-2xl md:rounded-[32px] p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-5 md:gap-8 overflow-hidden relative glass-glare shadow-lg"
             >
               <div className="flex-1 z-10">
-                <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center mb-4">
-                  <MessageSquare className="w-6 h-6 text-blue-600" />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-blue-100 flex items-center justify-center mb-3 md:mb-4">
+                  <MessageSquare className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
                 </div>
-                <h3 className="text-2xl font-extrabold text-navy mb-2 tracking-tight">Family Messaging</h3>
-                <p className="text-base text-text-secondary font-medium leading-relaxed">
+                <h3 className="text-xl md:text-2xl font-extrabold text-navy mb-1.5 md:mb-2 tracking-tight">Family Messaging</h3>
+                <p className="text-sm md:text-base text-text-secondary font-medium leading-relaxed">
                   Secure, instant communication between staff and families. No more phone tag or lost sticky notes.
                 </p>
               </div>
-              <div className="w-full md:w-1/2 flex flex-col gap-3 relative z-10 translate-x-4 md:translate-x-10 translate-y-4">
-                <div className="bg-white p-4 rounded-2xl rounded-br-sm shadow-md border border-slate-100 w-4/5 self-end">
-                  <p className="text-sm font-medium text-navy">She ate all her breakfast and enjoyed the garden today! 🌻</p>
+              <div className="w-full md:w-1/2 flex flex-col gap-2.5 md:gap-3 relative z-10 md:translate-x-10 md:translate-y-4">
+                <div className="bg-white p-3 md:p-4 rounded-2xl rounded-br-sm shadow-md border border-slate-100 w-[85%] md:w-4/5 self-end">
+                  <p className="text-xs md:text-sm font-medium text-navy">She ate all her breakfast and enjoyed the garden today! 🌻</p>
                   <div className="flex items-center justify-end gap-1 mt-1">
-                    <span className="text-[10px] text-text-muted">10:42 AM</span>
-                    <CheckCheck className="w-3 h-3 text-primary" />
+                    <span className="text-[9px] md:text-[10px] text-text-muted">10:42 AM</span>
+                    <CheckCheck className="w-2.5 h-2.5 md:w-3 md:h-3 text-primary" />
                   </div>
                 </div>
-                <div className="bg-primary text-white p-4 rounded-2xl rounded-bl-sm shadow-md w-4/5 self-start">
-                  <p className="text-sm font-medium">That's wonderful to hear. Thank you!</p>
+                <div className="bg-primary text-white p-3 md:p-4 rounded-2xl rounded-bl-sm shadow-md w-[85%] md:w-4/5 self-start">
+                  <p className="text-xs md:text-sm font-medium">That's wonderful to hear. Thank you!</p>
                 </div>
               </div>
             </motion.div>
@@ -245,23 +254,24 @@ export default function LandingPage() {
           <Reveal delay={200} className="md:row-span-2 h-full">
             <motion.div 
               whileHover={{ scale: 1.02, y: -5 }}
+              whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="h-full glass-panel rounded-[32px] p-8 flex flex-col relative overflow-hidden glass-glare shadow-lg"
+              className="h-full glass-panel rounded-2xl md:rounded-[32px] p-6 md:p-8 flex flex-col relative overflow-hidden glass-glare shadow-lg"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-400/10 rounded-bl-full blur-2xl" />
-              <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center mb-4 relative z-10 animate-heartbeat">
-                <Activity className="w-6 h-6 text-emerald-600" />
+              <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-emerald-400/10 rounded-bl-full blur-2xl" />
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-emerald-100 flex items-center justify-center mb-3 md:mb-4 relative z-10 animate-heartbeat">
+                <Activity className="w-5 h-5 md:w-6 md:h-6 text-emerald-600" />
               </div>
-              <h3 className="text-2xl font-extrabold text-navy mb-2 tracking-tight relative z-10">Real-Time Vitals</h3>
-              <p className="text-base text-text-secondary font-medium leading-relaxed relative z-10">
+              <h3 className="text-xl md:text-2xl font-extrabold text-navy mb-1.5 md:mb-2 tracking-tight relative z-10">Real-Time Vitals</h3>
+              <p className="text-sm md:text-base text-text-secondary font-medium leading-relaxed relative z-10">
                 Live health tracking with intelligent alerts. Families see what matters, exactly when it matters.
               </p>
-              <div className="mt-auto relative z-10 bg-white/60 border border-white/80 p-4 rounded-2xl shadow-sm">
+              <div className="mt-auto relative z-10 bg-white/60 border border-white/80 p-3 md:p-4 rounded-xl md:rounded-2xl shadow-sm">
                 <div className="flex justify-between items-end mb-2">
-                  <span className="text-sm font-bold text-navy">Heart Rate</span>
-                  <span className="text-2xl font-black text-emerald-600">72 <span className="text-sm text-text-muted">bpm</span></span>
+                  <span className="text-xs md:text-sm font-bold text-navy">Heart Rate</span>
+                  <span className="text-xl md:text-2xl font-black text-emerald-600">72 <span className="text-[10px] md:text-sm text-text-muted">bpm</span></span>
                 </div>
-                <div className="w-full h-12 flex items-center gap-1">
+                <div className="w-full h-10 md:h-12 flex items-center gap-1">
                   {[40, 70, 45, 90, 60, 80, 50, 75].map((h, i) => (
                     <motion.div 
                       key={i} 
@@ -280,14 +290,15 @@ export default function LandingPage() {
           <Reveal delay={300} className="h-full">
             <motion.div 
               whileHover={{ scale: 1.02, y: -5 }}
+              whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="h-full glass-panel rounded-[32px] p-8 glass-glare shadow-lg"
+              className="h-full glass-panel rounded-2xl md:rounded-[32px] p-6 md:p-8 glass-glare shadow-lg"
             >
-              <div className="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center mb-4">
-                <Bell className="w-6 h-6 text-amber-600" />
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-amber-100 flex items-center justify-center mb-3 md:mb-4">
+                <Bell className="w-5 h-5 md:w-6 md:h-6 text-amber-600" />
               </div>
-              <h3 className="text-xl font-extrabold text-navy mb-2 tracking-tight">Smart Alerts</h3>
-              <p className="text-sm text-text-secondary font-medium leading-relaxed">
+              <h3 className="text-lg md:text-xl font-extrabold text-navy mb-1.5 md:mb-2 tracking-tight">Smart Alerts</h3>
+              <p className="text-xs md:text-sm text-text-secondary font-medium leading-relaxed">
                 AI-prioritized alerts ensure critical issues are seen first. Never miss what matters.
               </p>
             </motion.div>
@@ -297,14 +308,15 @@ export default function LandingPage() {
           <Reveal delay={400} className="h-full">
             <motion.div 
               whileHover={{ scale: 1.02, y: -5 }}
+              whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="h-full glass-panel rounded-[32px] p-8 glass-glare shadow-lg"
+              className="h-full glass-panel rounded-2xl md:rounded-[32px] p-6 md:p-8 glass-glare shadow-lg"
             >
-              <div className="w-12 h-12 rounded-2xl bg-violet-100 flex items-center justify-center mb-4">
-                <Clock className="w-6 h-6 text-violet-600" />
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-violet-100 flex items-center justify-center mb-3 md:mb-4">
+                <Clock className="w-5 h-5 md:w-6 md:h-6 text-violet-600" />
               </div>
-              <h3 className="text-xl font-extrabold text-navy mb-2 tracking-tight">Care Timeline</h3>
-              <p className="text-sm text-text-secondary font-medium leading-relaxed">
+              <h3 className="text-lg md:text-xl font-extrabold text-navy mb-1.5 md:mb-2 tracking-tight">Care Timeline</h3>
+              <p className="text-xs md:text-sm text-text-secondary font-medium leading-relaxed">
                 A chronological record of every visit note, medication, and milestone.
               </p>
             </motion.div>
@@ -314,15 +326,16 @@ export default function LandingPage() {
           <Reveal delay={500} className="md:col-span-2 h-full">
             <motion.div 
               whileHover={{ scale: 1.02, y: -5 }}
+              whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="h-full glass-panel rounded-[32px] p-8 flex items-center gap-6 overflow-hidden relative glass-glare shadow-lg"
+              className="h-full glass-panel rounded-2xl md:rounded-[32px] p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 overflow-hidden relative glass-glare shadow-lg"
             >
-              <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-rose-400 to-orange-400 flex items-center justify-center text-white shadow-lg shrink-0 z-10">
-                <Shield className="w-8 h-8" />
+              <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-gradient-to-tr from-rose-400 to-orange-400 flex items-center justify-center text-white shadow-lg shrink-0 z-10">
+                <Shield className="w-6 h-6 md:w-8 md:h-8" />
               </div>
               <div className="z-10">
-                <h3 className="text-2xl font-extrabold text-navy mb-2 tracking-tight">Enterprise Security</h3>
-                <p className="text-base text-text-secondary font-medium leading-relaxed">
+                <h3 className="text-xl md:text-2xl font-extrabold text-navy mb-1.5 md:mb-2 tracking-tight">Enterprise Security</h3>
+                <p className="text-sm md:text-base text-text-secondary font-medium leading-relaxed">
                   Fully HIPAA compliant and GDPR ready. End-to-end encryption ensures patient data never falls into the wrong hands.
                 </p>
               </div>
@@ -333,38 +346,39 @@ export default function LandingPage() {
       </section>
 
       {/* === How It Works === */}
-      <section id="how-it-works" className="relative max-w-6xl mx-auto px-6 py-24">
+      <section id="how-it-works" className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24">
         <Reveal>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-navy tracking-tighter">
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-navy tracking-tighter">
               Simple for <span className="gradient-text">everyone</span>
             </h2>
-            <p className="text-lg text-text-secondary font-medium mt-4 max-w-xl mx-auto">
+            <p className="text-sm md:text-lg text-text-secondary font-medium mt-3 md:mt-4 max-w-xl mx-auto px-2 md:px-0">
               Two portals, one seamless platform — designed so both sides feel heard.
             </p>
           </div>
         </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-5 md:gap-8">
           <Reveal delay={100} direction="left" className="h-full">
             <motion.div 
               whileHover={{ scale: 1.02, y: -5 }}
+              whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="glass-panel-heavy rounded-3xl p-8 md:p-10 relative overflow-hidden group h-full shadow-lg"
+              className="glass-panel-heavy rounded-2xl md:rounded-3xl p-6 md:p-10 relative overflow-hidden group h-full shadow-lg"
             >
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-sky-400/20 to-transparent rounded-bl-full blur-xl" />
+              <div className="absolute top-0 right-0 w-40 h-40 md:w-64 md:h-64 bg-gradient-to-bl from-sky-400/20 to-transparent rounded-bl-full blur-xl" />
               <div className="relative z-10">
-                <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/20 mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Heart className="w-8 h-8" />
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/20 mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Heart className="w-6 h-6 md:w-8 md:h-8" />
                 </div>
-                <h3 className="text-2xl font-extrabold text-navy mb-3 tracking-tight">For Families</h3>
-                <p className="text-text-secondary font-medium leading-relaxed mb-8">
+                <h3 className="text-xl md:text-2xl font-extrabold text-navy mb-2 md:mb-3 tracking-tight">For Families</h3>
+                <p className="text-sm md:text-base text-text-secondary font-medium leading-relaxed mb-5 md:mb-8">
                   Open the app, see how your loved one is doing today. Read care notes from staff, check medications, and message the care team directly.
                 </p>
-                <ul className="space-y-4">
+                <ul className="space-y-2.5 md:space-y-4">
                   {["Daily care updates & photos", "Medication tracking", "Direct staff messaging", "Escalation notifications"].map((item) => (
-                    <li key={item} className="flex items-center gap-3 text-sm font-bold text-navy bg-white/40 p-2 rounded-xl">
-                      <CheckCircle2 className="w-5 h-5 text-success shrink-0" />
+                    <li key={item} className="flex items-center gap-2.5 md:gap-3 text-xs md:text-sm font-bold text-navy bg-white/40 p-2 rounded-xl">
+                      <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-success shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -376,22 +390,23 @@ export default function LandingPage() {
           <Reveal delay={200} direction="right" className="h-full">
             <motion.div 
               whileHover={{ scale: 1.02, y: -5 }}
+              whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="glass-panel-heavy rounded-3xl p-8 md:p-10 relative overflow-hidden group h-full shadow-lg"
+              className="glass-panel-heavy rounded-2xl md:rounded-3xl p-6 md:p-10 relative overflow-hidden group h-full shadow-lg"
             >
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-indigo-400/20 to-transparent rounded-bl-full blur-xl" />
+              <div className="absolute top-0 right-0 w-40 h-40 md:w-64 md:h-64 bg-gradient-to-bl from-indigo-400/20 to-transparent rounded-bl-full blur-xl" />
               <div className="relative z-10">
-                <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Building2 className="w-8 h-8" />
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Building2 className="w-6 h-6 md:w-8 md:h-8" />
                 </div>
-                <h3 className="text-2xl font-extrabold text-navy mb-3 tracking-tight">For Staff</h3>
-                <p className="text-text-secondary font-medium leading-relaxed mb-8">
+                <h3 className="text-xl md:text-2xl font-extrabold text-navy mb-2 md:mb-3 tracking-tight">For Staff</h3>
+                <p className="text-sm md:text-base text-text-secondary font-medium leading-relaxed mb-5 md:mb-8">
                   A command center built for care teams. Log notes, prescribe meds, respond to families, and manage escalations — all from one dashboard.
                 </p>
-                <ul className="space-y-4">
+                <ul className="space-y-2.5 md:space-y-4">
                   {["Resident management dashboard", "Visit notes & care timeline", "Medication prescriptions", "Family communication hub"].map((item) => (
-                    <li key={item} className="flex items-center gap-3 text-sm font-bold text-navy bg-white/40 p-2 rounded-xl">
-                      <CheckCircle2 className="w-5 h-5 text-success shrink-0" />
+                    <li key={item} className="flex items-center gap-2.5 md:gap-3 text-xs md:text-sm font-bold text-navy bg-white/40 p-2 rounded-xl">
+                      <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-success shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -403,10 +418,10 @@ export default function LandingPage() {
       </section>
 
       {/* === Stats === */}
-      <section id="trust" className="relative max-w-6xl mx-auto px-6 py-24">
+      <section id="trust" className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24">
         <Reveal>
-          <div className="glass-panel-heavy rounded-[40px] p-10 md:p-14 shadow-xl shadow-slate-200/50 border-white">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+          <div className="glass-panel-heavy rounded-3xl md:rounded-[40px] p-6 md:p-14 shadow-xl shadow-slate-200/50 border-white">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4">
               {[
                 { value: "99.9%", label: "Uptime SLA" },
                 { value: "< 2s", label: "Alert Delivery" },
@@ -414,8 +429,8 @@ export default function LandingPage() {
                 { value: "24/7", label: "Support" },
               ].map((stat, i) => (
                 <div key={stat.label} className="text-center">
-                  <p className="text-4xl md:text-5xl font-black text-navy tracking-tighter">{stat.value}</p>
-                  <p className="text-sm font-bold text-text-muted mt-2 uppercase tracking-widest">{stat.label}</p>
+                  <p className="text-2xl md:text-5xl font-black text-navy tracking-tighter">{stat.value}</p>
+                  <p className="text-[10px] md:text-sm font-bold text-text-muted mt-1 md:mt-2 uppercase tracking-widest">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -424,37 +439,37 @@ export default function LandingPage() {
       </section>
 
       {/* === Final CTA === */}
-      <section className="relative max-w-6xl mx-auto px-6 pb-32 pt-8">
+      <section className="relative max-w-6xl mx-auto px-5 md:px-6 pb-20 md:pb-32 pt-4 md:pt-8">
         <Reveal>
-          <div className="relative rounded-[40px] overflow-hidden shadow-2xl">
+          <div className="relative rounded-3xl md:rounded-[40px] overflow-hidden shadow-2xl">
             {/* Background gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-navy via-slate-900 to-navy" />
             <div className="absolute inset-0 opacity-30 overflow-hidden mix-blend-screen pointer-events-none">
-              <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-cyan-400 blur-[100px] animate-blob-1" />
-              <div className="absolute bottom-[-20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-indigo-500 blur-[120px] animate-blob-2" />
+              <div className="absolute top-[-20%] right-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-cyan-400 blur-[80px] md:blur-[100px] animate-blob-1" />
+              <div className="absolute bottom-[-20%] left-[-10%] w-[250px] md:w-[400px] h-[250px] md:h-[400px] rounded-full bg-indigo-500 blur-[80px] md:blur-[120px] animate-blob-2" />
             </div>
 
-            <div className="relative z-10 px-8 py-20 md:px-16 md:py-24 text-center">
-              <h2 className="text-4xl md:text-6xl font-extrabold text-white tracking-tighter leading-tight max-w-3xl mx-auto">
+            <div className="relative z-10 px-6 py-14 md:px-16 md:py-24 text-center">
+              <h2 className="text-2xl md:text-6xl font-extrabold text-white tracking-tighter leading-tight max-w-3xl mx-auto">
                 Ready to transform how families experience care?
               </h2>
-              <p className="text-lg text-slate-300 font-medium mt-6 max-w-xl mx-auto">
+              <p className="text-sm md:text-lg text-slate-300 font-medium mt-4 md:mt-6 max-w-xl mx-auto">
                 Join forward-thinking care facilities already using Aethon to build trust and transparency with families.
               </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 mt-8 md:mt-12 w-full sm:w-auto">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }} className="w-full sm:w-auto">
                   <Link
                     href="/login"
-                    className="group px-8 py-4 bg-white text-navy text-base font-bold rounded-2xl hover:bg-slate-100 shadow-xl hover:shadow-2xl flex items-center gap-2 block"
+                    className="group px-6 md:px-8 py-3.5 md:py-4 bg-white text-navy text-sm md:text-base font-bold rounded-2xl hover:bg-slate-100 shadow-xl hover:shadow-2xl flex items-center justify-center gap-2"
                   >
                     Start Free Trial
-                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }} className="w-full sm:w-auto">
                   <a
                     href="#how-it-works"
-                    className="px-8 py-4 bg-white/10 text-white text-base font-bold rounded-2xl border border-white/20 hover:bg-white/20 backdrop-blur-sm block"
+                    className="px-6 md:px-8 py-3.5 md:py-4 bg-white/10 text-white text-sm md:text-base font-bold rounded-2xl border border-white/20 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center"
                   >
                     Learn More
                   </a>
