@@ -22,10 +22,17 @@ function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-[480px] px-6 py-12 flex flex-col items-center relative z-10">
+    <div className="w-full max-w-[480px] px-6 py-12 flex flex-col relative z-10">
       
+      {/* Back Button */}
+      <div className="absolute top-0 left-6">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm font-bold text-text-muted hover:text-navy transition-colors bg-white/50 px-4 py-2 rounded-full border border-slate-200/50 backdrop-blur-sm">
+          <ArrowRight className="w-4 h-4 rotate-180" /> Back to Home
+        </Link>
+      </div>
+
       {/* Brand */}
-      <div className="animate-fade-in-up flex flex-col items-center">
+      <div className="animate-fade-in-up flex flex-col items-center mt-12">
         <h1 className="text-4xl font-bold text-navy tracking-tight">
           Aethon <span className="text-primary font-light">Health</span>
         </h1>

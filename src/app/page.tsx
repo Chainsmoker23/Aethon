@@ -1,5 +1,491 @@
-import { redirect } from "next/navigation";
+"use client";
 
-export default function Home() {
-  redirect("/login");
+import Link from "next/link";
+import { useState } from "react";
+import {
+  Heart, Shield, MessageSquare, Activity, Bell, Clock,
+  ArrowRight, CheckCircle2, Users, Building2, Sparkles,
+  ChevronRight, Menu, X, CheckCheck
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Reveal } from "@/components/ui/Reveal";
+
+export default function LandingPage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  return (
+    <div className="relative min-h-screen overflow-hidden bg-slate-50/50 landing-grid-bg [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      
+      {/* === Elegant Color-Shifting Siri Aura Background === */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[120px] animate-blob-1" />
+        <div className="absolute top-[20%] right-[-5%] w-[600px] h-[600px] rounded-full blur-[120px] animate-blob-2" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[800px] h-[800px] rounded-full blur-[150px] animate-blob-3" />
+        <div className="absolute top-[50%] left-[50%] w-[400px] h-[400px] rounded-full blur-[100px] animate-blob-4 -translate-x-1/2 -translate-y-1/2" />
+      </div>
+
+      {/* === Navigation === */}
+      <nav className="sticky top-0 z-50 bg-white/60 backdrop-blur-2xl border-b border-slate-200/50">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 animate-heartbeat">
+              <Heart className="w-5 h-5 text-white" fill="white" />
+            </div>
+            <span className="text-xl font-extrabold text-navy tracking-tight">
+              Aethon<span className="font-light text-primary ml-0.5">Health</span>
+            </span>
+          </div>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-text-secondary">
+            <a href="#features" className="hover:text-navy transition-colors">Features</a>
+            <a href="#how-it-works" className="hover:text-navy transition-colors">How It Works</a>
+            <a href="#trust" className="hover:text-navy transition-colors">Trust</a>
+          </div>
+
+          <div className="hidden md:block">
+            <Link
+              href="/login"
+              className="px-5 py-2.5 bg-navy text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all shadow-lg shadow-navy/20 hover:shadow-navy/30 hover:scale-105 active:scale-95 flex items-center gap-2"
+            >
+              Sign In <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-navy hover:bg-slate-200 transition-colors"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+
+        {/* Mobile Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-2xl border-b border-slate-200/50 shadow-2xl p-6 flex flex-col gap-4 origin-top animate-slide-down">
+            <a href="#features" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 opacity-0 animate-slide-down stagger-1 flex items-center justify-between">
+              Features <ChevronRight className="w-4 h-4 text-text-muted" />
+            </a>
+            <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 opacity-0 animate-slide-down stagger-2 flex items-center justify-between">
+              How It Works <ChevronRight className="w-4 h-4 text-text-muted" />
+            </a>
+            <a href="#trust" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 opacity-0 animate-slide-down stagger-3 flex items-center justify-between">
+              Trust & Security <ChevronRight className="w-4 h-4 text-text-muted" />
+            </a>
+            <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="mt-4 px-5 py-3.5 bg-navy text-white text-center text-base font-bold rounded-xl flex items-center justify-center gap-2 opacity-0 animate-slide-down stagger-4 shadow-lg shadow-navy/20 active:scale-95 transition-transform">
+              Sign In <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        )}
+      </nav>
+
+      {/* === Hero Section === */}
+      <section className="relative max-w-6xl mx-auto px-6 pt-20 pb-28 md:pt-28 md:pb-36 flex flex-col items-center">
+        <div className="flex flex-col items-center text-center relative z-20">
+          <Reveal>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-lg border border-slate-200/60 shadow-sm mb-8 animate-levitate" style={{ animationDelay: '1s' }}>
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              <span className="text-xs font-bold text-navy tracking-wide uppercase">
+                AI-Powered Care Platform
+              </span>
+            </div>
+          </Reveal>
+
+          <Reveal delay={100}>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-navy leading-[0.95] tracking-tighter max-w-4xl">
+              Care that{" "}
+              <span className="gradient-text">families</span>
+              <br />
+              can see
+            </h1>
+          </Reveal>
+
+          <Reveal delay={200}>
+            <p className="text-lg md:text-xl text-text-secondary font-medium mt-8 max-w-2xl leading-relaxed">
+              The intelligent platform that gives families real-time visibility
+              into their loved one's care — while empowering staff with
+              tools that actually work.
+            </p>
+          </Reveal>
+
+          <Reveal delay={300}>
+            <div className="flex flex-col sm:flex-row items-center gap-4 mt-12">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
+                <Link
+                  href="/login"
+                  className="group px-8 py-4 bg-primary text-white text-base font-bold rounded-2xl hover:bg-primary-dark shadow-xl shadow-primary/25 hover:shadow-primary/40 flex items-center gap-2 block"
+                >
+                  Get Started Free
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
+                <a
+                  href="#how-it-works"
+                  className="px-8 py-4 bg-white/70 backdrop-blur-lg text-navy text-base font-bold rounded-2xl border border-slate-200/60 hover:bg-white shadow-sm hover:shadow-md block"
+                >
+                  See How It Works
+                </a>
+              </motion.div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={400}>
+            <p className="text-xs font-semibold text-text-muted mt-8 flex items-center gap-2">
+              <Shield className="w-3.5 h-3.5" />
+              HIPAA Compliant · GDPR Ready · SOC 2 Type II
+            </p>
+          </Reveal>
+        </div>
+
+        {/* Hero Mockup emerging from bottom */}
+        <Reveal delay={500} className="w-full mt-24 relative z-10 hidden md:block">
+          <div className="animate-levitate" style={{ animationDelay: '0.5s' }}>
+            <div className="max-w-4xl mx-auto bg-white/40 backdrop-blur-3xl border border-white/60 rounded-t-[40px] shadow-2xl overflow-hidden h-[300px] p-6 flex gap-6 mask-bottom glass-glare">
+            {/* Sidebar Mockup */}
+            <div className="w-48 bg-white/50 rounded-2xl p-4 border border-white/40 flex flex-col gap-3">
+              <div className="w-full h-8 bg-slate-200/50 rounded-lg mb-4" />
+              <div className="w-full h-10 bg-primary/10 rounded-xl" />
+              <div className="w-full h-10 bg-white/40 rounded-xl" />
+              <div className="w-full h-10 bg-white/40 rounded-xl" />
+            </div>
+            {/* Main Area Mockup */}
+            <div className="flex-1 flex flex-col gap-6">
+              <div className="flex justify-between items-center">
+                <div className="w-48 h-10 bg-white/60 rounded-xl" />
+                <div className="w-32 h-10 bg-white/60 rounded-xl" />
+              </div>
+              <div className="flex-1 grid grid-cols-3 gap-4">
+                <div className="col-span-2 bg-white/60 border border-white/40 rounded-2xl p-5 shadow-sm flex flex-col gap-3">
+                  <div className="w-32 h-4 bg-slate-200/80 rounded-full" />
+                  <div className="w-full h-20 bg-slate-100/50 rounded-xl mt-auto" />
+                </div>
+                <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-2xl p-5 shadow-sm" />
+              </div>
+            </div>
+          </div>
+          </div>
+        </Reveal>
+
+        {/* === Floating Feature Pills === */}
+        <div className="hidden lg:block absolute top-32 left-8 animate-float">
+          <div className="glass-panel rounded-2xl px-5 py-3 flex items-center gap-3 shadow-lg">
+            <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+              <Activity className="w-5 h-5 text-emerald-600" />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-navy">Vitals Normal</p>
+              <p className="text-[11px] font-medium text-text-muted">Updated 2m ago</p>
+            </div>
+          </div>
+        </div>
+        <div className="hidden lg:block absolute top-48 right-10 animate-float-delayed">
+          <div className="glass-panel rounded-2xl px-5 py-3 flex items-center gap-3 shadow-lg">
+            <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
+              <MessageSquare className="w-5 h-5 text-blue-600" />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-navy">New Message</p>
+              <p className="text-[11px] font-medium text-text-muted">"She had a great day!"</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* === Features Section (Bento Box) === */}
+      <section id="features" className="relative max-w-6xl mx-auto px-6 py-24">
+        <Reveal>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-navy tracking-tighter">
+              Everything you need,{" "}
+              <span className="gradient-text">nothing you don't</span>
+            </h2>
+            <p className="text-lg text-text-secondary font-medium mt-4 max-w-xl mx-auto leading-relaxed">
+              Built from the ground up for modern elderly care facilities
+              and the families they serve.
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[280px]">
+          
+          {/* Bento Item 1: Wide (Family Messaging) */}
+          <Reveal delay={100} className="md:col-span-2 h-full">
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="h-full glass-panel rounded-[32px] p-8 flex flex-col md:flex-row items-center gap-8 overflow-hidden relative glass-glare shadow-lg"
+            >
+              <div className="flex-1 z-10">
+                <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center mb-4">
+                  <MessageSquare className="w-6 h-6 text-blue-600" />
+                </div>
+                <h3 className="text-2xl font-extrabold text-navy mb-2 tracking-tight">Family Messaging</h3>
+                <p className="text-base text-text-secondary font-medium leading-relaxed">
+                  Secure, instant communication between staff and families. No more phone tag or lost sticky notes.
+                </p>
+              </div>
+              <div className="w-full md:w-1/2 flex flex-col gap-3 relative z-10 translate-x-4 md:translate-x-10 translate-y-4">
+                <div className="bg-white p-4 rounded-2xl rounded-br-sm shadow-md border border-slate-100 w-4/5 self-end">
+                  <p className="text-sm font-medium text-navy">She ate all her breakfast and enjoyed the garden today! 🌻</p>
+                  <div className="flex items-center justify-end gap-1 mt-1">
+                    <span className="text-[10px] text-text-muted">10:42 AM</span>
+                    <CheckCheck className="w-3 h-3 text-primary" />
+                  </div>
+                </div>
+                <div className="bg-primary text-white p-4 rounded-2xl rounded-bl-sm shadow-md w-4/5 self-start">
+                  <p className="text-sm font-medium">That's wonderful to hear. Thank you!</p>
+                </div>
+              </div>
+            </motion.div>
+          </Reveal>
+
+          {/* Bento Item 2: Tall (Real-Time Vitals) */}
+          <Reveal delay={200} className="md:row-span-2 h-full">
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="h-full glass-panel rounded-[32px] p-8 flex flex-col relative overflow-hidden glass-glare shadow-lg"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-400/10 rounded-bl-full blur-2xl" />
+              <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center mb-4 relative z-10 animate-heartbeat">
+                <Activity className="w-6 h-6 text-emerald-600" />
+              </div>
+              <h3 className="text-2xl font-extrabold text-navy mb-2 tracking-tight relative z-10">Real-Time Vitals</h3>
+              <p className="text-base text-text-secondary font-medium leading-relaxed relative z-10">
+                Live health tracking with intelligent alerts. Families see what matters, exactly when it matters.
+              </p>
+              <div className="mt-auto relative z-10 bg-white/60 border border-white/80 p-4 rounded-2xl shadow-sm">
+                <div className="flex justify-between items-end mb-2">
+                  <span className="text-sm font-bold text-navy">Heart Rate</span>
+                  <span className="text-2xl font-black text-emerald-600">72 <span className="text-sm text-text-muted">bpm</span></span>
+                </div>
+                <div className="w-full h-12 flex items-center gap-1">
+                  {[40, 70, 45, 90, 60, 80, 50, 75].map((h, i) => (
+                    <motion.div 
+                      key={i} 
+                      className="flex-1 bg-emerald-200 rounded-full" 
+                      initial={{ height: 0 }}
+                      whileInView={{ height: `${h}%` }}
+                      transition={{ type: "spring", delay: i * 0.1, bounce: 0.5 }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </Reveal>
+
+          {/* Bento Item 3: Square (Smart Alerts) */}
+          <Reveal delay={300} className="h-full">
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="h-full glass-panel rounded-[32px] p-8 glass-glare shadow-lg"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center mb-4">
+                <Bell className="w-6 h-6 text-amber-600" />
+              </div>
+              <h3 className="text-xl font-extrabold text-navy mb-2 tracking-tight">Smart Alerts</h3>
+              <p className="text-sm text-text-secondary font-medium leading-relaxed">
+                AI-prioritized alerts ensure critical issues are seen first. Never miss what matters.
+              </p>
+            </motion.div>
+          </Reveal>
+
+          {/* Bento Item 4: Square (Care Timeline) */}
+          <Reveal delay={400} className="h-full">
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="h-full glass-panel rounded-[32px] p-8 glass-glare shadow-lg"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-violet-100 flex items-center justify-center mb-4">
+                <Clock className="w-6 h-6 text-violet-600" />
+              </div>
+              <h3 className="text-xl font-extrabold text-navy mb-2 tracking-tight">Care Timeline</h3>
+              <p className="text-sm text-text-secondary font-medium leading-relaxed">
+                A chronological record of every visit note, medication, and milestone.
+              </p>
+            </motion.div>
+          </Reveal>
+
+          {/* Bento Item 5: Wide (HIPAA & Security) */}
+          <Reveal delay={500} className="md:col-span-2 h-full">
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="h-full glass-panel rounded-[32px] p-8 flex items-center gap-6 overflow-hidden relative glass-glare shadow-lg"
+            >
+              <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-rose-400 to-orange-400 flex items-center justify-center text-white shadow-lg shrink-0 z-10">
+                <Shield className="w-8 h-8" />
+              </div>
+              <div className="z-10">
+                <h3 className="text-2xl font-extrabold text-navy mb-2 tracking-tight">Enterprise Security</h3>
+                <p className="text-base text-text-secondary font-medium leading-relaxed">
+                  Fully HIPAA compliant and GDPR ready. End-to-end encryption ensures patient data never falls into the wrong hands.
+                </p>
+              </div>
+            </motion.div>
+          </Reveal>
+
+        </div>
+      </section>
+
+      {/* === How It Works === */}
+      <section id="how-it-works" className="relative max-w-6xl mx-auto px-6 py-24">
+        <Reveal>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-navy tracking-tighter">
+              Simple for <span className="gradient-text">everyone</span>
+            </h2>
+            <p className="text-lg text-text-secondary font-medium mt-4 max-w-xl mx-auto">
+              Two portals, one seamless platform — designed so both sides feel heard.
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          <Reveal delay={100} direction="left" className="h-full">
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="glass-panel-heavy rounded-3xl p-8 md:p-10 relative overflow-hidden group h-full shadow-lg"
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-sky-400/20 to-transparent rounded-bl-full blur-xl" />
+              <div className="relative z-10">
+                <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/20 mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Heart className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-extrabold text-navy mb-3 tracking-tight">For Families</h3>
+                <p className="text-text-secondary font-medium leading-relaxed mb-8">
+                  Open the app, see how your loved one is doing today. Read care notes from staff, check medications, and message the care team directly.
+                </p>
+                <ul className="space-y-4">
+                  {["Daily care updates & photos", "Medication tracking", "Direct staff messaging", "Escalation notifications"].map((item) => (
+                    <li key={item} className="flex items-center gap-3 text-sm font-bold text-navy bg-white/40 p-2 rounded-xl">
+                      <CheckCircle2 className="w-5 h-5 text-success shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          </Reveal>
+
+          <Reveal delay={200} direction="right" className="h-full">
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="glass-panel-heavy rounded-3xl p-8 md:p-10 relative overflow-hidden group h-full shadow-lg"
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-indigo-400/20 to-transparent rounded-bl-full blur-xl" />
+              <div className="relative z-10">
+                <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Building2 className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-extrabold text-navy mb-3 tracking-tight">For Staff</h3>
+                <p className="text-text-secondary font-medium leading-relaxed mb-8">
+                  A command center built for care teams. Log notes, prescribe meds, respond to families, and manage escalations — all from one dashboard.
+                </p>
+                <ul className="space-y-4">
+                  {["Resident management dashboard", "Visit notes & care timeline", "Medication prescriptions", "Family communication hub"].map((item) => (
+                    <li key={item} className="flex items-center gap-3 text-sm font-bold text-navy bg-white/40 p-2 rounded-xl">
+                      <CheckCircle2 className="w-5 h-5 text-success shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* === Stats === */}
+      <section id="trust" className="relative max-w-6xl mx-auto px-6 py-24">
+        <Reveal>
+          <div className="glass-panel-heavy rounded-[40px] p-10 md:p-14 shadow-xl shadow-slate-200/50 border-white">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+              {[
+                { value: "99.9%", label: "Uptime SLA" },
+                { value: "< 2s", label: "Alert Delivery" },
+                { value: "256-bit", label: "AES Encryption" },
+                { value: "24/7", label: "Support" },
+              ].map((stat, i) => (
+                <div key={stat.label} className="text-center">
+                  <p className="text-4xl md:text-5xl font-black text-navy tracking-tighter">{stat.value}</p>
+                  <p className="text-sm font-bold text-text-muted mt-2 uppercase tracking-widest">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* === Final CTA === */}
+      <section className="relative max-w-6xl mx-auto px-6 pb-32 pt-8">
+        <Reveal>
+          <div className="relative rounded-[40px] overflow-hidden shadow-2xl">
+            {/* Background gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-navy via-slate-900 to-navy" />
+            <div className="absolute inset-0 opacity-30 overflow-hidden mix-blend-screen pointer-events-none">
+              <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-cyan-400 blur-[100px] animate-blob-1" />
+              <div className="absolute bottom-[-20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-indigo-500 blur-[120px] animate-blob-2" />
+            </div>
+
+            <div className="relative z-10 px-8 py-20 md:px-16 md:py-24 text-center">
+              <h2 className="text-4xl md:text-6xl font-extrabold text-white tracking-tighter leading-tight max-w-3xl mx-auto">
+                Ready to transform how families experience care?
+              </h2>
+              <p className="text-lg text-slate-300 font-medium mt-6 max-w-xl mx-auto">
+                Join forward-thinking care facilities already using Aethon to build trust and transparency with families.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
+                  <Link
+                    href="/login"
+                    className="group px-8 py-4 bg-white text-navy text-base font-bold rounded-2xl hover:bg-slate-100 shadow-xl hover:shadow-2xl flex items-center gap-2 block"
+                  >
+                    Start Free Trial
+                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
+                  <a
+                    href="#how-it-works"
+                    className="px-8 py-4 bg-white/10 text-white text-base font-bold rounded-2xl border border-white/20 hover:bg-white/20 backdrop-blur-sm block"
+                  >
+                    Learn More
+                  </a>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* === Footer === */}
+      <footer className="border-t border-slate-200/60 bg-white/60 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center shadow-md shadow-sky-500/15">
+              <Heart className="w-4 h-4 text-white" fill="white" />
+            </div>
+            <span className="text-lg font-extrabold text-navy tracking-tight">
+              Aethon<span className="font-light text-primary ml-0.5">Health</span>
+            </span>
+          </div>
+          <p className="text-sm font-bold text-text-muted">
+            © {new Date().getFullYear()} Aethon Health. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6 text-sm font-bold text-text-secondary">
+            <a href="#" className="hover:text-navy transition-colors">Privacy</a>
+            <a href="#" className="hover:text-navy transition-colors">Terms</a>
+            <a href="#" className="hover:text-navy transition-colors">Contact</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
 }

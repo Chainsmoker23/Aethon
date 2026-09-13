@@ -1,10 +1,11 @@
 "use client";
 
 import { SignOutButton } from "@/components/auth/SignOutButton";
-import { User, Settings, Shield, Bell, ChevronRight, LogOut, Loader2 } from "lucide-react";
+import { User, Settings, Shield, Bell, ChevronRight, LogOut, Loader2, ArrowLeft } from "lucide-react";
 import { useFamilyResident } from "@/hooks/useFamilyResident";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function ProfilePage() {
   const { residentInfo, loading: residentLoading } = useFamilyResident();
@@ -24,8 +25,13 @@ export default function ProfilePage() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="bg-white/80 backdrop-blur-xl border-b border-border/50 sticky top-0 z-20 px-6 py-5 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-black text-navy tracking-tight">Family Profile</h1>
+        <div className="flex items-center gap-3">
+          <Link href="/family" className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors">
+            <ArrowLeft className="w-4 h-4 text-navy" />
+          </Link>
+          <div>
+            <h1 className="text-2xl font-black text-navy tracking-tight">Family Profile</h1>
+          </div>
         </div>
         <div className="w-10 h-10 rounded-full bg-primary-light flex items-center justify-center">
           <User className="w-5 h-5 text-primary" />
@@ -47,26 +53,26 @@ export default function ProfilePage() {
         </div>
 
         <div className="bg-surface rounded-2xl shadow-sm border border-border overflow-hidden">
-          <button className="w-full flex items-center justify-between p-4 hover:bg-surface-alt transition-colors border-b border-border/50">
+          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 opacity-60 border-b border-border/50 cursor-not-allowed">
             <div className="flex items-center gap-3">
               <Bell className="w-5 h-5 text-text-muted" />
               <span className="font-bold text-navy text-sm">Notification Preferences</span>
             </div>
-            <ChevronRight className="w-4 h-4 text-text-muted" />
+            <span className="text-[10px] font-bold text-text-muted bg-surface-alt px-2 py-1 rounded-md border border-border">Coming Soon</span>
           </button>
-          <button className="w-full flex items-center justify-between p-4 hover:bg-surface-alt transition-colors border-b border-border/50">
+          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 opacity-60 border-b border-border/50 cursor-not-allowed">
             <div className="flex items-center gap-3">
               <Shield className="w-5 h-5 text-text-muted" />
               <span className="font-bold text-navy text-sm">Privacy & Security</span>
             </div>
-            <ChevronRight className="w-4 h-4 text-text-muted" />
+            <span className="text-[10px] font-bold text-text-muted bg-surface-alt px-2 py-1 rounded-md border border-border">Coming Soon</span>
           </button>
-          <button className="w-full flex items-center justify-between p-4 hover:bg-surface-alt transition-colors">
+          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 opacity-60 cursor-not-allowed">
             <div className="flex items-center gap-3">
               <Settings className="w-5 h-5 text-text-muted" />
               <span className="font-bold text-navy text-sm">Account Settings</span>
             </div>
-            <ChevronRight className="w-4 h-4 text-text-muted" />
+            <span className="text-[10px] font-bold text-text-muted bg-surface-alt px-2 py-1 rounded-md border border-border">Coming Soon</span>
           </button>
         </div>
 

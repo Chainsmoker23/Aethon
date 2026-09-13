@@ -1,8 +1,9 @@
 "use client";
 
-import { ChevronDown, ChevronRight, Loader2 } from "lucide-react";
+import { ChevronDown, ChevronRight, Loader2, AlertTriangle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
+import { MobileResidentRoster } from "./MobileResidentRoster";
 
 type Resident = {
   id: string;
@@ -95,71 +96,108 @@ export function ResidentRoster() {
   }
 
   return (
-    <div className="glass-panel-heavy rounded-3xl overflow-hidden animate-fade-in-up delay-300 relative z-10">
-      
-      {/* Table header */}
-      <div className="hidden md:grid grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr_40px] bg-white/40 backdrop-blur-md border-b border-white/50 text-navy text-xs font-bold uppercase tracking-wider">
-        <div className="px-6 py-4">Client</div>
-        <div className="px-3 py-4">Care stage</div>
-        <div className="px-3 py-4">Last visit</div>
-        <div className="px-3 py-4">Seen today</div>
-        <div className="px-3 py-4">Escalations</div>
-        <div className="px-3 py-4">Notes (7d)</div>
-        <div className="px-3 py-4"></div>
+    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden relative z-10">
+      <div className="px-6 py-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
+        <h2 className="text-lg font-semibold text-slate-900 tracking-tight">Active Residents</h2>
       </div>
 
-      {/* Rows */}
-      <div className="divide-y divide-white/40">
+      {/* Desktop Table Header */}
+      <div className="hidden md:grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] bg-slate-50 border-b border-slate-200 text-slate-500 text-xs font-medium uppercase tracking-wider px-4">
+        <div className="px-4 py-3">Client</div>
+        <div className="px-3 py-3">Care stage</div>
+        <div className="px-3 py-3">Last visit</div>
+        <div className="px-3 py-3 text-center">Seen today</div>
+        <div className="px-3 py-3 text-center">Escalations</div>
+        <div className="px-3 py-3 text-center">Notes (7d)</div>
+        <div className="px-3 py-3"></div>
+      </div>
+
+      <MobileResidentRoster residents={residents} expandedId={expandedId} setExpandedId={setExpandedId} />
+
+      {/* Desktop Rows */}
+      <div className="hidden md:block divide-y divide-slate-100 bg-white">
         {residents.map((r) => {
           const isExpanded = expandedId === r.id;
           return (
             <div key={r.id} className="group">
+              
+              {/* Desktop Row Wrapper */}
               <div
-                className={`grid md:grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr_40px] items-center cursor-pointer row-hover ${getRowBg(r)}`}
+                className={`grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] items-center cursor-pointer hover:bg-slate-50 transition-colors ${r.escalations > 0 ? "bg-red-50/30" : ""} px-4`}
                 onClick={() => setExpandedId(isExpanded ? null : r.id)}
               >
-                <div className="px-6 py-5 font-bold text-base text-navy">{r.name}</div>
-                <div className="px-3 py-5 hidden md:block"><CareStageTag stage={r.careStage} /></div>
-                <div className="px-3 py-5 text-sm font-semibold text-text-secondary hidden md:block">{r.lastVisit}</div>
-                <div className="px-3 py-5 hidden md:block">
+                
+                {/* 1. Client Name */}
+                <div className="px-4 py-4">
+                  <span className="font-semibold text-sm text-slate-900">{r.name}</span>
+                </div>
+
+                {/* 2. Care Stage */}
+                <div className="px-3 py-4">
+                  <CareStageTag stage={r.careStage} />
+                </div>
+
+                {/* 3. Last Visit */}
+                <div className="px-3 py-4 text-sm font-medium text-slate-600">
+                  {r.lastVisit}
+                </div>
+
+                {/* 4. Seen Today */}
+                <div className="px-3 py-4 flex justify-center items-center text-sm">
                   {r.seenToday ? (
-                    <span className="w-3 h-3 rounded-full bg-success inline-block shadow-sm shadow-success/40" title="Yes" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm" title="Yes" />
                   ) : (
-                    <span className="w-3 h-3 rounded-full bg-border inline-block" title="No" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-slate-200" title="No" />
                   )}
                 </div>
-                <div className="px-3 py-5 hidden md:block">
+
+                {/* 5. Escalations */}
+                <div className="px-3 py-4 flex justify-center items-center">
                   {r.escalations > 0 ? (
-                    <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-danger text-white text-sm font-bold shadow-sm shadow-danger/40 pulse-dot">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-red-500 text-white text-xs font-semibold shadow-sm">
                       {r.escalations}
                     </span>
                   ) : (
-                    <span className="text-sm font-bold text-text-muted">—</span>
+                    <span className="text-sm text-slate-300">—</span>
                   )}
                 </div>
-                <div className="px-3 py-5 text-sm text-text-secondary font-bold hidden md:block">{r.notes7d}</div>
-                <div className="px-3 py-5 text-text-muted">
+
+                {/* 6. Notes (7d) */}
+                <div className="px-3 py-4 flex justify-center items-center text-sm text-slate-600 font-medium">
+                  {r.notes7d}
+                </div>
+
+                {/* 7. Desktop Chevron */}
+                <div className="px-3 py-4 text-slate-400 flex justify-end">
                   {isExpanded ? (
                     <ChevronDown className="w-5 h-5 text-primary" />
                   ) : (
-                    <ChevronRight className="w-5 h-5 group-hover:text-primary transition-colors" />
+                    <ChevronRight className="w-5 h-5" />
                   )}
                 </div>
               </div>
 
               {/* Expanded Area */}
               {isExpanded && (
-                <div className="bg-white/50 backdrop-blur-md px-10 py-6 border-t border-white/40 animate-fade-in shadow-inner">
-                  <p className="text-xs font-extrabold text-navy/60 uppercase tracking-widest mb-4">Recent visits</p>
+                <div className="bg-slate-50/80 px-10 py-6 border-t border-slate-100 shadow-inner">
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Recent visits</p>
                   {r.recentVisits.length === 0 ? (
-                    <p className="text-sm text-text-muted italic">No recent visits logged.</p>
+                    <p className="text-sm text-slate-500 italic bg-white p-4 rounded-xl border border-slate-200 shadow-sm">No recent visits logged.</p>
                   ) : (
-                    <div className="space-y-4">
-                      {r.recentVisits.map((v, i) => (
-                        <div key={i} className="flex items-start gap-6 text-sm">
-                          <span className="text-text-secondary w-28 shrink-0 font-bold">{v.date}</span>
-                          <span className="text-navy font-bold w-36 shrink-0">{v.type}</span>
-                          <span className="text-text-secondary font-medium">{v.tasks}</span>
+                    <div className="space-y-3">
+                      {r.recentVisits.map((v: any, i: number) => (
+                        <div key={i} className="flex gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm max-w-3xl">
+                          <div className="flex flex-col items-center mt-1">
+                            <div className="w-2 h-2 rounded-full bg-primary" />
+                            {i !== r.recentVisits.length - 1 && <div className="w-0.5 h-full bg-slate-200 mt-2" />}
+                          </div>
+                          <div>
+                            <div className="flex gap-3 items-center mb-1">
+                              <span className="text-xs font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md">{v.type}</span>
+                              <span className="text-xs font-medium text-slate-400">{v.date}</span>
+                            </div>
+                            <p className="text-sm text-slate-600 mt-2 leading-relaxed">{v.tasks}</p>
+                          </div>
                         </div>
                       ))}
                     </div>

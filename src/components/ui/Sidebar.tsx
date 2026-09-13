@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Users, AlertTriangle, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, AlertTriangle, Settings, LogOut, Menu, X } from "lucide-react";
 import { SignOutButton } from "@/components/auth/SignOutButton";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
@@ -10,19 +10,32 @@ import { createClient } from "@/utils/supabase/client";
 export function Sidebar() {
   const pathname = usePathname();
   const [escalationCount, setEscalationCount] = useState(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [userName, setUserName] = useState("Staff User");
   const supabase = createClient();
 
-  // Fetch real unread escalation count for the badge!
   useEffect(() => {
-    async function fetchBadge() {
+    async function fetchData() {
+      // Fetch escalation badge count
       const { count } = await supabase
         .from('escalations')
         .select('*', { count: 'exact', head: true })
         .eq('is_resolved', false);
       if (count !== null) setEscalationCount(count);
+
+      // Fetch actual user name
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUserName(user.user_metadata?.full_name || user.email?.split('@')[0] || "Staff User");
+      }
     }
-    fetchBadge();
+    fetchData();
   }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   const links = [
     { name: "Overview", href: "/management", icon: <LayoutDashboard className="w-5 h-5" /> },
@@ -31,34 +44,48 @@ export function Sidebar() {
     { name: "Settings", href: "/management/settings", icon: <Settings className="w-5 h-5" /> },
   ];
 
-  return (
-    <aside className="w-72 bg-white/40 backdrop-blur-2xl border-r border-white/50 hidden lg:flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-20 relative">
+  const initials = userName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'S';
+
+  const navContent = (
+    <>
       {/* Brand */}
-      <div className="h-[88px] flex items-center px-8 border-b border-white/50 bg-white/20">
-        <h1 className="text-3xl font-extrabold text-navy tracking-tight flex items-center gap-2">
-          Aethon<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-indigo-500 font-light">Pro</span>
-        </h1>
+      <div className="h-14 lg:h-[88px] flex items-center justify-between px-4 lg:px-8 border-b border-slate-200 bg-white shrink-0">
+        <div className="hidden lg:flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center shadow-sm">
+            <LayoutDashboard className="w-4 h-4 text-white" />
+          </div>
+          <span className="font-bold text-slate-900 tracking-tight">Management</span>
+        </div>
+        {/* Mobile close button */}
+        <button
+          onClick={() => setMobileOpen(false)}
+          className="lg:hidden ml-auto w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors"
+          aria-label="Close navigation menu"
+        >
+          <X className="w-4 h-4 text-slate-600" />
+        </button>
       </div>
       
       {/* Nav */}
-      <nav className="flex-1 py-8 px-5 space-y-2">
-        {links.map((link) => {
+      <nav className="flex-1 py-6 px-4 space-y-1.5 overflow-y-auto">
+        {links.map((link, i) => {
           const isActive = pathname === link.href;
           return (
             <Link 
               key={link.name} 
               href={link.href}
-              className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl font-bold text-sm transition-all ${
+              className={`flex items-center gap-3 px-3 py-3 rounded-xl font-bold text-sm transition-all ${
                 isActive 
-                  ? "bg-gradient-to-r from-cyan-500 to-indigo-500 text-white shadow-lg shadow-indigo-500/25" 
-                  : "text-text-secondary hover:bg-white/60 hover:text-navy hover:shadow-sm"
-              }`}
+                  ? "bg-gradient-to-r from-cyan-500 to-indigo-500 text-white shadow-md shadow-indigo-500/20" 
+                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+              } ${mobileOpen ? `opacity-0 animate-slide-down stagger-${i + 1}` : ""}`}
+              aria-current={isActive ? "page" : undefined}
             >
               {link.icon}
               <span className="flex-1">{link.name}</span>
               {link.badge && link.badge > 0 ? (
                 <span className={`text-[10px] font-black px-2 py-0.5 rounded-full min-w-[24px] text-center ${
-                  isActive ? "bg-white/20 text-white" : "bg-gradient-to-r from-rose-500 to-orange-400 text-white shadow-sm shadow-rose-500/40 pulse-dot"
+                  isActive ? "bg-white/20 text-white" : "bg-rose-500 text-white shadow-sm"
                 }`}>
                   {link.badge}
                 </span>
@@ -69,21 +96,62 @@ export function Sidebar() {
       </nav>
 
       {/* User */}
-      <div className="p-5 border-t border-white/50 bg-white/30 m-5 rounded-3xl shadow-inner">
-        <div className="flex items-center gap-4 mb-5">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-black text-sm shadow-md shadow-indigo-500/30">
-            AW
+      <div className="p-4 border-t border-slate-200 bg-slate-50 m-4 rounded-2xl shrink-0">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-black text-sm shadow-sm">
+            {initials}
           </div>
-          <div>
-            <p className="font-extrabold text-sm text-navy">Dr. Anna Weber</p>
-            <p className="text-text-secondary text-[11px] uppercase tracking-wider font-bold mt-0.5">Management</p>
+          <div className="min-w-0">
+            <p className="font-extrabold text-sm text-slate-900 truncate">{userName}</p>
+            <p className="text-slate-500 text-[10px] uppercase tracking-wider font-bold mt-0.5">Management</p>
           </div>
         </div>
-        <SignOutButton className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-bold text-rose-600 bg-white/60 border border-white/80 hover:bg-rose-50 hover:border-rose-100 transition-all btn-press shadow-sm shadow-black/5">
+        <SignOutButton className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg text-sm font-bold text-rose-600 bg-white border border-slate-200 hover:bg-rose-50 hover:border-rose-200 transition-all btn-press shadow-sm">
           <LogOut className="w-4 h-4" />
-          Secure Sign Out
+          Sign Out
         </SignOutButton>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile Bottom Nav — visible below lg */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 flex items-center justify-around pb-safe shadow-[0_-4px_24px_rgba(0,0,0,0.02)]">
+        {links.map((link) => {
+          const isActive = pathname === link.href || pathname.startsWith(link.href + '/');
+          return (
+            <Link 
+              key={link.name} 
+              href={link.href}
+              className={`relative flex flex-col items-center justify-center w-full py-3 gap-1 transition-colors ${
+                isActive ? "text-indigo-600" : "text-slate-400 hover:text-slate-600"
+              }`}
+            >
+              <div className="relative">
+                {link.icon}
+                {link.badge && link.badge > 0 ? (
+                  <span className="absolute -top-1.5 -right-2 bg-rose-500 text-white text-[8px] font-black px-1.5 py-0.5 rounded-full shadow-sm">
+                    {link.badge}
+                  </span>
+                ) : null}
+              </div>
+              <span className={`text-[10px] font-bold ${isActive ? "text-slate-900" : "text-slate-500"}`}>
+                {link.name}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+
+      {/* Sidebar — desktop only */}
+      <aside 
+        className="hidden lg:flex static top-0 left-0 z-50 h-full w-72 bg-white border-r border-slate-200 flex-col"
+        role="navigation"
+        aria-label="Main navigation"
+      >
+        {navContent}
+      </aside>
+    </>
   );
 }

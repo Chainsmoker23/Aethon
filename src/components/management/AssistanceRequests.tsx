@@ -3,6 +3,7 @@
 import { AlertTriangle, Check, Clock, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
+import { MobileAssistanceRequests } from "./MobileAssistanceRequests";
 
 type Escalation = {
   id: string;
@@ -35,14 +36,11 @@ export function AssistanceRequests() {
   };
 
   useEffect(() => {
-    // 1. Initial Fetch
     fetchEscalations();
 
-    // 2. Realtime Subscription
     const channel = supabase
       .channel('live-escalations')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'escalations' }, (payload) => {
-        // Whenever any escalation is added or resolved in the DB, re-fetch the live list
         fetchEscalations();
       })
       .subscribe();
@@ -53,10 +51,7 @@ export function AssistanceRequests() {
   }, []);
 
   const resolve = async (id: string) => {
-    // Optimistic UI update
     setEscalations(prev => prev.map(e => e.id === id ? { ...e, is_resolved: true } : e));
-    
-    // Database update
     await supabase
       .from('escalations')
       .update({ is_resolved: true, resolved_at: new Date().toISOString() })
@@ -67,74 +62,104 @@ export function AssistanceRequests() {
 
   if (loading) {
     return (
-      <div className="glass-panel-heavy rounded-3xl h-64 flex items-center justify-center relative z-10">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="bg-white border border-slate-200 rounded-xl shadow-sm h-64 flex items-center justify-center relative z-10 w-full">
+        <Loader2 className="w-8 h-8 animate-spin text-slate-400" />
       </div>
     );
   }
 
-  return (
-    <div className="glass-panel-heavy rounded-3xl overflow-hidden flex flex-col relative z-10">
-      <div className="px-6 py-5 border-b border-white/50 flex items-center justify-between bg-white/20">
-        <div>
-          <h2 className="font-bold text-navy text-xl">Open escalations</h2>
-          <p className="text-sm font-semibold text-text-secondary mt-0.5">{open.length} require attention</p>
-        </div>
-        {open.length > 0 && (
-          <span className="bg-gradient-to-r from-rose-500 to-orange-400 text-white text-sm font-bold w-8 h-8 flex items-center justify-center rounded-full shadow-lg shadow-rose-500/40 pulse-dot">
-            {open.length}
-          </span>
-        )}
-      </div>
+  const mobileRequests = escalations
+    .filter(e => !e.is_resolved)
+    .map(e => {
+      const hoursAgo = Math.floor((new Date().getTime() - new Date(e.created_at).getTime()) / (1000 * 60 * 60));
+      return {
+        id: e.id,
+        resident_name: `${e.residents?.first_name || ''} ${e.residents?.last_name || ''}`.trim(),
+        issue_type: e.reason,
+        description: e.reason,
+        time_ago: hoursAgo < 1 ? "Just now" : `${hoursAgo}h ago`
+      };
+    });
 
-      <div className="divide-y divide-white/40 flex-1 overflow-y-auto max-h-[400px]">
-        {escalations.map((e) => (
-          <div 
-            key={e.id} 
-            className={`p-6 border-l-[6px] transition-all duration-300 ${
-              e.is_resolved 
-                ? "border-success bg-white/30 opacity-70" 
-                : "border-danger bg-white/60 hover:bg-white/80"
-            }`}
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <p className="text-lg font-bold text-navy">
-                  {e.residents?.first_name} {e.residents?.last_name}
-                </p>
-                <p className="text-sm font-medium text-text-secondary mt-1.5 leading-relaxed">{e.reason}</p>
-                <div className="flex items-center gap-1.5 mt-3">
-                  <Clock className="w-3.5 h-3.5 text-text-muted" />
-                  <span className="text-xs font-bold text-text-muted">
-                    Room {e.residents?.room_number || "N/A"} · {new Date(e.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </span>
+  return (
+    <>
+      <MobileAssistanceRequests requests={mobileRequests} loading={loading} />
+
+      <div className="hidden md:flex bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden flex-col relative z-10 w-full">
+        <div className="px-6 py-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
+          <div>
+            <h2 className="font-semibold text-slate-900 text-lg tracking-tight">Open escalations</h2>
+            <p className="text-sm font-medium text-slate-500 mt-0.5">{open.length} require attention</p>
+          </div>
+          {open.length > 0 && (
+            <span className="bg-red-500 text-white text-xs font-semibold w-7 h-7 flex items-center justify-center rounded-full shadow-sm animate-pulse">
+              {open.length}
+            </span>
+          )}
+        </div>
+
+        <div className="divide-y divide-slate-100 flex-1 overflow-y-auto max-h-[400px]">
+          {escalations.map((e) => (
+            <div 
+              key={e.id} 
+              className={`p-6 border-l-[4px] transition-all duration-300 ${
+                e.is_resolved 
+                  ? "border-emerald-400 bg-slate-50 opacity-60" 
+                  : "border-red-500 bg-white hover:bg-slate-50"
+              }`}
+            >
+              <div className="flex justify-between items-start">
+                <div className="flex gap-4">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
+                    e.is_resolved ? "bg-emerald-100" : "bg-red-100 animate-pulse"
+                  }`}>
+                    {e.is_resolved ? (
+                      <Check className="w-5 h-5 text-emerald-600" />
+                    ) : (
+                      <AlertTriangle className="w-5 h-5 text-red-600" />
+                    )}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className={`font-semibold text-base ${e.is_resolved ? 'text-slate-500' : 'text-slate-900'}`}>
+                        {e.residents?.first_name} {e.residents?.last_name}
+                      </span>
+                      <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
+                        Room {e.residents?.room_number}
+                      </span>
+                    </div>
+                    <p className={`text-sm mt-1 font-medium ${e.is_resolved ? 'text-slate-400' : 'text-slate-700'}`}>
+                      {e.reason}
+                    </p>
+                    <div className="flex items-center gap-1.5 mt-2 text-xs font-medium text-slate-400">
+                      <Clock className="w-3.5 h-3.5" />
+                      {new Date(e.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </div>
+                  </div>
                 </div>
+                {!e.is_resolved && (
+                  <button 
+                    onClick={() => resolve(e.id)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 text-sm font-bold hover:bg-emerald-100 transition-colors border border-emerald-200/50"
+                  >
+                    <Check className="w-4 h-4" /> Resolve
+                  </button>
+                )}
               </div>
-              {!e.is_resolved ? (
-                <button
-                  onClick={() => resolve(e.id)}
-                  className="shrink-0 px-4 py-2 text-sm font-bold bg-white border border-white/80 rounded-xl text-navy hover:bg-success hover:text-white hover:border-success transition-all shadow-sm btn-press"
-                >
-                  Resolve
-                </button>
-              ) : (
-                <span className="shrink-0 flex items-center gap-1.5 text-sm font-bold text-success animate-fade-in">
-                  <Check className="w-5 h-5" /> Resolved
-                </span>
-              )}
             </div>
-          </div>
-        ))}
-        {open.length === 0 && (
-          <div className="p-10 text-center flex flex-col items-center justify-center h-full animate-fade-in">
-            <div className="w-14 h-14 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/30">
-              <Check className="w-7 h-7 text-white" />
+          ))}
+          
+          {escalations.length === 0 && (
+            <div className="p-8 text-center flex flex-col items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center mb-3">
+                <Check className="w-6 h-6 text-emerald-500" />
+              </div>
+              <p className="text-slate-900 font-semibold text-sm">All clear</p>
+              <p className="text-slate-500 text-sm mt-1">No pending escalations right now.</p>
             </div>
-            <p className="text-lg font-bold text-navy">All caught up!</p>
-            <p className="text-sm font-medium text-text-secondary mt-1">No open escalations.</p>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

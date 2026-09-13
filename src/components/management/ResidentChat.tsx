@@ -9,6 +9,7 @@ export function ResidentChat({ residentId }: { residentId: string }) {
   const [newMessage, setNewMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   
   const supabase = createClient();
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -55,16 +56,17 @@ export function ResidentChat({ residentId }: { residentId: string }) {
 
     const { data: { user } } = await supabase.auth.getUser();
 
-    const { error } = await supabase.from('messages').insert([{
+    const { error: dbError } = await supabase.from('messages').insert([{
       resident_id: residentId,
       sender_id: user?.id,
       sender_role: 'staff',
       content: newMessage.trim()
     }]);
 
-    if (error) {
-      alert("Database Error: " + error.message);
-      console.error(error);
+    if (dbError) {
+      setError("Failed to send message. Please try again.");
+      setTimeout(() => setError(null), 5000);
+      console.error(dbError);
     } else {
       setNewMessage("");
     }
@@ -119,6 +121,12 @@ export function ResidentChat({ residentId }: { residentId: string }) {
 
       {/* Embedded Input Area */}
       <div className="p-4 bg-white border-t border-border/50 shrink-0">
+        {error && (
+          <div className="mb-3 px-4 py-2 bg-danger/10 border border-danger/20 rounded-xl text-sm font-bold text-danger animate-fade-in flex items-center justify-between">
+            <span>{error}</span>
+            <button onClick={() => setError(null)} className="text-danger/60 hover:text-danger" aria-label="Dismiss error">✕</button>
+          </div>
+        )}
         <form onSubmit={handleSend} className="flex items-end gap-2 bg-slate-50 border border-slate-200/80 rounded-2xl p-1.5 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary/40 focus-within:bg-white transition-all shadow-sm">
           <textarea
             placeholder="Type a message to the family..."

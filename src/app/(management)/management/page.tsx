@@ -10,59 +10,37 @@ export default function ManagementDashboard() {
   const timeStr = now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
 
   return (
-    <div className="relative min-h-screen flex-1 overflow-hidden bg-slate-50/50 z-0">
-      
-      {/* === Elegant Color-Shifting Siri Aura Background === */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        {/* Top left - Cyan <-> Indigo */}
-        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[120px] animate-blob-1" />
-        
-        {/* Top right - Indigo <-> Pink */}
-        <div className="absolute top-[10%] right-[-5%] w-[600px] h-[600px] rounded-full blur-[120px] animate-blob-2" />
-        
-        {/* Bottom center - Blue <-> Teal */}
-        <div className="absolute bottom-[-20%] left-[20%] w-[800px] h-[800px] rounded-full blur-[150px] animate-blob-3" />
-        
-        {/* Dynamic center highlight - Teal <-> Violet */}
-        <div className="absolute top-[40%] left-[40%] w-[400px] h-[400px] rounded-full blur-[100px] animate-blob-4" />
-      </div>
-
-      <main className="p-6 lg:p-10 space-y-8 overflow-y-auto h-full max-w-[1200px] mx-auto w-full relative z-10">
-        
+    <main className="p-4 md:p-6 lg:p-10 space-y-6 md:space-y-8 max-w-[1200px] mx-auto w-full pb-20 lg:pb-32">
         {/* Header */}
-        <div className="flex items-start justify-between animate-fade-in-up">
-          <div>
+        <div className="hidden md:flex items-start justify-between animate-fade-in-up">
+          <div className="w-full">
             <div className="flex items-center gap-3">
-              <h1 className="text-4xl font-extrabold text-navy tracking-tight drop-shadow-sm">
+              <h1 className="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">
                 Facility Intelligence
               </h1>
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-cyan-400 to-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                <Sparkles className="w-4 h-4 text-white" />
-              </div>
             </div>
-            <p className="text-sm font-semibold text-text-secondary mt-2 flex items-center gap-3">
-              {dateStr}
-              <span className="w-1 h-1 rounded-full bg-text-muted" />
-              {timeStr}
-              <span className="mx-2 text-border">|</span>
-              <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-wider font-bold text-primary bg-white/60 backdrop-blur-md px-3 py-1.5 rounded-full shadow-sm border border-white/80">
+            <div className="text-xs md:text-sm font-medium text-slate-500 mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
+              <span className="whitespace-nowrap">{dateStr}</span>
+              <span className="hidden sm:block w-1 h-1 rounded-full bg-slate-300" />
+              <span className="whitespace-nowrap">{timeStr}</span>
+              <span className="hidden sm:block mx-1 text-slate-300">|</span>
+              <span className="inline-flex items-center gap-1.5 text-[10px] md:text-[11px] uppercase tracking-wider font-bold text-slate-700 bg-white px-2 py-1 md:px-3 md:py-1.5 rounded-md shadow-sm border border-slate-200 shrink-0">
                 <RefreshCw className="w-3.5 h-3.5" /> Live Sync Active
               </span>
-            </p>
+            </div>
           </div>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-6 md:space-y-8">
           <FacilityOverview />
           
           <ResidentRoster />
 
-          <div className="grid lg:grid-cols-2 gap-8 animate-fade-in-up delay-400">
+          <div className="grid lg:grid-cols-2 gap-6 md:gap-8 animate-fade-in-up delay-400">
             <AssistanceRequests />
             <ShiftHandover />
           </div>
         </div>
-      </main>
-    </div>
+    </main>
   );
 }
