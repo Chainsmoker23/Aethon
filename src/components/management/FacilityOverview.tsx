@@ -74,7 +74,7 @@ export function FacilityOverview() {
       <MobileFacilityOverview stats={stats} loading={loading} />
       
       {/* Desktop View */}
-      <div className={`hidden md:flex gap-4 overflow-x-auto sm:grid sm:grid-cols-2 xl:grid-cols-4 relative z-10 w-full`}>
+      <div className={`hidden md:grid md:grid-cols-2 xl:grid-cols-4 gap-4 relative z-10 w-full`}>
         {loading ? (
           [1,2,3,4].map((i) => (
              <div key={i} className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 h-32 flex items-center justify-center shrink-0">
@@ -87,9 +87,9 @@ export function FacilityOverview() {
               key={stat.label} 
               className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 flex flex-col justify-between hover:shadow-md transition-shadow"
             >
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-sm font-medium text-slate-500 tracking-tight">{stat.label}</span>
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br ${stat.gradient} ${stat.shadow} shadow-sm text-white`}>
+              <div className="flex items-start justify-between mb-4 gap-3">
+                <span className="text-sm font-medium text-slate-500 tracking-tight leading-tight pt-1">{stat.label}</span>
+                <div className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center bg-gradient-to-br ${stat.gradient} ${stat.shadow} shadow-sm text-white`}>
                   {stat.icon}
                 </div>
               </div>
