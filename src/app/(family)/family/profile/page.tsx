@@ -11,17 +11,31 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 export default function ProfilePage() {
   const { residentInfo, loading: residentLoading } = useFamilyResident();
   const [userName, setUserName] = useState("Family Member");
+  const [userEmail, setUserEmail] = useState("");
+  const [language, setLanguage] = useState("English");
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const supabase = createClient();
 
   useEffect(() => {
     async function loadUser() {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
-        setUserName(user.user_metadata?.full_name || user.email || "Family Member");
+        setUserName(user.user_metadata?.full_name || user.email?.split('@')[0] || "Family Member");
+        setUserEmail(user.email || "");
       }
     }
     loadUser();
+    
+    // Load saved language
+    const savedLang = localStorage.getItem("aethon_lang");
+    if (savedLang) setLanguage(savedLang);
   }, []);
+
+  const handleLanguageSelect = (lang: string) => {
+    setLanguage(lang);
+    localStorage.setItem("aethon_lang", lang);
+    setIsLanguageOpen(false);
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -96,22 +110,41 @@ export default function ProfilePage() {
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Email Address</label>
-                    <input type="email" defaultValue="user@example.com" disabled className="w-full px-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-sm font-bold text-slate-500 cursor-not-allowed opacity-70" />
+                    <input type="email" value={userEmail || "Loading..."} readOnly className="w-full px-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-sm font-bold text-slate-500 cursor-not-allowed opacity-70" />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Language</label>
-                  <div className="bg-white p-1 rounded-2xl border border-slate-200 shadow-sm">
-                    <div className="flex items-center gap-3 p-3 border-b border-slate-100">
-                      <Globe className="w-5 h-5 text-slate-400" />
-                      <select className="flex-1 bg-transparent text-sm font-bold text-slate-900 outline-none cursor-pointer">
-                        <option>English</option>
-                        <option>Deutsch (Schweiz)</option>
-                        <option>Français</option>
-                        <option>Italiano</option>
-                      </select>
-                    </div>
+                  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <button 
+                      onClick={() => setIsLanguageOpen(!isLanguageOpen)}
+                      className="w-full flex items-center justify-between p-4 outline-none hover:bg-slate-50 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <Globe className="w-5 h-5 text-sky-500" />
+                        <span className="text-sm font-bold text-slate-900">{language}</span>
+                      </div>
+                      <ChevronRight className={`w-4 h-4 text-slate-400 transition-transform ${isLanguageOpen ? 'rotate-90' : ''}`} />
+                    </button>
+                    
+                    {isLanguageOpen && (
+                      <div className="p-2 space-y-1 bg-slate-50 border-t border-slate-100">
+                        {["English", "German", "French", "Italian"].map(lang => (
+                          <button
+                            key={lang}
+                            onClick={() => handleLanguageSelect(lang)}
+                            className={`w-full text-left px-4 py-3 rounded-xl text-sm font-bold transition-colors ${
+                              language === lang 
+                                ? 'bg-sky-100 text-sky-700' 
+                                : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900'
+                            }`}
+                          >
+                            {lang}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
                 
