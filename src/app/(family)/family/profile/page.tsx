@@ -8,13 +8,44 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
+const translations: Record<string, any> = {
+  "English": {
+    profileTitle: "Family Profile", connectedTo: "Connected to", resident: "Resident", notifications: "Notification Preferences",
+    privacy: "Privacy & Security", account: "Account Settings", signOut: "Sign Out", displayName: "Display Name",
+    email: "Email Address", language: "Language", save: "Save Changes", saving: "Saving...", saved: "Saved!",
+    comingSoon: "Coming Soon", accountInfo: "Account Info", manageDetails: "Manage your personal details."
+  },
+  "German": {
+    profileTitle: "Familienprofil", connectedTo: "Verbunden mit", resident: "Bewohner", notifications: "Benachrichtigungen",
+    privacy: "Datenschutz & Sicherheit", account: "Kontoeinstellungen", signOut: "Abmelden", displayName: "Anzeigename",
+    email: "E-Mail-Adresse", language: "Sprache", save: "Änderungen speichern", saving: "Speichern...", saved: "Gespeichert!",
+    comingSoon: "Demnächst", accountInfo: "Kontoinformationen", manageDetails: "Verwalten Sie Ihre Daten."
+  },
+  "French": {
+    profileTitle: "Profil Familial", connectedTo: "Connecté à", resident: "Résident", notifications: "Notifications",
+    privacy: "Confidentialité et Sécurité", account: "Paramètres du Compte", signOut: "Se déconnecter", displayName: "Nom d'affichage",
+    email: "Adresse e-mail", language: "Langue", save: "Enregistrer", saving: "Enregistrement...", saved: "Enregistré !",
+    comingSoon: "Bientôt", accountInfo: "Infos du Compte", manageDetails: "Gérez vos informations."
+  },
+  "Italian": {
+    profileTitle: "Profilo Famiglia", connectedTo: "Collegato a", resident: "Residente", notifications: "Notifiche",
+    privacy: "Privacy e Sicurezza", account: "Impostazioni Account", signOut: "Disconnettersi", displayName: "Nome",
+    email: "Indirizzo Email", language: "Lingua", save: "Salva modifiche", saving: "Salvataggio...", saved: "Salvato!",
+    comingSoon: "Presto", accountInfo: "Info Account", manageDetails: "Gestisci i tuoi dettagli."
+  }
+};
+
 export default function ProfilePage() {
   const { residentInfo, loading: residentLoading } = useFamilyResident();
   const [userName, setUserName] = useState("Family Member");
   const [userEmail, setUserEmail] = useState("");
   const [language, setLanguage] = useState("English");
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  
   const supabase = createClient();
+  const t = translations[language] || translations["English"];
 
   useEffect(() => {
     async function loadUser() {
@@ -37,6 +68,18 @@ export default function ProfilePage() {
     setIsLanguageOpen(false);
   };
 
+  const handleSave = async () => {
+    setIsSaving(true);
+    // Simulate updating Supabase profile
+    if (userName) {
+      await supabase.auth.updateUser({ data: { full_name: userName } });
+    }
+    await new Promise(r => setTimeout(r, 600));
+    setIsSaving(false);
+    setSaveSuccess(true);
+    setTimeout(() => setSaveSuccess(false), 2000);
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="bg-white border-b border-slate-200 sticky top-0 z-20 px-6 py-5 flex items-center justify-between shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
@@ -45,7 +88,7 @@ export default function ProfilePage() {
             <ArrowLeft className="w-4 h-4 text-slate-700" />
           </Link>
           <div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">Family Profile</h1>
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">{t.profileTitle}</h1>
           </div>
         </div>
         <div className="w-10 h-10 rounded-full bg-sky-100 flex items-center justify-center">
@@ -62,7 +105,7 @@ export default function ProfilePage() {
             <h2 className="text-xl font-bold text-slate-900 truncate">{userName}</h2>
             <p className="text-sm font-medium text-slate-500 mt-0.5 truncate">
               {residentLoading ? <Loader2 className="w-3 h-3 animate-spin inline-block text-slate-400" /> : 
-                `Connected to ${residentInfo?.first_name || 'Resident'}`}
+                `${t.connectedTo} ${residentInfo?.first_name || t.resident}`}
             </p>
           </div>
         </div>
@@ -73,18 +116,18 @@ export default function ProfilePage() {
           <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50/50 opacity-60 border-b border-slate-200 cursor-not-allowed">
             <div className="flex items-center gap-3">
               <Bell className="w-5 h-5 text-slate-500" />
-              <span className="font-bold text-slate-900 text-sm">Notification Preferences</span>
+              <span className="font-bold text-slate-900 text-sm">{t.notifications}</span>
             </div>
-            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-md border border-slate-200">Coming Soon</span>
+            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-md border border-slate-200">{t.comingSoon}</span>
           </button>
 
           {/* Privacy & Security */}
           <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50/50 opacity-60 border-b border-slate-200 cursor-not-allowed">
             <div className="flex items-center gap-3">
               <Shield className="w-5 h-5 text-slate-500" />
-              <span className="font-bold text-slate-900 text-sm">Privacy & Security</span>
+              <span className="font-bold text-slate-900 text-sm">{t.privacy}</span>
             </div>
-            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-md border border-slate-200">Coming Soon</span>
+            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-md border border-slate-200">{t.comingSoon}</span>
           </button>
 
           {/* Account Settings */}
@@ -92,30 +135,35 @@ export default function ProfilePage() {
             <SheetTrigger className="w-full flex items-center justify-between p-4 bg-white hover:bg-slate-50 transition-colors active:bg-slate-100">
               <div className="flex items-center gap-3">
                 <Settings className="w-5 h-5 text-violet-500" />
-                <span className="font-bold text-slate-900 text-sm">Account Settings</span>
+                <span className="font-bold text-slate-900 text-sm">{t.account}</span>
               </div>
               <ChevronRight className="w-4 h-4 text-slate-400" />
             </SheetTrigger>
             <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl border-t-0 p-0 overflow-hidden flex flex-col bg-slate-50">
               <SheetHeader className="p-6 bg-white border-b border-slate-200 sticky top-0 z-10">
-                <SheetTitle className="text-xl font-black text-slate-900 text-left">Account Info</SheetTitle>
-                <p className="text-sm font-medium text-slate-500 text-left mt-1">Manage your personal details.</p>
+                <SheetTitle className="text-xl font-black text-slate-900 text-left">{t.accountInfo}</SheetTitle>
+                <p className="text-sm font-medium text-slate-500 text-left mt-1">{t.manageDetails}</p>
               </SheetHeader>
               <div className="p-6 flex-1 overflow-y-auto space-y-6">
                 
                 <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Display Name</label>
-                    <input type="text" defaultValue={userName} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all" />
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.displayName}</label>
+                    <input 
+                      type="text" 
+                      value={userName}
+                      onChange={(e) => setUserName(e.target.value)}
+                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all" 
+                    />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Email Address</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.email}</label>
                     <input type="email" value={userEmail || "Loading..."} readOnly className="w-full px-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-sm font-bold text-slate-500 cursor-not-allowed opacity-70" />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">Language</label>
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider pl-1">{t.language}</label>
                   <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
                     <button 
                       onClick={() => setIsLanguageOpen(!isLanguageOpen)}
@@ -148,8 +196,22 @@ export default function ProfilePage() {
                   </div>
                 </div>
                 
-                <button className="w-full py-3.5 bg-sky-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-sky-600/20 hover:bg-sky-700 transition-colors active:scale-[0.98]">
-                  Save Changes
+                <button 
+                  onClick={handleSave}
+                  disabled={isSaving || saveSuccess}
+                  className={`w-full py-3.5 text-white rounded-xl text-sm font-bold shadow-lg transition-colors active:scale-[0.98] ${
+                    saveSuccess ? 'bg-emerald-500 shadow-emerald-500/20' : 'bg-sky-600 shadow-sky-600/20 hover:bg-sky-700'
+                  }`}
+                >
+                  {isSaving ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <Loader2 className="w-4 h-4 animate-spin" /> {t.saving}
+                    </span>
+                  ) : saveSuccess ? (
+                    t.saved
+                  ) : (
+                    t.save
+                  )}
                 </button>
 
               </div>
@@ -161,7 +223,7 @@ export default function ProfilePage() {
         <div className="pt-6 border-t border-slate-200/50">
           <SignOutButton className="w-full flex items-center justify-center gap-2 p-4 bg-white border border-rose-200 text-rose-500 rounded-2xl font-bold hover:bg-rose-50 transition-colors shadow-sm active:scale-[0.98]">
             <LogOut className="w-5 h-5" />
-            Sign Out
+            {t.signOut}
           </SignOutButton>
         </div>
       </main>
