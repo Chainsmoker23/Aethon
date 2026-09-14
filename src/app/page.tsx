@@ -561,10 +561,6 @@ export default function LandingPage() {
               <div className="absolute bottom-[-20%] left-[-10%] w-[250px] md:w-[400px] h-[250px] md:h-[400px] rounded-full bg-indigo-500 blur-[80px] md:blur-[120px] animate-blob-2" />
             </div>
 
-            {/* Illustration */}
-            <div className="hidden lg:block absolute bottom-0 right-10 z-10 w-64 xl:w-72 pointer-events-none drop-shadow-2xl opacity-90 animate-float">
-              <img src="/cartoon%20Images/old-man.webp" alt="Happy senior" className="w-full h-auto" />
-            </div>
 
             <div className="relative z-20 px-6 py-14 md:px-16 md:py-24 text-center">
               <h2 className="text-2xl md:text-6xl font-extrabold text-white tracking-tighter leading-tight max-w-3xl mx-auto">
