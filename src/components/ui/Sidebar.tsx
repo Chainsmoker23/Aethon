@@ -51,9 +51,11 @@ export function Sidebar() {
       {/* Brand */}
       <div className="h-14 lg:h-[88px] flex items-center justify-between px-4 lg:px-8 border-b border-slate-200 bg-white shrink-0">
         <div className="hidden lg:flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center shadow-sm">
-            <LayoutDashboard className="w-4 h-4 text-white" />
-          </div>
+          <img 
+            src="/logo.jpg" 
+            alt="Aethon Health Logo" 
+            className="w-8 h-8 rounded-lg object-contain bg-white shadow-sm border border-slate-200" 
+          />
           <span className="font-bold text-slate-900 tracking-tight">Management</span>
         </div>
         {/* Mobile close button */}

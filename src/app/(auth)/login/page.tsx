@@ -33,6 +33,11 @@ function LoginForm() {
 
       {/* Brand */}
       <div className="animate-fade-in-up flex flex-col items-center mt-12">
+        <img 
+          src="/logo.jpg" 
+          alt="Aethon Health Logo" 
+          className="w-16 h-16 rounded-2xl object-contain bg-white shadow-sm border border-slate-200/50 mb-4" 
+        />
         <h1 className="text-4xl font-bold text-navy tracking-tight">
           Aethon <span className="text-primary font-light">Health</span>
         </h1>

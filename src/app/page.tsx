@@ -28,9 +28,11 @@ export default function LandingPage() {
       <nav className="sticky top-0 z-50 bg-white/60 backdrop-blur-2xl border-b border-slate-200/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 animate-heartbeat">
-              <Heart className="w-5 h-5 text-white" fill="white" />
-            </div>
+            <img 
+              src="/logo.jpg" 
+              alt="Aethon Health Logo" 
+              className="w-10 h-10 rounded-xl object-contain bg-white shadow-sm border border-slate-200/50" 
+            />
             <span className="text-xl font-extrabold text-navy tracking-tight">
               Aethon<span className="font-light text-primary ml-0.5">Health</span>
             </span>
@@ -651,9 +653,11 @@ export default function LandingPage() {
       <footer className="border-t border-slate-200/60 bg-white/60 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center shadow-md shadow-sky-500/15">
-              <Heart className="w-4 h-4 text-white" fill="white" />
-            </div>
+            <img 
+              src="/logo.jpg" 
+              alt="Aethon Health Logo" 
+              className="w-8 h-8 rounded-lg object-contain bg-white shadow-sm border border-slate-200/50" 
+            />
             <span className="text-lg font-extrabold text-navy tracking-tight">
               Aethon<span className="font-light text-primary ml-0.5">Health</span>
             </span>
