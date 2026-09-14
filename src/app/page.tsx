@@ -344,6 +344,68 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* === The Human Touch Section === */}
+      <section className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24 overflow-hidden">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <Reveal direction="left" className="order-2 md:order-1">
+            <div className="relative max-w-md mx-auto md:max-w-none">
+              {/* Decorative background blob */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-sky-200 to-emerald-200 rounded-[40px] rotate-3 blur-md transform scale-105 opacity-60" />
+              <img 
+                src="/cartoon%20Images/nurse-assisting.webp" 
+                alt="Nurse assisting elderly patient" 
+                className="relative z-10 w-full h-auto drop-shadow-2xl object-cover rounded-[40px] bg-white p-6 md:p-8 border border-slate-100"
+              />
+              {/* Floating element */}
+              <div className="absolute -bottom-6 -right-6 md:-right-10 z-20 glass-panel rounded-2xl p-4 shadow-xl flex items-center gap-3 animate-float hidden sm:flex">
+                 <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
+                   <Heart className="w-5 h-5 text-emerald-600" />
+                 </div>
+                 <div>
+                   <p className="text-sm font-bold text-navy">Compassionate Care</p>
+                   <p className="text-xs text-text-secondary font-medium">Powered by tech</p>
+                 </div>
+              </div>
+            </div>
+          </Reveal>
+          
+          <Reveal direction="right" className="order-1 md:order-2">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-sky-100 mb-6">
+                <Sparkles className="w-4 h-4 text-sky-600" />
+                <span className="text-xs font-bold text-sky-700 tracking-wide uppercase">
+                  The Human Touch
+                </span>
+              </div>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-navy tracking-tighter mb-6 leading-[1.1]">
+                Technology that <br/>
+                <span className="gradient-text">empowers care</span>
+              </h2>
+              <p className="text-base md:text-lg text-text-secondary font-medium leading-relaxed mb-6">
+                At Aethon Health, we believe that software shouldn't replace the human element of caregiving—it should enhance it.
+              </p>
+              <p className="text-base md:text-lg text-text-secondary font-medium leading-relaxed mb-8">
+                By automating the busywork, generating smart timelines, and streamlining communication, we give care workers their time back so they can focus on what truly matters: the residents.
+              </p>
+              <ul className="space-y-4">
+                {[
+                  "More face-to-face time with residents",
+                  "Reduced burnout for care staff",
+                  "Peace of mind for families"
+                ].map((item, i) => (
+                   <li key={i} className="flex items-center gap-3 text-sm md:text-base font-bold text-navy">
+                      <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      </div>
+                      {item}
+                   </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* === How It Works === */}
       <section id="how-it-works" className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24">
         <Reveal>
@@ -366,6 +428,12 @@ export default function LandingPage() {
               className="glass-panel-heavy rounded-2xl md:rounded-3xl p-6 md:p-10 relative overflow-hidden group h-full shadow-lg"
             >
               <div className="absolute top-0 right-0 w-40 h-40 md:w-64 md:h-64 bg-gradient-to-bl from-sky-400/20 to-transparent rounded-bl-full blur-xl" />
+              
+              {/* Subtle watermark illustration */}
+              <div className="absolute bottom-0 right-0 w-48 md:w-64 opacity-5 pointer-events-none">
+                <img src="/cartoon%20Images/doctor-explaining.webp" alt="" className="w-full h-auto" />
+              </div>
+
               <div className="relative z-10">
                 <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/20 mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Heart className="w-6 h-6 md:w-8 md:h-8" />
@@ -394,6 +462,12 @@ export default function LandingPage() {
               className="glass-panel-heavy rounded-2xl md:rounded-3xl p-6 md:p-10 relative overflow-hidden group h-full shadow-lg"
             >
               <div className="absolute top-0 right-0 w-40 h-40 md:w-64 md:h-64 bg-gradient-to-bl from-indigo-400/20 to-transparent rounded-bl-full blur-xl" />
+              
+              {/* Subtle watermark illustration */}
+              <div className="absolute bottom-0 right-0 w-48 md:w-64 opacity-5 pointer-events-none">
+                <img src="/cartoon%20Images/hospital-entrance.webp" alt="" className="w-full h-auto" />
+              </div>
+
               <div className="relative z-10">
                 <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Building2 className="w-6 h-6 md:w-8 md:h-8" />
