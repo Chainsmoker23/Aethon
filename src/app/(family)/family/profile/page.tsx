@@ -76,14 +76,12 @@ export default function ProfilePage() {
           
           {/* Notification Preferences */}
           <Sheet>
-            <SheetTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 bg-white hover:bg-slate-50 border-b border-slate-200 transition-colors active:bg-slate-100">
-                <div className="flex items-center gap-3">
-                  <Bell className="w-5 h-5 text-sky-500" />
-                  <span className="font-bold text-slate-900 text-sm">Notification Preferences</span>
-                </div>
-                <ChevronRight className="w-4 h-4 text-slate-400" />
-              </button>
+            <SheetTrigger className="w-full flex items-center justify-between p-4 bg-white hover:bg-slate-50 border-b border-slate-200 transition-colors active:bg-slate-100">
+              <div className="flex items-center gap-3">
+                <Bell className="w-5 h-5 text-sky-500" />
+                <span className="font-bold text-slate-900 text-sm">Notification Preferences</span>
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-400" />
             </SheetTrigger>
             <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl border-t-0 p-0 overflow-hidden flex flex-col bg-slate-50">
               <SheetHeader className="p-6 bg-white border-b border-slate-200 sticky top-0 z-10">
@@ -133,14 +131,12 @@ export default function ProfilePage() {
 
           {/* Privacy & Security */}
           <Sheet>
-            <SheetTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 bg-white hover:bg-slate-50 border-b border-slate-200 transition-colors active:bg-slate-100">
-                <div className="flex items-center gap-3">
-                  <Shield className="w-5 h-5 text-emerald-500" />
-                  <span className="font-bold text-slate-900 text-sm">Privacy & Security</span>
-                </div>
-                <ChevronRight className="w-4 h-4 text-slate-400" />
-              </button>
+            <SheetTrigger className="w-full flex items-center justify-between p-4 bg-white hover:bg-slate-50 border-b border-slate-200 transition-colors active:bg-slate-100">
+              <div className="flex items-center gap-3">
+                <Shield className="w-5 h-5 text-emerald-500" />
+                <span className="font-bold text-slate-900 text-sm">Privacy & Security</span>
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-400" />
             </SheetTrigger>
             <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl border-t-0 p-0 overflow-hidden flex flex-col bg-slate-50">
               <SheetHeader className="p-6 bg-white border-b border-slate-200 sticky top-0 z-10">
@@ -190,14 +186,12 @@ export default function ProfilePage() {
 
           {/* Account Settings */}
           <Sheet>
-            <SheetTrigger asChild>
-              <button className="w-full flex items-center justify-between p-4 bg-white hover:bg-slate-50 transition-colors active:bg-slate-100">
-                <div className="flex items-center gap-3">
-                  <Settings className="w-5 h-5 text-violet-500" />
-                  <span className="font-bold text-slate-900 text-sm">Account Settings</span>
-                </div>
-                <ChevronRight className="w-4 h-4 text-slate-400" />
-              </button>
+            <SheetTrigger className="w-full flex items-center justify-between p-4 bg-white hover:bg-slate-50 transition-colors active:bg-slate-100">
+              <div className="flex items-center gap-3">
+                <Settings className="w-5 h-5 text-violet-500" />
+                <span className="font-bold text-slate-900 text-sm">Account Settings</span>
+              </div>
+              <ChevronRight className="w-4 h-4 text-slate-400" />
             </SheetTrigger>
             <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl border-t-0 p-0 overflow-hidden flex flex-col bg-slate-50">
               <SheetHeader className="p-6 bg-white border-b border-slate-200 sticky top-0 z-10">
