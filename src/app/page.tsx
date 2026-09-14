@@ -227,7 +227,7 @@ export default function LandingPage() {
           </Reveal>
           
           <Reveal direction="right">
-            <div className="relative max-w-md mx-auto">
+            <div className="relative max-w-[280px] md:max-w-[320px] mx-auto">
               <div className="absolute inset-0 bg-slate-200/50 rounded-[40px] -rotate-3 blur-sm transform scale-105 opacity-60" />
               <img 
                 src="/cartoon%20Images/a-depressed-senior-in-a-wheelchair-1.jpg" 
