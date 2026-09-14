@@ -97,7 +97,7 @@ export default function ClientProfilePage() {
       const userIds = accessData.map(a => a.user_id);
       const { data: profiles } = await supabase
         .from('user_profiles')
-        .select('full_name')
+        .select('id, full_name')
         .in('id', userIds);
         
       if (profiles) {
@@ -172,6 +172,24 @@ export default function ClientProfilePage() {
       alert("Failed to update medication status");
       fetchProfile(); // Revert on failure
     }
+  };
+
+  const handleRevokeAccess = async (userId: string) => {
+    await supabase
+      .from('family_access')
+      .delete()
+      .eq('resident_id', residentId)
+      .eq('user_id', userId);
+    await fetchProfile();
+  };
+
+  const handleCancelInvite = async (email: string) => {
+    await supabase
+      .from('family_invitations')
+      .delete()
+      .eq('resident_id', residentId)
+      .eq('email', email);
+    await fetchProfile();
   };
 
   const handleInvite = async (e: React.FormEvent) => {
@@ -353,9 +371,18 @@ export default function ClientProfilePage() {
                           <p className="text-[9px] md:text-[10px] font-medium text-slate-500">Connected</p>
                         </div>
                       </div>
-                      <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md shrink-0 ml-2">
-                        Active
-                      </span>
+                      <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">
+                          Active
+                        </span>
+                        <button
+                          onClick={() => handleRevokeAccess(family.id)}
+                          className="w-6 h-6 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center hover:bg-rose-100 transition-colors group"
+                          title="Revoke access"
+                        >
+                          <X className="w-3 h-3 text-rose-400 group-hover:text-rose-600" />
+                        </button>
+                      </div>
                     </div>
                   ))}
 
@@ -371,9 +398,18 @@ export default function ClientProfilePage() {
                           <p className="text-[9px] md:text-[10px] font-medium text-slate-500">Invite Sent</p>
                         </div>
                       </div>
-                      <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-slate-200 px-2 py-0.5 rounded-md shrink-0 ml-2">
-                        Pending
-                      </span>
+                      <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-slate-200 px-2 py-0.5 rounded-md">
+                          Pending
+                        </span>
+                        <button
+                          onClick={() => handleCancelInvite(email)}
+                          className="w-6 h-6 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center hover:bg-rose-100 transition-colors group"
+                          title="Cancel invite"
+                        >
+                          <X className="w-3 h-3 text-rose-400 group-hover:text-rose-600" />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
