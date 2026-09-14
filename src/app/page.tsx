@@ -34,6 +34,11 @@ export default function LandingPage() {
             <span className="text-xl font-extrabold text-navy tracking-tight">
               Aethon<span className="font-light text-primary ml-0.5">Health</span>
             </span>
+            <svg width="14" height="14" viewBox="0 0 32 32" fill="none" className="shrink-0 opacity-70">
+              <rect width="32" height="32" rx="4" fill="#FF0000"/>
+              <rect x="13" y="6" width="6" height="20" rx="1" fill="white"/>
+              <rect x="6" y="13" width="20" height="6" rx="1" fill="white"/>
+            </svg>
           </div>
 
           <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-text-secondary">
@@ -103,8 +108,8 @@ export default function LandingPage() {
 
           <Reveal delay={200}>
             <p className="text-base md:text-xl text-text-secondary font-medium mt-6 md:mt-8 max-w-lg md:max-w-2xl leading-relaxed px-2 md:px-0">
-              The intelligent platform that gives families real-time visibility
-              into their loved one's care — while empowering staff with
+              The intelligent platform — built for Swiss healthcare — that gives families real-time visibility
+              into their loved one's care, while empowering staff with
               tools that actually work.
             </p>
           </Reveal>
@@ -510,6 +515,87 @@ export default function LandingPage() {
         </Reveal>
       </section>
 
+      {/* === Swiss Precision Trust Banner === */}
+      <section className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24">
+        <Reveal>
+          <div className="relative rounded-3xl md:rounded-[40px] overflow-hidden border border-red-100">
+            {/* Swiss-inspired white background with subtle cross pattern */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white via-red-50/30 to-white" />
+            
+            {/* Subtle Swiss Cross watermark */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none">
+              <svg width="400" height="400" viewBox="0 0 32 32" fill="none">
+                <rect x="13" y="6" width="6" height="20" rx="1" fill="#FF0000"/>
+                <rect x="6" y="13" width="20" height="6" rx="1" fill="#FF0000"/>
+              </svg>
+            </div>
+
+            <div className="relative z-10 px-6 py-12 md:px-16 md:py-16">
+              <div className="flex flex-col items-center text-center mb-10 md:mb-14">
+                {/* Swiss badge */}
+                <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-red-200 shadow-sm mb-6">
+                  <svg width="20" height="20" viewBox="0 0 32 32" fill="none" className="shrink-0">
+                    <rect width="32" height="32" rx="4" fill="#FF0000"/>
+                    <rect x="13" y="6" width="6" height="20" rx="1" fill="white"/>
+                    <rect x="6" y="13" width="20" height="6" rx="1" fill="white"/>
+                  </svg>
+                  <span className="text-xs font-bold text-red-700 uppercase tracking-widest">Built for Swiss Healthcare</span>
+                </div>
+                
+                <h2 className="text-3xl md:text-5xl font-extrabold text-navy tracking-tighter leading-[1.1]">
+                  Swiss precision,<br/>
+                  <span className="text-red-600">global trust</span>
+                </h2>
+                <p className="text-sm md:text-lg text-text-secondary font-medium mt-4 max-w-2xl mx-auto">
+                  Aethon Health is designed from the ground up for the Swiss healthcare system — with the precision, privacy, and reliability that Switzerland is known for worldwide.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-5 md:gap-6">
+                {/* Pillar 1: Data Sovereignty */}
+                <Reveal delay={100}>
+                  <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm h-full">
+                    <div className="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center mb-4">
+                      <Shield className="w-5 h-5 text-red-600" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-navy mb-2 tracking-tight">Swiss Data Sovereignty</h3>
+                    <p className="text-sm text-text-secondary font-medium leading-relaxed">
+                      Your data stays in Switzerland. Fully compliant with the Swiss Federal Act on Data Protection (FADP) and GDPR. Zero compromises on privacy.
+                    </p>
+                  </div>
+                </Reveal>
+
+                {/* Pillar 2: Multilingual */}
+                <Reveal delay={200}>
+                  <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm h-full">
+                    <div className="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center mb-4">
+                      <Users className="w-5 h-5 text-red-600" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-navy mb-2 tracking-tight">Multilingual by Default</h3>
+                    <p className="text-sm text-text-secondary font-medium leading-relaxed">
+                      Built for Switzerland's four-language reality. Interface and care notes flow seamlessly in Deutsch, Français, Italiano, and English.
+                    </p>
+                  </div>
+                </Reveal>
+
+                {/* Pillar 3: Precision */}
+                <Reveal delay={300}>
+                  <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm h-full">
+                    <div className="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center mb-4">
+                      <CheckCheck className="w-5 h-5 text-red-600" />
+                    </div>
+                    <h3 className="text-base font-extrabold text-navy mb-2 tracking-tight">Swiss-Grade Reliability</h3>
+                    <p className="text-sm text-text-secondary font-medium leading-relaxed">
+                      Like a Swiss timepiece, Aethon runs with relentless precision. 99.9% uptime, sub-second alerts, and infrastructure engineered for zero downtime.
+                    </p>
+                  </div>
+                </Reveal>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
       {/* === Final CTA === */}
       <section className="relative max-w-6xl mx-auto px-5 md:px-6 pb-20 md:pb-32 pt-4 md:pt-8">
         <Reveal>
@@ -523,11 +609,19 @@ export default function LandingPage() {
 
 
             <div className="relative z-20 px-6 py-14 md:px-16 md:py-24 text-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 mb-6 md:mb-8">
+                <svg width="16" height="16" viewBox="0 0 32 32" fill="none" className="shrink-0">
+                  <rect width="32" height="32" rx="4" fill="#FF0000"/>
+                  <rect x="13" y="6" width="6" height="20" rx="1" fill="white"/>
+                  <rect x="6" y="13" width="20" height="6" rx="1" fill="white"/>
+                </svg>
+                <span className="text-[10px] md:text-xs font-bold text-white/80 uppercase tracking-widest">Made in Switzerland</span>
+              </div>
               <h2 className="text-2xl md:text-6xl font-extrabold text-white tracking-tighter leading-tight max-w-3xl mx-auto">
                 Ready to transform how families experience care?
               </h2>
               <p className="text-sm md:text-lg text-slate-300 font-medium mt-4 md:mt-6 max-w-xl mx-auto">
-                Join forward-thinking care facilities already using Aethon to build trust and transparency with families.
+                Join forward-thinking Swiss care facilities already using Aethon to build trust, transparency, and peace of mind with families.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 mt-8 md:mt-12 w-full sm:w-auto">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }} className="w-full sm:w-auto">
