@@ -142,7 +142,7 @@ export default function TeamPage() {
                 <img 
                   src="/Selena.jpg" 
                   alt="Selena Nguyen" 
-                  className="w-full h-full object-cover scale-125"
+                  className="w-full h-full object-cover scale-[1.15] translate-y-1"
                 />
               </div>
               <h3 className="text-xl font-extrabold text-navy mb-1">Selena Nguyen</h3>
