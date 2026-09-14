@@ -386,8 +386,8 @@ export default function LandingPage() {
       {/* === The Human Touch Section === */}
       <section className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24 overflow-hidden">
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <Reveal direction="left" className="order-2 md:order-1">
-            <div className="relative max-w-md mx-auto md:max-w-none">
+          <Reveal direction="left" className="order-2 md:order-1 flex items-center justify-center">
+            <div className="relative max-w-[280px] md:max-w-[360px] w-full mx-auto">
               {/* Decorative background blob */}
               <div className="absolute inset-0 bg-gradient-to-tr from-sky-200 to-emerald-200 rounded-[40px] rotate-3 blur-md transform scale-105 opacity-60" />
               <img 
