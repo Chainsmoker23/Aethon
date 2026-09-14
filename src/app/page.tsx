@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Heart, Shield, MessageSquare, Activity, Bell, Clock,
   ArrowRight, CheckCircle2, Users, Building2, Sparkles,
@@ -9,6 +9,118 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Reveal } from "@/components/ui/Reveal";
+
+/* ── Live Chat Demo ── */
+const chatMessages = [
+  { from: "staff", text: "Good morning! Margaret had a wonderful breakfast today 🌻", time: "10:42 AM" },
+  { from: "family", text: "That's so great to hear! Did she take her morning walk?", time: "10:43 AM" },
+  { from: "staff", text: "Yes! She walked in the garden for 20 minutes and even fed the birds 🐦", time: "10:44 AM" },
+  { from: "family", text: "Amazing, thank you for the updates!", time: "10:45 AM" },
+  { from: "staff", text: "Of course! I'll send photos later this afternoon 📸", time: "10:45 AM" },
+];
+
+function LiveChatDemo() {
+  const [visibleCount, setVisibleCount] = useState(0);
+  const [typing, setTyping] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (visibleCount >= chatMessages.length) {
+      // Pause then reset loop
+      const resetTimer = setTimeout(() => {
+        setVisibleCount(0);
+        setTyping(false);
+      }, 4000);
+      return () => clearTimeout(resetTimer);
+    }
+
+    // Show typing indicator first
+    const typingTimer = setTimeout(() => {
+      setTyping(true);
+    }, 800);
+
+    // Then reveal message
+    const messageTimer = setTimeout(() => {
+      setTyping(false);
+      setVisibleCount((c) => c + 1);
+    }, 2200);
+
+    return () => {
+      clearTimeout(typingTimer);
+      clearTimeout(messageTimer);
+    };
+  }, [visibleCount]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+  }, [visibleCount, typing]);
+
+  return (
+    <div className="w-full md:w-1/2 relative z-10 md:translate-x-6">
+      <div
+        ref={scrollRef}
+        className="flex flex-col gap-2 md:gap-2.5 max-h-[180px] md:max-h-[200px] overflow-y-auto pr-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+      >
+        <AnimatePresence>
+          {chatMessages.slice(0, visibleCount).map((msg, i) => (
+            <motion.div
+              key={`${msg.time}-${i}`}
+              initial={{ opacity: 0, y: 12, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className={`flex ${msg.from === "family" ? "justify-start" : "justify-end"}`}
+            >
+              <div
+                className={`max-w-[85%] p-2.5 md:p-3 shadow-sm ${
+                  msg.from === "staff"
+                    ? "bg-white rounded-2xl rounded-br-sm border border-slate-100"
+                    : "bg-primary text-white rounded-2xl rounded-bl-sm"
+                }`}
+              >
+                <p className={`text-[11px] md:text-xs font-medium ${msg.from === "staff" ? "text-navy" : "text-white"}`}>{msg.text}</p>
+                <div className={`flex items-center gap-1 mt-0.5 ${msg.from === "staff" ? "justify-end" : "justify-start"}`}>
+                  <span className={`text-[8px] md:text-[9px] ${msg.from === "staff" ? "text-text-muted" : "text-white/60"}`}>{msg.time}</span>
+                  {msg.from === "staff" && <CheckCheck className="w-2.5 h-2.5 text-primary" />}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+
+        {/* Typing indicator */}
+        <AnimatePresence>
+          {typing && visibleCount < chatMessages.length && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              className={`flex ${chatMessages[visibleCount].from === "family" ? "justify-start" : "justify-end"}`}
+            >
+              <div className={`px-4 py-2.5 rounded-2xl shadow-sm ${
+                chatMessages[visibleCount].from === "staff"
+                  ? "bg-white border border-slate-100 rounded-br-sm"
+                  : "bg-primary rounded-bl-sm"
+              }`}>
+                <div className="flex items-center gap-1">
+                  {[0, 1, 2].map((dot) => (
+                    <motion.div
+                      key={dot}
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        chatMessages[visibleCount].from === "staff" ? "bg-slate-400" : "bg-white/70"
+                      }`}
+                      animate={{ y: [0, -4, 0] }}
+                      transition={{ duration: 0.6, repeat: Infinity, delay: dot * 0.15 }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -232,7 +344,7 @@ export default function LandingPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 md:auto-rows-[280px]">
           
-          {/* Bento Item 1: Wide (Family Messaging) */}
+          {/* Bento Item 1: Wide (Family Messaging) — Live Chat */}
           <Reveal delay={100} className="md:col-span-2 h-full">
             <motion.div 
               whileHover={{ scale: 1.02, y: -5 }}
@@ -249,18 +361,7 @@ export default function LandingPage() {
                   Secure, instant communication between staff and families. No more phone tag or lost sticky notes.
                 </p>
               </div>
-              <div className="w-full md:w-1/2 flex flex-col gap-2.5 md:gap-3 relative z-10 md:translate-x-10 md:translate-y-4">
-                <div className="bg-white p-3 md:p-4 rounded-2xl rounded-br-sm shadow-md border border-slate-100 w-[85%] md:w-4/5 self-end">
-                  <p className="text-xs md:text-sm font-medium text-navy">She ate all her breakfast and enjoyed the garden today! 🌻</p>
-                  <div className="flex items-center justify-end gap-1 mt-1">
-                    <span className="text-[9px] md:text-[10px] text-text-muted">10:42 AM</span>
-                    <CheckCheck className="w-2.5 h-2.5 md:w-3 md:h-3 text-primary" />
-                  </div>
-                </div>
-                <div className="bg-primary text-white p-3 md:p-4 rounded-2xl rounded-bl-sm shadow-md w-[85%] md:w-4/5 self-start">
-                  <p className="text-xs md:text-sm font-medium">That's wonderful to hear. Thank you!</p>
-                </div>
-              </div>
+              <LiveChatDemo />
             </motion.div>
           </Reveal>
 
