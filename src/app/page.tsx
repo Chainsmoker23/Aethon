@@ -90,14 +90,7 @@ export default function LandingPage() {
       {/* === Hero Section === */}
       <section className="relative max-w-6xl mx-auto px-5 md:px-6 pt-14 pb-16 md:pt-28 md:pb-36 flex flex-col items-center">
         <div className="flex flex-col items-center text-center relative z-20">
-          <Reveal>
-            <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/70 backdrop-blur-lg border border-slate-200/60 shadow-sm mb-6 md:mb-8 animate-levitate" style={{ animationDelay: '1s' }}>
-              <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-500" />
-              <span className="text-[10px] md:text-xs font-bold text-navy tracking-wide uppercase">
-                AI-Powered Care Platform
-              </span>
-            </div>
-          </Reveal>
+
 
           <Reveal delay={100}>
             <h1 className="text-[2.5rem] md:text-7xl lg:text-8xl font-extrabold text-navy leading-[0.95] tracking-tighter max-w-4xl">
@@ -148,7 +141,7 @@ export default function LandingPage() {
 
         {/* Hero Mockup emerging from bottom */}
         <Reveal delay={500} className="w-full mt-24 relative z-10 hidden md:block">
-          <div className="animate-levitate" style={{ animationDelay: '0.5s' }}>
+          <div>
             <div className="max-w-4xl mx-auto bg-white/40 backdrop-blur-3xl border border-white/60 rounded-t-[40px] shadow-2xl overflow-hidden h-[300px] p-6 flex gap-6 mask-bottom glass-glare">
             {/* Sidebar Mockup */}
             <div className="w-48 bg-white/50 rounded-2xl p-4 border border-white/40 flex flex-col gap-3">
@@ -174,30 +167,6 @@ export default function LandingPage() {
           </div>
           </div>
         </Reveal>
-
-        {/* === Floating Feature Pills === */}
-        <div className="hidden lg:block absolute top-32 left-8 animate-float">
-          <div className="glass-panel rounded-2xl px-5 py-3 flex items-center gap-3 shadow-lg">
-            <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
-              <Activity className="w-5 h-5 text-emerald-600" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-navy">Vitals Normal</p>
-              <p className="text-[11px] font-medium text-text-muted">Updated 2m ago</p>
-            </div>
-          </div>
-        </div>
-        <div className="hidden lg:block absolute top-48 right-10 animate-float-delayed">
-          <div className="glass-panel rounded-2xl px-5 py-3 flex items-center gap-3 shadow-lg">
-            <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
-              <MessageSquare className="w-5 h-5 text-blue-600" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-navy">New Message</p>
-              <p className="text-[11px] font-medium text-text-muted">"She had a great day!"</p>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* === The Challenge Section === */}
@@ -395,16 +364,7 @@ export default function LandingPage() {
                 alt="Nurse assisting elderly patient" 
                 className="relative z-10 w-full h-auto drop-shadow-2xl object-cover rounded-[40px] bg-white p-6 md:p-8 border border-slate-100"
               />
-              {/* Floating element */}
-              <div className="absolute -bottom-6 -right-6 md:-right-10 z-20 glass-panel rounded-2xl p-4 shadow-xl flex items-center gap-3 animate-float hidden sm:flex">
-                 <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                   <Heart className="w-5 h-5 text-emerald-600" />
-                 </div>
-                 <div>
-                   <p className="text-sm font-bold text-navy">Compassionate Care</p>
-                   <p className="text-xs text-text-secondary font-medium">Powered by tech</p>
-                 </div>
-              </div>
+
             </div>
           </Reveal>
           
