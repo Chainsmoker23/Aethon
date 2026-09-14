@@ -36,10 +36,10 @@ export default function LandingPage() {
             </span>
           </div>
 
-          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-text-secondary">
             <a href="#features" className="hover:text-navy transition-colors">Features</a>
             <a href="#how-it-works" className="hover:text-navy transition-colors">How It Works</a>
+            <a href="#team" className="hover:text-navy transition-colors">Team</a>
             <a href="#trust" className="hover:text-navy transition-colors">Trust</a>
           </div>
 
@@ -76,6 +76,9 @@ export default function LandingPage() {
               </a>
               <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 flex items-center justify-between">
                 How It Works <ChevronRight className="w-4 h-4 text-text-muted" />
+              </a>
+              <a href="#team" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 flex items-center justify-between">
+                Team <ChevronRight className="w-4 h-4 text-text-muted" />
               </a>
               <a href="#trust" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 flex items-center justify-between">
                 Trust & Security <ChevronRight className="w-4 h-4 text-text-muted" />
@@ -412,6 +415,64 @@ export default function LandingPage() {
                   ))}
                 </ul>
               </div>
+            </motion.div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* === Team Section === */}
+      <section id="team" className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24">
+        <Reveal>
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-navy tracking-tighter">
+              Meet the <span className="gradient-text">Team</span>
+            </h2>
+            <p className="text-sm md:text-lg text-text-secondary font-medium mt-3 md:mt-4 max-w-xl mx-auto px-2 md:px-0">
+              The experts behind Aethon Health, dedicated to transforming elderly care through intelligent technology.
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+          {/* Team Member 1 */}
+          <Reveal delay={100} className="h-full">
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -5 }}
+              className="glass-panel rounded-3xl p-8 flex flex-col items-center text-center shadow-lg relative overflow-hidden h-full"
+            >
+              <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center text-white text-3xl font-black shadow-xl shadow-sky-500/20 mb-6">
+                FW
+              </div>
+              <h3 className="text-xl font-extrabold text-navy mb-1">Flynn Werner</h3>
+              <p className="text-[11px] md:text-xs font-bold text-primary uppercase tracking-wider">Founder & CEO</p>
+            </motion.div>
+          </Reveal>
+
+          {/* Team Member 2 */}
+          <Reveal delay={200} className="h-full">
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -5 }}
+              className="glass-panel rounded-3xl p-8 flex flex-col items-center text-center shadow-lg relative overflow-hidden h-full"
+            >
+              <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-violet-400 to-purple-600 flex items-center justify-center text-white text-3xl font-black shadow-xl shadow-violet-500/20 mb-6">
+                DS
+              </div>
+              <h3 className="text-xl font-extrabold text-navy mb-1">Divesh Sarkar</h3>
+              <p className="text-[11px] md:text-xs font-bold text-violet-600 uppercase tracking-wider">CTO & Researcher</p>
+            </motion.div>
+          </Reveal>
+
+          {/* Team Member 3 */}
+          <Reveal delay={300} className="h-full">
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -5 }}
+              className="glass-panel rounded-3xl p-8 flex flex-col items-center text-center shadow-lg relative overflow-hidden h-full"
+            >
+              <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-rose-400 to-orange-500 flex items-center justify-center text-white text-3xl font-black shadow-xl shadow-rose-500/20 mb-6">
+                SN
+              </div>
+              <h3 className="text-xl font-extrabold text-navy mb-1">Selena Nguyen</h3>
+              <p className="text-[11px] md:text-xs font-bold text-rose-600 uppercase tracking-wider">COO</p>
             </motion.div>
           </Reveal>
         </div>
