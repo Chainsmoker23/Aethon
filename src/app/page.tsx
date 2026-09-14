@@ -226,14 +226,16 @@ export default function LandingPage() {
             </div>
           </Reveal>
           
-          <Reveal direction="right">
-            <div className="relative max-w-md mx-auto">
+          <Reveal direction="right" className="flex items-center justify-center w-full h-full">
+            <div className="relative w-full max-w-sm md:max-w-md mx-auto aspect-square">
               <div className="absolute inset-0 bg-slate-200/50 rounded-[40px] -rotate-3 blur-sm transform scale-105 opacity-60" />
-              <img 
-                src="/cartoon%20Images/a-depressed-senior-in-a-wheelchair.webp" 
-                alt="Depressed senior" 
-                className="relative z-10 w-full h-auto drop-shadow-xl object-cover rounded-[40px] bg-white p-6 md:p-10 border border-slate-100"
-              />
+              <div className="relative z-10 w-full h-full drop-shadow-xl rounded-[40px] bg-white border border-slate-100 flex items-center justify-center overflow-hidden p-8">
+                <img 
+                  src="/cartoon%20Images/a-depressed-senior-in-a-wheelchair.webp" 
+                  alt="Depressed senior" 
+                  className="w-[140%] max-w-none h-auto object-contain translate-x-8 md:translate-x-12"
+                />
+              </div>
             </div>
           </Reveal>
         </div>
