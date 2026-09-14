@@ -109,7 +109,7 @@ export default function TeamPage() {
               <img 
                 src="/Flynn.jpg" 
                 alt="Flynn Werner" 
-                className="w-24 h-24 rounded-full object-cover shadow-xl shadow-sky-500/20 mb-6 border-4 border-white"
+                className="w-24 h-24 rounded-full object-cover shadow-xl shadow-sky-500/20 mb-6 shrink-0"
               />
               <h3 className="text-xl font-extrabold text-navy mb-1">Flynn Werner</h3>
               <p className="text-[11px] md:text-xs font-bold text-sky-600 uppercase tracking-wider">Founder & CEO</p>
@@ -139,7 +139,7 @@ export default function TeamPage() {
               <img 
                 src="/Selena.jpg" 
                 alt="Selena Nguyen" 
-                className="w-24 h-24 rounded-full object-cover shadow-xl shadow-rose-500/20 mb-6 border-4 border-white"
+                className="w-24 h-24 rounded-full object-cover shadow-xl shadow-rose-500/20 mb-6 shrink-0"
               />
               <h3 className="text-xl font-extrabold text-navy mb-1">Selena Nguyen</h3>
               <p className="text-[11px] md:text-xs font-bold text-rose-600 uppercase tracking-wider">COO</p>
