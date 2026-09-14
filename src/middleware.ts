@@ -67,9 +67,10 @@ export async function middleware(request: NextRequest) {
 
   const isAuthRoute = request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/auth')
   const isLandingPage = request.nextUrl.pathname === '/'
+  const isTeamPage = request.nextUrl.pathname.startsWith('/team')
 
-  if (!user && !isAuthRoute && !isLandingPage) {
-    // If not logged in and not on login page or landing page, redirect to login
+  if (!user && !isAuthRoute && !isLandingPage && !isTeamPage) {
+    // If not logged in and not on login page, landing page, or team page, redirect to login
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
