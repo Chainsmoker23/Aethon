@@ -200,6 +200,45 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* === The Challenge Section === */}
+      <section className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24 border-t border-slate-200/50">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <Reveal direction="left">
+            <div>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-navy tracking-tighter mb-6 leading-[1.1]">
+                The current state of care <br/>
+                <span className="text-rose-500">is broken.</span>
+              </h2>
+              <p className="text-base md:text-lg text-text-secondary font-medium leading-relaxed mb-6">
+                Staff are overwhelmed with paperwork. Families are left in the dark, constantly worrying and making phone calls just to get a simple update.
+              </p>
+              <p className="text-base md:text-lg text-text-secondary font-medium leading-relaxed mb-8">
+                And caught in the middle are the residents—who deserve connection, dignity, and attentive care, but often feel isolated in the system.
+              </p>
+              
+              <div className="bg-rose-50/50 border border-rose-100 rounded-2xl p-5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-rose-200/30 blur-xl rounded-bl-full" />
+                <p className="text-sm md:text-base font-bold text-rose-800 relative z-10 italic">
+                  "I just want to know if my dad ate lunch today without feeling like I'm bothering the nurses."
+                </p>
+                <p className="text-xs font-semibold text-rose-600 mt-3 relative z-10 uppercase tracking-widest">— A frustrated family member</p>
+              </div>
+            </div>
+          </Reveal>
+          
+          <Reveal direction="right">
+            <div className="relative max-w-md mx-auto">
+              <div className="absolute inset-0 bg-slate-200/50 rounded-[40px] -rotate-3 blur-sm transform scale-105 opacity-60" />
+              <img 
+                src="/cartoon%20Images/a-depressed-senior-in-a-wheelchair.webp" 
+                alt="Depressed senior" 
+                className="relative z-10 w-full h-auto drop-shadow-xl object-cover rounded-[40px] bg-white p-6 md:p-10 border border-slate-100"
+              />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* === Features Section (Bento Box) === */}
       <section id="features" className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24">
         <Reveal>
@@ -522,7 +561,12 @@ export default function LandingPage() {
               <div className="absolute bottom-[-20%] left-[-10%] w-[250px] md:w-[400px] h-[250px] md:h-[400px] rounded-full bg-indigo-500 blur-[80px] md:blur-[120px] animate-blob-2" />
             </div>
 
-            <div className="relative z-10 px-6 py-14 md:px-16 md:py-24 text-center">
+            {/* Illustration */}
+            <div className="hidden lg:block absolute bottom-0 right-10 z-10 w-64 xl:w-72 pointer-events-none drop-shadow-2xl opacity-90 animate-float">
+              <img src="/cartoon%20Images/old-man.webp" alt="Happy senior" className="w-full h-auto" />
+            </div>
+
+            <div className="relative z-20 px-6 py-14 md:px-16 md:py-24 text-center">
               <h2 className="text-2xl md:text-6xl font-extrabold text-white tracking-tighter leading-tight max-w-3xl mx-auto">
                 Ready to transform how families experience care?
               </h2>
