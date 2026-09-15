@@ -295,7 +295,12 @@ export default function LandingPage() {
             <div>
               <h2 className="text-xl sm:text-2xl md:text-5xl font-extrabold text-navy tracking-tighter mb-4 md:mb-6 leading-[1.1]">
                 The current state of care <br/>
-                <span className="text-rose-500">is broken.</span>
+                <motion.span 
+                  animate={{ color: ["#f43f5e", "#3b82f6", "#a855f7", "#f43f5e"] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  is broken.
+                </motion.span>
               </h2>
               <p className="text-sm md:text-lg text-text-secondary font-medium leading-relaxed mb-4 md:mb-6">
                 Staff are overwhelmed with paperwork. Families are left in the dark, constantly worrying and making phone calls just to get a simple update.
