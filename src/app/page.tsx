@@ -293,29 +293,29 @@ export default function LandingPage() {
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
           <Reveal direction="left">
             <div>
-              <h2 className="text-2xl md:text-5xl font-extrabold text-navy tracking-tighter mb-5 md:mb-6 leading-[1.1]">
+              <h2 className="text-xl sm:text-2xl md:text-5xl font-extrabold text-navy tracking-tighter mb-4 md:mb-6 leading-[1.1]">
                 The current state of care <br/>
                 <span className="text-rose-500">is broken.</span>
               </h2>
-              <p className="text-base md:text-lg text-text-secondary font-medium leading-relaxed mb-6">
+              <p className="text-sm md:text-lg text-text-secondary font-medium leading-relaxed mb-4 md:mb-6">
                 Staff are overwhelmed with paperwork. Families are left in the dark, constantly worrying and making phone calls just to get a simple update.
               </p>
-              <p className="text-base md:text-lg text-text-secondary font-medium leading-relaxed mb-8">
+              <p className="text-sm md:text-lg text-text-secondary font-medium leading-relaxed mb-6 md:mb-8">
                 And caught in the middle are the residents—who deserve connection, dignity, and attentive care, but often feel isolated in the system.
               </p>
               
-              <div className="bg-rose-50/50 border border-rose-100 rounded-2xl p-5 relative overflow-hidden">
+              <div className="bg-rose-50/50 border border-rose-100 rounded-2xl p-4 md:p-5 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-rose-200/30 blur-xl rounded-bl-full" />
-                <p className="text-sm md:text-base font-bold text-rose-800 relative z-10 italic">
+                <p className="text-xs md:text-base font-bold text-rose-800 relative z-10 italic">
                   "I just want to know if my dad ate lunch today without feeling like I'm bothering the nurses."
                 </p>
-                <p className="text-xs font-semibold text-rose-600 mt-3 relative z-10 uppercase tracking-widest">— A frustrated family member</p>
+                <p className="text-[10px] md:text-xs font-semibold text-rose-600 mt-2 md:mt-3 relative z-10 uppercase tracking-widest">— A frustrated family member</p>
               </div>
             </div>
           </Reveal>
           
           <Reveal direction="right">
-            <div className="relative max-w-[280px] md:max-w-[320px] mx-auto">
+            <div className="relative max-w-[200px] sm:max-w-[240px] md:max-w-[320px] mx-auto">
               <div className="absolute inset-0 bg-slate-200/50 rounded-[40px] -rotate-3 blur-sm transform scale-105 opacity-60" />
               <img 
                 src="/cartoon%20Images/a-depressed-senior-in-a-wheelchair-1.jpg" 
