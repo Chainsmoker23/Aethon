@@ -70,8 +70,9 @@ export async function middleware(request: NextRequest) {
   const isTeamPage = request.nextUrl.pathname.startsWith('/team')
   const isTermsPage = request.nextUrl.pathname.startsWith('/terms')
   const isPrivacyPage = request.nextUrl.pathname.startsWith('/privacy')
+  const isContactPage = request.nextUrl.pathname.startsWith('/contact')
 
-  if (!user && !isAuthRoute && !isLandingPage && !isTeamPage && !isTermsPage && !isPrivacyPage) {
+  if (!user && !isAuthRoute && !isLandingPage && !isTeamPage && !isTermsPage && !isPrivacyPage && !isContactPage) {
     // If not logged in and not on a public page, redirect to login
     const url = request.nextUrl.clone()
     url.pathname = '/login'

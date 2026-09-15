@@ -163,7 +163,7 @@ export default function PrivacyPage() {
             <Link href="/team" className="hover:text-navy transition-colors">Team</Link>
             <Link href="/privacy" className="text-navy hover:text-sky-600 transition-colors">Privacy</Link>
             <Link href="/terms" className="hover:text-navy transition-colors">Terms</Link>
-            <Link href="/" className="hover:text-navy transition-colors">Contact</Link>
+            <Link href="/contact" className="hover:text-navy transition-colors">Contact</Link>
           </div>
         </div>
       </footer>
