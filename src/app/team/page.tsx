@@ -171,7 +171,7 @@ export default function TeamPage() {
           <div className="flex items-center gap-6 text-sm font-bold text-slate-500">
             <Link href="/team" className="text-navy hover:text-sky-600 transition-colors">Team</Link>
             <Link href="/" className="hover:text-navy transition-colors">Privacy</Link>
-            <Link href="/" className="hover:text-navy transition-colors">Terms</Link>
+            <Link href="/terms" className="hover:text-navy transition-colors">Terms</Link>
             <Link href="/" className="hover:text-navy transition-colors">Contact</Link>
           </div>
         </div>
