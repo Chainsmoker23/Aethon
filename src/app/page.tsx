@@ -212,7 +212,7 @@ export default function LandingPage() {
 
 
           <Reveal delay={100}>
-            <h1 className="text-[2rem] md:text-7xl lg:text-8xl font-extrabold text-navy leading-[0.95] tracking-tighter max-w-4xl">
+            <h1 className="text-[2.5rem] sm:text-5xl md:text-7xl lg:text-8xl font-extrabold text-navy leading-[0.95] tracking-tighter max-w-4xl">
               Care that{" "}
               <span className="gradient-text">families</span>
               <br />
