@@ -10,16 +10,34 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
+    
+    const formData = new FormData(e.currentTarget);
+    formData.append("access_key", "4edaf27d-5daa-4a8b-8a6d-3b5687c0178e");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      
+      const data = await response.json();
+      if (data.success) {
+        setIsSuccess(true);
+        (e.target as HTMLFormElement).reset();
+        setTimeout(() => setIsSuccess(false), 5000);
+      } else {
+        console.error("Form submission failed", data);
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting form", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-      // Reset success state after a few seconds
-      setTimeout(() => setIsSuccess(false), 5000);
-    }, 1500);
+    }
   };
 
   return (
@@ -149,6 +167,7 @@ export default function ContactPage() {
                       <input 
                         required
                         type="text" 
+                        name="name"
                         className="w-full px-4 py-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
                         placeholder="Jane Doe"
                       />
@@ -158,6 +177,7 @@ export default function ContactPage() {
                       <input 
                         required
                         type="email" 
+                        name="email"
                         className="w-full px-4 py-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
                         placeholder="jane@example.com"
                       />
@@ -166,6 +186,7 @@ export default function ContactPage() {
                       <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Message</label>
                       <textarea 
                         required
+                        name="message"
                         rows={4}
                         className="w-full px-4 py-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none" 
                         placeholder="How can we help you?"
