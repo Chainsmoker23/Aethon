@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 
-export default function TermsPage() {
+export default function PrivacyPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -36,7 +36,8 @@ export default function TermsPage() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-text-secondary">
             <Link href="/team" className="hover:text-navy transition-colors">Team</Link>
-            <Link href="/terms" className="text-navy transition-colors">Terms</Link>
+            <Link href="/privacy" className="text-navy transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-navy transition-colors">Terms</Link>
           </div>
 
           <div className="hidden md:block">
@@ -61,7 +62,8 @@ export default function TermsPage() {
         {mobileMenuOpen && (
           <div className="md:hidden absolute top-16 left-0 w-full bg-white/95 backdrop-blur-3xl border-b border-slate-200/50 shadow-xl py-6 px-6 flex flex-col gap-4 text-center">
             <Link href="/team" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-text-secondary hover:text-navy transition-colors">Team</Link>
-            <Link href="/terms" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy transition-colors">Terms</Link>
+            <Link href="/privacy" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy transition-colors">Privacy</Link>
+            <Link href="/terms" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-text-secondary hover:text-navy transition-colors">Terms</Link>
             <div className="h-px w-full bg-slate-200/60 my-2" />
             <Link
               href="/login"
@@ -74,54 +76,65 @@ export default function TermsPage() {
         )}
       </nav>
 
-      {/* === Terms Content === */}
+      {/* === Privacy Policy Content === */}
       <section className="flex-1 py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-6">
           <Reveal>
             <div className="bg-white/80 backdrop-blur-xl border border-white/20 shadow-xl shadow-slate-200/50 rounded-3xl p-8 md:p-12 prose prose-slate max-w-none">
-              <h1 className="text-3xl md:text-5xl font-black text-navy tracking-tight mb-4">Terms of Service</h1>
+              <h1 className="text-3xl md:text-5xl font-black text-navy tracking-tight mb-4">Privacy Policy</h1>
               <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-8">Last Updated: September 15, 2026</p>
               
               <div className="space-y-8 text-slate-700">
                 <section>
-                  <h2 className="text-xl font-extrabold text-slate-900 mb-3">1. Acceptance of Terms</h2>
+                  <h2 className="text-xl font-extrabold text-slate-900 mb-3">1. Introduction</h2>
                   <p>
-                    By accessing and using Aethon Health ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our Service. The Service provides a platform for care facilities and family members to communicate, share updates, and manage care transparently.
+                    Aethon Health is committed to protecting the privacy and security of your data. This Privacy Policy explains how we collect, use, and protect your personal information when you use our care management platform. We adhere strictly to the Swiss Federal Act on Data Protection (FADP) and other relevant healthcare data regulations.
                   </p>
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-extrabold text-slate-900 mb-3">2. Description of Service</h2>
+                  <h2 className="text-xl font-extrabold text-slate-900 mb-3">2. Information We Collect</h2>
                   <p>
-                    Aethon Health provides healthcare management tools, including but not limited to real-time vitals tracking, family messaging, shift handovers, and AI-powered care summaries. We reserve the right to modify, suspend, or discontinue any part of the Service at any time without notice.
+                    We collect information that you provide directly to us, including:
+                  </p>
+                  <ul className="list-disc pl-5 mt-2 space-y-1">
+                    <li><strong>Account Information:</strong> Name, email address, and role (e.g., family member, care staff).</li>
+                    <li><strong>Health Data:</strong> Care updates, vitals, medication schedules, and clinical notes entered by authorized staff regarding residents.</li>
+                    <li><strong>Communications:</strong> Messages exchanged between care facilities and family members within the app.</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h2 className="text-xl font-extrabold text-slate-900 mb-3">3. How We Use Your Information</h2>
+                  <p>
+                    Your data is used exclusively to provide and improve the Aethon Health service. Specifically, we use the information to:
+                  </p>
+                  <ul className="list-disc pl-5 mt-2 space-y-1">
+                    <li>Facilitate secure communication between care providers and family members.</li>
+                    <li>Maintain accurate health records and care summaries.</li>
+                    <li>Send important notifications regarding resident updates or account security.</li>
+                    <li>Ensure the technical functionality and security of the platform.</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h2 className="text-xl font-extrabold text-slate-900 mb-3">4. Data Security & Storage</h2>
+                  <p>
+                    We implement industry-leading security measures to protect your data. All sensitive health information is encrypted both in transit (via TLS) and at rest. Access to patient records is strictly governed by Role-Based Access Control (RBAC), ensuring that only verified staff and explicitly authorized family members can view specific resident data.
                   </p>
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-extrabold text-slate-900 mb-3">3. Privacy and Data Security (Swiss Compliance)</h2>
+                  <h2 className="text-xl font-extrabold text-slate-900 mb-3">5. Data Sharing</h2>
                   <p>
-                    Your privacy is critical to us. We adhere to strict Swiss healthcare data regulations and the Swiss Federal Act on Data Protection (FADP). Patient and resident data is encrypted at rest and in transit. By using the Service, you also agree to our Privacy Policy, which outlines how we handle and protect sensitive health information.
-                  </p>
-                </section>
-
-                <section>
-                  <h2 className="text-xl font-extrabold text-slate-900 mb-3">4. User Responsibilities</h2>
-                  <p>
-                    Users must provide accurate and current information when creating an account. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. Facility staff must ensure they only share authorized health information with verified family members.
-                  </p>
-                </section>
-
-                <section>
-                  <h2 className="text-xl font-extrabold text-slate-900 mb-3">5. Limitation of Liability</h2>
-                  <p>
-                    Aethon Health is a communication and management tool, not a substitute for professional medical advice, diagnosis, or treatment. In no event shall Aethon Health or its creators be liable for any direct, indirect, incidental, special, or consequential damages resulting from the use or inability to use the Service.
+                    <strong>We do not sell your personal data.</strong> Information is only shared within the platform according to the permissions set by the care facility (e.g., sharing a resident's daily update with their connected family members). We may only disclose data to third parties if required by law or valid legal process.
                   </p>
                 </section>
                 
                 <section>
-                  <h2 className="text-xl font-extrabold text-slate-900 mb-3">6. Governing Law</h2>
+                  <h2 className="text-xl font-extrabold text-slate-900 mb-3">6. Your Rights</h2>
                   <p>
-                    These Terms shall be governed by and construed in accordance with the laws of Switzerland, without regard to its conflict of law provisions.
+                    Under the FADP, you have the right to access, correct, or request the deletion of your personal data. Family members can revoke their own access at any time, and facility administrators can instantly revoke family access to resident records. To exercise these rights, please contact your care facility administrator or reach out to our support team.
                   </p>
                 </section>
               </div>
@@ -148,8 +161,8 @@ export default function TermsPage() {
           </p>
           <div className="flex items-center gap-6 text-sm font-bold text-slate-500">
             <Link href="/team" className="hover:text-navy transition-colors">Team</Link>
-            <Link href="/privacy" className="hover:text-navy transition-colors">Privacy</Link>
-            <Link href="/terms" className="text-navy hover:text-sky-600 transition-colors">Terms</Link>
+            <Link href="/privacy" className="text-navy hover:text-sky-600 transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-navy transition-colors">Terms</Link>
             <Link href="/" className="hover:text-navy transition-colors">Contact</Link>
           </div>
         </div>
