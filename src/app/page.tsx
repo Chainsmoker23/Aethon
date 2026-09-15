@@ -302,11 +302,8 @@ export default function LandingPage() {
                   is broken.
                 </motion.span>
               </h2>
-              <p className="text-sm md:text-lg text-text-secondary font-medium leading-relaxed mb-4 md:mb-6">
-                Staff are overwhelmed with paperwork. Families are left in the dark, constantly worrying and making phone calls just to get a simple update.
-              </p>
               <p className="text-sm md:text-lg text-text-secondary font-medium leading-relaxed mb-6 md:mb-8">
-                And caught in the middle are the residents—who deserve connection, dignity, and attentive care, but often feel isolated in the system.
+                Staff are overwhelmed with paperwork. Families are left in the dark, constantly worrying and making phone calls just to get a simple update.
               </p>
               
               <div className="bg-rose-50/50 border border-rose-100 rounded-2xl p-4 md:p-5 relative overflow-hidden">
