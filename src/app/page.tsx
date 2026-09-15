@@ -207,12 +207,12 @@ export default function LandingPage() {
       </nav>
 
       {/* === Hero Section === */}
-      <section className="relative max-w-6xl mx-auto px-5 md:px-6 pt-14 pb-16 md:pt-28 md:pb-36 flex flex-col items-center">
+      <section className="relative max-w-6xl mx-auto px-5 md:px-6 pt-12 pb-14 md:pt-28 md:pb-36 flex flex-col items-center">
         <div className="flex flex-col items-center text-center relative z-20">
 
 
           <Reveal delay={100}>
-            <h1 className="text-[2.5rem] md:text-7xl lg:text-8xl font-extrabold text-navy leading-[0.95] tracking-tighter max-w-4xl">
+            <h1 className="text-[2rem] md:text-7xl lg:text-8xl font-extrabold text-navy leading-[0.95] tracking-tighter max-w-4xl">
               Care that{" "}
               <span className="gradient-text">families</span>
               <br />
@@ -289,11 +289,11 @@ export default function LandingPage() {
       </section>
 
       {/* === The Challenge Section === */}
-      <section className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24 border-t border-slate-200/50">
+      <section className="relative max-w-6xl mx-auto px-5 md:px-6 py-12 md:py-24 border-t border-slate-200/50">
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
           <Reveal direction="left">
             <div>
-              <h2 className="text-3xl md:text-5xl font-extrabold text-navy tracking-tighter mb-6 leading-[1.1]">
+              <h2 className="text-2xl md:text-5xl font-extrabold text-navy tracking-tighter mb-5 md:mb-6 leading-[1.1]">
                 The current state of care <br/>
                 <span className="text-rose-500">is broken.</span>
               </h2>
@@ -328,10 +328,10 @@ export default function LandingPage() {
       </section>
 
       {/* === Features Section (Bento Box) === */}
-      <section id="features" className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24">
+      <section id="features" className="relative max-w-6xl mx-auto px-5 md:px-6 py-12 md:py-24">
         <Reveal>
           <div className="text-center mb-10 md:mb-16">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-navy tracking-tighter">
+            <h2 className="text-2xl md:text-5xl font-extrabold text-navy tracking-tighter">
               Everything you need,{" "}
               <span className="gradient-text">nothing you don't</span>
             </h2>
@@ -356,7 +356,7 @@ export default function LandingPage() {
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-blue-100 flex items-center justify-center mb-3 md:mb-4">
                   <MessageSquare className="w-5 h-5 md:w-6 md:h-6 text-blue-600" />
                 </div>
-                <h3 className="text-xl md:text-2xl font-extrabold text-navy mb-1.5 md:mb-2 tracking-tight">Family Messaging</h3>
+                <h3 className="text-lg md:text-2xl font-extrabold text-navy mb-1.5 md:mb-2 tracking-tight">Family Messaging</h3>
                 <p className="text-sm md:text-base text-text-secondary font-medium leading-relaxed">
                   Secure, instant communication between staff and families. No more phone tag or lost sticky notes.
                 </p>
@@ -377,7 +377,7 @@ export default function LandingPage() {
               <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-emerald-100 flex items-center justify-center mb-3 md:mb-4 relative z-10 animate-heartbeat">
                 <Activity className="w-5 h-5 md:w-6 md:h-6 text-emerald-600" />
               </div>
-              <h3 className="text-xl md:text-2xl font-extrabold text-navy mb-1.5 md:mb-2 tracking-tight relative z-10">Real-Time Vitals</h3>
+              <h3 className="text-lg md:text-2xl font-extrabold text-navy mb-1.5 md:mb-2 tracking-tight relative z-10">Real-Time Vitals</h3>
               <p className="text-sm md:text-base text-text-secondary font-medium leading-relaxed relative z-10">
                 Live health tracking with intelligent alerts. Families see what matters, exactly when it matters.
               </p>
@@ -449,7 +449,7 @@ export default function LandingPage() {
                 <Shield className="w-6 h-6 md:w-8 md:h-8" />
               </div>
               <div className="z-10">
-                <h3 className="text-xl md:text-2xl font-extrabold text-navy mb-1.5 md:mb-2 tracking-tight">Enterprise Security</h3>
+                <h3 className="text-lg md:text-2xl font-extrabold text-navy mb-1.5 md:mb-2 tracking-tight">Enterprise Security</h3>
                 <p className="text-sm md:text-base text-text-secondary font-medium leading-relaxed">
                   Fully HIPAA compliant and GDPR ready. End-to-end encryption ensures patient data never falls into the wrong hands.
                 </p>
@@ -461,7 +461,7 @@ export default function LandingPage() {
       </section>
 
       {/* === The Human Touch Section === */}
-      <section className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24 overflow-hidden">
+      <section className="relative max-w-6xl mx-auto px-5 md:px-6 py-12 md:py-24 overflow-hidden">
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
           <Reveal direction="left" className="order-2 md:order-1 flex items-center justify-center">
             <div className="relative max-w-[280px] md:max-w-[360px] w-full mx-auto">
@@ -484,7 +484,7 @@ export default function LandingPage() {
                   The Human Touch
                 </span>
               </div>
-              <h2 className="text-3xl md:text-5xl font-extrabold text-navy tracking-tighter mb-6 leading-[1.1]">
+              <h2 className="text-2xl md:text-5xl font-extrabold text-navy tracking-tighter mb-5 md:mb-6 leading-[1.1]">
                 Technology that <br/>
                 <span className="gradient-text">empowers care</span>
               </h2>
@@ -514,10 +514,10 @@ export default function LandingPage() {
       </section>
 
       {/* === How It Works === */}
-      <section id="how-it-works" className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24">
+      <section id="how-it-works" className="relative max-w-6xl mx-auto px-5 md:px-6 py-12 md:py-24">
         <Reveal>
           <div className="text-center mb-10 md:mb-16">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-navy tracking-tighter">
+            <h2 className="text-2xl md:text-5xl font-extrabold text-navy tracking-tighter">
               Simple for <span className="gradient-text">everyone</span>
             </h2>
             <p className="text-sm md:text-lg text-text-secondary font-medium mt-3 md:mt-4 max-w-xl mx-auto px-2 md:px-0">
@@ -545,7 +545,7 @@ export default function LandingPage() {
                 <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/20 mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Heart className="w-6 h-6 md:w-8 md:h-8" />
                 </div>
-                <h3 className="text-xl md:text-2xl font-extrabold text-navy mb-2 md:mb-3 tracking-tight">For Families</h3>
+                <h3 className="text-lg md:text-2xl font-extrabold text-navy mb-2 md:mb-3 tracking-tight">For Families</h3>
                 <p className="text-sm md:text-base text-text-secondary font-medium leading-relaxed mb-5 md:mb-8">
                   Open the app, see how your loved one is doing today. Read care notes from staff, check medications, and message the care team directly.
                 </p>
@@ -579,7 +579,7 @@ export default function LandingPage() {
                 <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Building2 className="w-6 h-6 md:w-8 md:h-8" />
                 </div>
-                <h3 className="text-xl md:text-2xl font-extrabold text-navy mb-2 md:mb-3 tracking-tight">For Staff</h3>
+                <h3 className="text-lg md:text-2xl font-extrabold text-navy mb-2 md:mb-3 tracking-tight">For Staff</h3>
                 <p className="text-sm md:text-base text-text-secondary font-medium leading-relaxed mb-5 md:mb-8">
                   A command center built for care teams. Log notes, prescribe meds, respond to families, and manage escalations — all from one dashboard.
                 </p>
@@ -598,7 +598,7 @@ export default function LandingPage() {
       </section>
 
       {/* === Stats === */}
-      <section id="trust" className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24">
+      <section id="trust" className="relative max-w-6xl mx-auto px-5 md:px-6 py-12 md:py-24">
         <Reveal>
           <div className="glass-panel-heavy rounded-3xl md:rounded-[40px] p-6 md:p-14 shadow-xl shadow-slate-200/50 border-white">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4">
@@ -609,7 +609,7 @@ export default function LandingPage() {
                 { value: "24/7", label: "Support" },
               ].map((stat, i) => (
                 <div key={stat.label} className="text-center">
-                  <p className="text-2xl md:text-5xl font-black text-navy tracking-tighter">{stat.value}</p>
+                  <p className="text-xl md:text-5xl font-black text-navy tracking-tighter">{stat.value}</p>
                   <p className="text-[10px] md:text-sm font-bold text-text-muted mt-1 md:mt-2 uppercase tracking-widest">{stat.label}</p>
                 </div>
               ))}
@@ -619,7 +619,7 @@ export default function LandingPage() {
       </section>
 
       {/* === Swiss Precision Trust Banner === */}
-      <section className="relative max-w-6xl mx-auto px-5 md:px-6 py-16 md:py-24">
+      <section className="relative max-w-6xl mx-auto px-5 md:px-6 py-12 md:py-24">
         <Reveal>
           <div className="relative rounded-3xl md:rounded-[40px] overflow-hidden border border-red-100">
             {/* Swiss-inspired white background with subtle cross pattern */}
@@ -645,7 +645,7 @@ export default function LandingPage() {
                   <span className="text-xs font-bold text-red-700 uppercase tracking-widest">Built for Swiss Healthcare</span>
                 </div>
                 
-                <h2 className="text-3xl md:text-5xl font-extrabold text-navy tracking-tighter leading-[1.1]">
+                <h2 className="text-2xl md:text-5xl font-extrabold text-navy tracking-tighter leading-[1.1]">
                   Swiss precision,<br/>
                   <span className="text-red-600">global trust</span>
                 </h2>
@@ -711,8 +711,8 @@ export default function LandingPage() {
             </div>
 
 
-            <div className="relative z-20 px-6 py-14 md:px-16 md:py-24 text-center">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 mb-6 md:mb-8">
+            <div className="relative z-20 px-5 py-12 md:px-16 md:py-24 text-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 mb-5 md:mb-8">
                 <svg width="16" height="16" viewBox="0 0 32 32" fill="none" className="shrink-0">
                   <rect width="32" height="32" rx="4" fill="#FF0000"/>
                   <rect x="13" y="6" width="6" height="20" rx="1" fill="white"/>
@@ -720,10 +720,10 @@ export default function LandingPage() {
                 </svg>
                 <span className="text-[10px] md:text-xs font-bold text-white/80 uppercase tracking-widest">Made in Switzerland</span>
               </div>
-              <h2 className="text-2xl md:text-6xl font-extrabold text-white tracking-tighter leading-tight max-w-3xl mx-auto">
+              <h2 className="text-xl md:text-6xl font-extrabold text-white tracking-tighter leading-tight max-w-3xl mx-auto">
                 Ready to transform how families experience care?
               </h2>
-              <p className="text-sm md:text-lg text-slate-300 font-medium mt-4 md:mt-6 max-w-xl mx-auto">
+              <p className="text-sm md:text-lg text-slate-300 font-medium mt-3 md:mt-6 max-w-xl mx-auto">
                 Join forward-thinking Swiss care facilities already using Aethon to build trust, transparency, and peace of mind with families.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 mt-8 md:mt-12 w-full sm:w-auto">
