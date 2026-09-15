@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRight, Menu, X, Mail, MapPin, Send, Loader2, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Menu, X, Mail, MapPin, Send, Loader2, CheckCircle2, Phone } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 
 export default function ContactPage() {
@@ -133,7 +133,21 @@ export default function ContactPage() {
                     <div>
                       <h3 className="text-lg font-bold text-navy">Email Us</h3>
                       <p className="text-slate-500 font-medium mb-1">Our friendly team is here to help.</p>
-                      <a href="mailto:support@aethonhealth.com" className="text-primary font-bold hover:underline">support@aethonhealth.com</a>
+                      <div className="flex flex-col space-y-1 mt-2">
+                        <a href="mailto:selena@alpinahealth.ch" className="text-primary font-bold hover:underline">selena@alpinahealth.ch</a>
+                        <a href="mailto:flynn@alpinahealth.ch" className="text-primary font-bold hover:underline">flynn@alpinahealth.ch</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center shrink-0">
+                      <Phone className="w-6 h-6 text-emerald-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-navy">Call Us</h3>
+                      <p className="text-slate-500 font-medium mb-1">Mon-Fri from 8am to 5pm.</p>
+                      <a href="tel:+41767250208" className="text-navy font-bold hover:text-primary transition-colors">+41 767 250 20 8</a>
                     </div>
                   </div>
                   
