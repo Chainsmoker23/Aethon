@@ -54,10 +54,11 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // Do not run on static files or api routes
+  // Do not run on static files, api routes, or auth callback (to prevent consuming the code prematurely)
   if (
     request.nextUrl.pathname.startsWith('/_next') ||
     request.nextUrl.pathname.startsWith('/api') ||
+    request.nextUrl.pathname.startsWith('/auth/callback') ||
     request.nextUrl.pathname.includes('.')
   ) {
     return supabaseResponse

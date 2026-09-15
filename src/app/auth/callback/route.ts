@@ -37,9 +37,12 @@ export async function GET(request: Request) {
       const response = NextResponse.redirect(`${origin}/family`)
       response.cookies.set('demo_role', 'family', { path: '/' })
       return response
+    } else {
+      console.error("Auth callback error:", error.message);
+      return NextResponse.redirect(`${origin}/login?error=${encodeURIComponent(error.message)}`)
     }
   }
 
   // return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/login?error=Could not authenticate`)
+  return NextResponse.redirect(`${origin}/login?error=No+auth+code+provided`)
 }
