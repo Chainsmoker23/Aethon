@@ -260,16 +260,16 @@ export default function SettingsPage() {
                       <p className="font-bold text-slate-900 dark:text-white text-sm">Theme Preference</p>
                       <p className="text-xs font-medium text-slate-500 dark:text-zinc-400 mt-0.5">Switch between Light and Dark mode.</p>
                     </div>
-                    <div className="flex w-full sm:w-auto bg-slate-200/70 dark:bg-zinc-950 p-1 rounded-xl border border-slate-300/50 dark:border-zinc-800">
+                    <div className="grid grid-cols-2 w-full sm:w-[240px] bg-slate-200/70 dark:bg-zinc-950 p-1 rounded-xl border border-slate-300/50 dark:border-zinc-800 shrink-0">
                       <button 
                         onClick={() => setTheme('light')}
-                        className={`flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'light' ? 'bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300'}`}
+                        className={`w-full text-center px-2 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'light' ? 'bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300'}`}
                       >
                         Light Mode
                       </button>
                       <button 
                         onClick={() => setTheme('dark')}
-                        className={`flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'dark' ? 'bg-slate-900 dark:bg-zinc-800 text-white dark:text-white shadow-sm' : 'text-slate-500 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300'}`}
+                        className={`w-full text-center px-2 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'dark' ? 'bg-slate-900 dark:bg-zinc-800 text-white dark:text-white shadow-sm' : 'text-slate-500 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300'}`}
                       >
                         Dark Mode
                       </button>
