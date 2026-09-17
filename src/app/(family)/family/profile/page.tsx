@@ -113,7 +113,7 @@ export default function ProfilePage() {
         <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-sm border border-slate-200 dark:border-zinc-800 overflow-hidden">
           
           {/* Notification Preferences */}
-          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50/50 opacity-60 border-b border-slate-200 dark:border-zinc-800 cursor-not-allowed">
+          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50 opacity-60 border-b border-slate-200 dark:border-zinc-800 cursor-not-allowed">
             <div className="flex items-center gap-3">
               <Bell className="w-5 h-5 text-slate-500 dark:text-slate-500" />
               <span className="font-bold text-slate-900 dark:text-white text-sm">{t.notifications}</span>
@@ -122,7 +122,7 @@ export default function ProfilePage() {
           </button>
 
           {/* Privacy & Security */}
-          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50/50 opacity-60 border-b border-slate-200 dark:border-zinc-800 cursor-not-allowed">
+          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50 opacity-60 border-b border-slate-200 dark:border-zinc-800 cursor-not-allowed">
             <div className="flex items-center gap-3">
               <Shield className="w-5 h-5 text-slate-500 dark:text-slate-500" />
               <span className="font-bold text-slate-900 dark:text-white text-sm">{t.privacy}</span>

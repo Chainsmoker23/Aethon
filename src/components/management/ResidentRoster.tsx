@@ -97,7 +97,7 @@ export function ResidentRoster() {
 
   return (
     <div className="bg-white dark:bg-[#0a0a0a] rounded-xl shadow-sm border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
-      <div className="px-6 py-5 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50/50">
+      <div className="px-6 py-5 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50">
         <h2 className="text-lg font-semibold text-slate-900 dark:text-white tracking-tight">Active Residents</h2>
       </div>
 

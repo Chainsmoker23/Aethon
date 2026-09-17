@@ -41,7 +41,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col overflow-hidden bg-slate-50 dark:bg-zinc-900/50/50 landing-grid-bg">
+    <div className="relative min-h-screen flex flex-col overflow-hidden bg-slate-50 dark:bg-zinc-900/50 landing-grid-bg">
       
       {/* === Elegant Color-Shifting Siri Aura Background === */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
@@ -182,7 +182,7 @@ export default function ContactPage() {
                         required
                         type="text" 
                         name="name"
-                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900/50/50 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
+                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
                         placeholder="Jane Doe"
                       />
                     </div>
@@ -192,7 +192,7 @@ export default function ContactPage() {
                         required
                         type="email" 
                         name="email"
-                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900/50/50 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
+                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
                         placeholder="jane@example.com"
                       />
                     </div>
@@ -202,7 +202,7 @@ export default function ContactPage() {
                         required
                         name="message"
                         rows={4}
-                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900/50/50 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none" 
+                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none" 
                         placeholder="How can we help you?"
                       />
                     </div>

@@ -86,7 +86,7 @@ export function AssistanceRequests() {
       <MobileAssistanceRequests requests={mobileRequests} loading={loading} />
 
       <div className="hidden md:flex bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl shadow-sm overflow-hidden flex-col relative z-10 w-full">
-        <div className="px-6 py-5 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50/50">
+        <div className="px-6 py-5 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50">
           <div>
             <h2 className="font-semibold text-slate-900 dark:text-white text-lg tracking-tight">Open escalations</h2>
             <p className="text-sm font-medium text-slate-500 dark:text-slate-500 mt-0.5">{open.length} require attention</p>

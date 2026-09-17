@@ -11,7 +11,7 @@ export function MobileAssistanceRequests({ requests, loading }: { requests: any[
 
   return (
     <div className="bg-white dark:bg-[#0a0a0a] rounded-xl shadow-sm border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10 md:hidden">
-      <div className="px-4 py-3 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50/50">
+      <div className="px-4 py-3 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50">
         <h2 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2 tracking-tight">
           <AlertCircle className="w-4 h-4 text-rose-500" /> Open Escalations
         </h2>

@@ -75,7 +75,7 @@ export function ResidentChat({ residentId }: { residentId: string }) {
   };
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 dark:bg-zinc-900/50/50 rounded-2xl border border-border/50 overflow-hidden shadow-inner relative animate-fade-in">
+    <div className="flex flex-col h-full bg-slate-50 dark:bg-zinc-900/50 rounded-2xl border border-border/50 overflow-hidden shadow-inner relative animate-fade-in">
       
       {/* Messages Feed */}
       <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">

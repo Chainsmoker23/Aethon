@@ -10,7 +10,7 @@ export default function TeamPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen flex flex-col overflow-hidden bg-slate-50 dark:bg-zinc-900/50/50 landing-grid-bg [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+    <div className="relative min-h-screen flex flex-col overflow-hidden bg-slate-50 dark:bg-zinc-900/50 landing-grid-bg [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       
       {/* === Elegant Color-Shifting Siri Aura Background === */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">

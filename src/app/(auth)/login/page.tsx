@@ -26,7 +26,7 @@ function LoginForm() {
       
       {/* Back Button */}
       <div className="absolute top-0 left-6">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm font-bold text-text-muted hover:text-navy transition-colors bg-white dark:bg-[#0a0a0a]/50 px-4 py-2 rounded-full border border-slate-200 dark:border-zinc-800/50 backdrop-blur-sm">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm font-bold text-text-muted hover:text-navy transition-colors bg-white dark:bg-[#0a0a0a] px-4 py-2 rounded-full border border-slate-200 dark:border-zinc-800/50 backdrop-blur-sm">
           <ArrowRight className="w-4 h-4 rotate-180" /> Back to Home
         </Link>
       </div>

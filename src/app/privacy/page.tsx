@@ -9,7 +9,7 @@ export default function PrivacyPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen flex flex-col overflow-hidden bg-slate-50 dark:bg-zinc-900/50/50 landing-grid-bg">
+    <div className="relative min-h-screen flex flex-col overflow-hidden bg-slate-50 dark:bg-zinc-900/50 landing-grid-bg">
       
       {/* === Elegant Color-Shifting Siri Aura Background === */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">

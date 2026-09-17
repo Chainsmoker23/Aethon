@@ -12,12 +12,12 @@ export default function FamilyDashboard() {
   if (loading) return (
     <div className="relative min-h-full pb-6">
       <main className="px-5 py-6 space-y-6 animate-pulse">
-        <div className="bg-white dark:bg-[#0a0a0a]/50 rounded-3xl p-6 h-[140px]" />
+        <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl p-6 h-[140px]" />
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-white dark:bg-[#0a0a0a]/50 rounded-3xl h-[100px]" />
-          <div className="bg-white dark:bg-[#0a0a0a]/50 rounded-3xl h-[100px]" />
+          <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl h-[100px]" />
+          <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl h-[100px]" />
         </div>
-        <div className="bg-white dark:bg-[#0a0a0a]/50 rounded-3xl h-[200px]" />
+        <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl h-[200px]" />
       </main>
     </div>
   );

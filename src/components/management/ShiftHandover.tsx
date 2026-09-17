@@ -146,7 +146,7 @@ export function ShiftHandover() {
 
       <div className="hidden md:flex flex-col h-[500px] bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl shadow-sm overflow-hidden relative z-10 w-full">
         
-        <div className="px-5 py-4 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50/50">
+        <div className="px-5 py-4 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center">
               <ClipboardList className="w-4 h-4 text-indigo-600" />

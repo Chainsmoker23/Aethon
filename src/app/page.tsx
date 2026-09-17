@@ -126,7 +126,7 @@ export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-50 dark:bg-zinc-900/50/50 landing-grid-bg [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+    <div className="relative min-h-screen overflow-hidden bg-slate-50 dark:bg-zinc-900/50 landing-grid-bg [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       
       {/* === Elegant Color-Shifting Siri Aura Background === */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
@@ -257,7 +257,7 @@ export default function LandingPage() {
           <div>
             <div className="max-w-4xl mx-auto bg-white dark:bg-[#0a0a0a]/40 backdrop-blur-3xl border border-white/60 rounded-t-[40px] shadow-2xl overflow-hidden h-[300px] p-6 flex gap-6 mask-bottom glass-glare">
             {/* Sidebar Mockup */}
-            <div className="w-48 bg-white dark:bg-[#0a0a0a]/50 rounded-2xl p-4 border border-white/40 flex flex-col gap-3">
+            <div className="w-48 bg-white dark:bg-[#0a0a0a] rounded-2xl p-4 border border-white/40 flex flex-col gap-3">
               <div className="w-full h-8 bg-slate-200 dark:bg-slate-700/50 rounded-lg mb-4" />
               <div className="w-full h-10 bg-primary/10 rounded-xl" />
               <div className="w-full h-10 bg-white dark:bg-[#0a0a0a]/40 rounded-xl" />

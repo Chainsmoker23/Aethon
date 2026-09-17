@@ -79,7 +79,7 @@ export function MessagingInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 dark:bg-zinc-900/50/50 relative">
+    <div className="flex flex-col h-full bg-slate-50 dark:bg-zinc-900/50 relative">
       
       {/* Header */}
       <div className="bg-white dark:bg-[#0a0a0a] border-b border-slate-200 dark:border-zinc-800 p-4 pt-6 shrink-0 flex items-center justify-between z-10 sticky top-0 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
