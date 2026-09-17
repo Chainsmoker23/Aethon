@@ -377,8 +377,8 @@ export default function ClientProfilePage() {
                     {resident.care_stage}
                   </Badge>
                 </div>
-                <p className="text-xs md:text-sm font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400">
-                  Room {resident.room_number || 'N/A'} · Admitted 2026
+                <p className="text-xs md:text-sm font-medium text-slate-500 dark:text-zinc-400">
+                  {resident.care_stage === 'Facility' ? (resident.room_number ? `Room ${resident.room_number}` : 'No Room') : (resident.room_number || 'Home Address Pending')} · Admitted 2026
                 </p>
               </div>
             </div>
@@ -830,12 +830,15 @@ export default function ClientProfilePage() {
               
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Room Number</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
+                    {editForm.care_stage === 'Facility' ? 'Room / Bed Number' : 'Home Address / Care Zone'}
+                  </label>
                   <input 
                     type="text"
+                    placeholder={editForm.care_stage === 'Facility' ? 'e.g. 104B' : 'e.g. Zurich North - Apt 4B'}
                     value={editForm.room_number}
                     onChange={e => setEditForm({...editForm, room_number: e.target.value})}
-                    className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
+                    className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors placeholder:text-slate-400 dark:placeholder:text-zinc-600"
                   />
                 </div>
                 <div>
