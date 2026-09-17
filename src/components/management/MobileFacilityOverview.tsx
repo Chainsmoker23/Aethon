@@ -2,10 +2,10 @@ import { Users, Eye, AlertTriangle, FileText, Loader2 } from "lucide-react";
 
 export function MobileFacilityOverview({ stats, loading }: { stats: any, loading: boolean }) {
   const displayStats = [
-    { label: "Clients", value: stats.totalClients, icon: <Users className="w-4 h-4 text-white" />, gradient: "from-blue-500 to-cyan-400" },
-    { label: "Seen Today", value: stats.seenToday, icon: <Eye className="w-4 h-4 text-white" />, gradient: "from-emerald-400 to-teal-500" },
-    { label: "Escalations", value: stats.escalations, icon: <AlertTriangle className="w-4 h-4 text-white" />, gradient: "from-rose-500 to-orange-400" },
-    { label: "Notes (7d)", value: stats.notesThisWeek, icon: <FileText className="w-4 h-4 text-white" />, gradient: "from-indigo-500 to-purple-500" },
+    { label: "Clients", value: stats.totalClients, icon: <Users className="w-4 h-4 text-white dark:text-zinc-900" />, gradient: "from-blue-500 to-cyan-400" },
+    { label: "Seen Today", value: stats.seenToday, icon: <Eye className="w-4 h-4 text-white dark:text-zinc-900" />, gradient: "from-emerald-400 to-teal-500" },
+    { label: "Escalations", value: stats.escalations, icon: <AlertTriangle className="w-4 h-4 text-white dark:text-zinc-900" />, gradient: "from-rose-500 to-orange-400" },
+    { label: "Notes (7d)", value: stats.notesThisWeek, icon: <FileText className="w-4 h-4 text-white dark:text-zinc-900" />, gradient: "from-indigo-500 to-purple-500" },
   ];
 
   if (loading) {
@@ -28,12 +28,12 @@ export function MobileFacilityOverview({ stats, loading }: { stats: any, loading
           className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl shadow-sm p-3 flex flex-col justify-between"
         >
           <div className="flex items-center gap-2 mb-2">
-            <div className={`w-6 h-6 rounded-md flex items-center justify-center bg-gradient-to-br ${stat.gradient} shadow-sm text-white shrink-0`}>
+            <div className={`w-6 h-6 rounded-md flex items-center justify-center bg-gradient-to-br ${stat.gradient} shadow-sm text-white dark:text-zinc-900 shrink-0`}>
               {stat.icon}
             </div>
-            <span className="text-[11px] font-bold text-slate-500 dark:text-slate-500 uppercase tracking-tight leading-none">{stat.label}</span>
+            <span className="text-[11px] font-bold text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500 uppercase tracking-tight leading-none">{stat.label}</span>
           </div>
-          <p className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">{stat.value}</p>
+          <p className="text-xl font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900 tracking-tight">{stat.value}</p>
         </div>
       ))}
     </div>

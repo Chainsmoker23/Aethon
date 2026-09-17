@@ -25,12 +25,12 @@ function getRowBg(r: Resident): string {
 
 function CareStageTag({ stage }: { stage: string }) {
   const styles: Record<string, string> = {
-    "Independent": "bg-primary-light text-primary-dark border-primary/20",
+    "Independent": "bg-primary dark:bg-zinc-200-light text-primary-dark border-primary/20",
     "Home care": "bg-indigo-100 text-indigo-700 border-indigo-200",
-    "Facility": "bg-navy/10 text-navy border-navy/20",
+    "Facility": "bg-navy dark:bg-zinc-100/10 text-navy dark:text-zinc-100 border-navy/20",
   };
   return (
-    <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold border ${styles[stage] || "bg-surface-alt text-text-muted border-border"}`}>
+    <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold border ${styles[stage] || "bg-surface-alt text-text-muted dark:text-zinc-500 border-border"}`}>
       {stage}
     </span>
   );
@@ -98,11 +98,11 @@ export function ResidentRoster() {
   return (
     <div className="bg-white dark:bg-[#0a0a0a] rounded-xl shadow-sm border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
       <div className="px-6 py-5 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50">
-        <h2 className="text-lg font-semibold text-slate-900 dark:text-white tracking-tight">Active Residents</h2>
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-zinc-100 dark:text-zinc-900 tracking-tight">Active Residents</h2>
       </div>
 
       {/* Desktop Table Header */}
-      <div className="hidden md:grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] bg-slate-50 dark:bg-zinc-900/50 border-b border-slate-200 dark:border-zinc-800 text-slate-500 dark:text-slate-500 text-xs font-medium uppercase tracking-wider px-4">
+      <div className="hidden md:grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] bg-slate-50 dark:bg-zinc-900/50 border-b border-slate-200 dark:border-zinc-800 text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500 text-xs font-medium uppercase tracking-wider px-4">
         <div className="px-4 py-3">Client</div>
         <div className="px-3 py-3">Care stage</div>
         <div className="px-3 py-3">Last visit</div>
@@ -123,13 +123,13 @@ export function ResidentRoster() {
               
               {/* Desktop Row Wrapper */}
               <div
-                className={`grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] items-center cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors ${r.escalations > 0 ? "bg-red-50/30" : ""} px-4`}
+                className={`grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] items-center cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-800/50 dark:bg-zinc-900/50 dark:hover:bg-slate-800 dark:hover:bg-zinc-300/50 dark:bg-zinc-900/50 transition-colors ${r.escalations > 0 ? "bg-red-50/30" : ""} px-4`}
                 onClick={() => setExpandedId(isExpanded ? null : r.id)}
               >
                 
                 {/* 1. Client Name */}
                 <div className="px-4 py-4">
-                  <span className="font-semibold text-sm text-slate-900 dark:text-white">{r.name}</span>
+                  <span className="font-semibold text-sm text-slate-900 dark:text-zinc-100 dark:text-zinc-900">{r.name}</span>
                 </div>
 
                 {/* 2. Care Stage */}
@@ -138,7 +138,7 @@ export function ResidentRoster() {
                 </div>
 
                 {/* 3. Last Visit */}
-                <div className="px-3 py-4 text-sm font-medium text-slate-600 dark:text-slate-400">
+                <div className="px-3 py-4 text-sm font-medium text-slate-600 dark:text-zinc-400">
                   {r.lastVisit}
                 </div>
 
@@ -154,7 +154,7 @@ export function ResidentRoster() {
                 {/* 5. Escalations */}
                 <div className="px-3 py-4 flex justify-center items-center">
                   {r.escalations > 0 ? (
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-red-500 text-white text-xs font-semibold shadow-sm">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-red-500 text-white dark:text-zinc-900 text-xs font-semibold shadow-sm">
                       {r.escalations}
                     </span>
                   ) : (
@@ -163,7 +163,7 @@ export function ResidentRoster() {
                 </div>
 
                 {/* 6. Notes (7d) */}
-                <div className="px-3 py-4 flex justify-center items-center text-sm text-slate-600 dark:text-slate-400 font-medium">
+                <div className="px-3 py-4 flex justify-center items-center text-sm text-slate-600 dark:text-zinc-400 font-medium">
                   {r.notes7d}
                 </div>
 
@@ -180,23 +180,23 @@ export function ResidentRoster() {
               {/* Expanded Area */}
               {isExpanded && (
                 <div className="bg-slate-50 dark:bg-zinc-900/50/80 px-10 py-6 border-t border-slate-100 dark:border-zinc-800/50 shadow-inner">
-                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-500 uppercase tracking-wider mb-4">Recent visits</p>
+                  <p className="text-xs font-semibold text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500 uppercase tracking-wider mb-4">Recent visits</p>
                   {r.recentVisits.length === 0 ? (
-                    <p className="text-sm text-slate-500 dark:text-slate-500 italic bg-white dark:bg-[#0a0a0a] p-4 rounded-xl border border-slate-200 dark:border-zinc-800 shadow-sm">No recent visits logged.</p>
+                    <p className="text-sm text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500 italic bg-white dark:bg-[#0a0a0a] p-4 rounded-xl border border-slate-200 dark:border-zinc-800 shadow-sm">No recent visits logged.</p>
                   ) : (
                     <div className="space-y-3">
                       {r.recentVisits.map((v: any, i: number) => (
                         <div key={i} className="flex gap-4 bg-white dark:bg-[#0a0a0a] p-4 rounded-xl border border-slate-200 dark:border-zinc-800 shadow-sm max-w-3xl">
                           <div className="flex flex-col items-center mt-1">
-                            <div className="w-2 h-2 rounded-full bg-primary" />
+                            <div className="w-2 h-2 rounded-full bg-primary dark:bg-zinc-200" />
                             {i !== r.recentVisits.length - 1 && <div className="w-0.5 h-full bg-slate-200 dark:bg-slate-700 mt-2" />}
                           </div>
                           <div>
                             <div className="flex gap-3 items-center mb-1">
-                              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-zinc-900 px-2 py-0.5 rounded-md">{v.type}</span>
+                              <span className="text-xs font-bold text-slate-700 dark:text-zinc-300 dark:text-slate-300 bg-slate-100 dark:bg-zinc-900 px-2 py-0.5 rounded-md">{v.type}</span>
                               <span className="text-xs font-medium text-slate-400">{v.date}</span>
                             </div>
-                            <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">{v.tasks}</p>
+                            <p className="text-sm text-slate-600 dark:text-zinc-400 mt-2 leading-relaxed">{v.tasks}</p>
                           </div>
                         </div>
                       ))}
