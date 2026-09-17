@@ -105,7 +105,7 @@ export function AssistanceRequests() {
               className={`p-6 border-l-[4px] transition-all duration-300 ${
                 e.is_resolved 
                   ? "border-emerald-400 bg-slate-50 dark:bg-[#0a0a0a] opacity-60" 
-                  : "border-red-500 bg-white dark:bg-[#0a0a0a] hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50"
+                  : "border-red-500 bg-white dark:bg-[#0a0a0a] hover:bg-slate-50 dark:hover:bg-[#111]"
               }`}
             >
               <div className="flex justify-between items-start">

@@ -71,7 +71,7 @@ export default function EscalationsPage() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-            <div className="flex bg-slate-100 dark:bg-zinc-900 p-1 rounded-xl shadow-inner border border-slate-200 dark:border-zinc-800">
+            <div className="flex bg-slate-100 dark:bg-zinc-950 p-1 rounded-xl shadow-inner border border-slate-200 dark:border-zinc-800">
               <button 
                 onClick={() => setFilter("all")}
                 className={`flex-1 sm:flex-none px-4 py-2 text-sm font-bold rounded-lg transition-all ${filter === "all" ? "bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white shadow-sm" : "text-slate-500 dark:text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:text-white"}`}
@@ -114,7 +114,7 @@ export default function EscalationsPage() {
           <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-2xl overflow-hidden animate-fade-in-up delay-100 divide-y divide-slate-100 shadow-sm">
             {filtered.length === 0 ? (
               <div className="p-16 text-center">
-                <div className="w-16 h-16 bg-slate-50 dark:bg-zinc-900/50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-200 dark:border-zinc-800 shadow-sm">
+                <div className="w-16 h-16 bg-slate-50 dark:bg-[#0a0a0a] rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-200 dark:border-zinc-800 shadow-sm">
                   <Check className="w-8 h-8 text-emerald-500" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">No escalations found</h3>
@@ -126,7 +126,7 @@ export default function EscalationsPage() {
                 const isToday = date.toDateString() === new Date().toDateString();
 
                 return (
-                  <div key={e.id} className="p-6 md:p-8 hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors flex flex-col md:flex-row gap-6 md:items-start group">
+                  <div key={e.id} className="p-6 md:p-8 hover:bg-slate-50 dark:hover:bg-[#111] transition-colors flex flex-col md:flex-row gap-6 md:items-start group">
                     
                     {/* Status Badge */}
                     <div className="shrink-0 pt-1">

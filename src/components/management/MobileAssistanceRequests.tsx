@@ -28,7 +28,7 @@ export function MobileAssistanceRequests({ requests, loading }: { requests: any[
           </div>
         ) : (
           requests.map((req) => (
-            <div key={req.id} className="p-3 hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors flex flex-col gap-2">
+            <div key={req.id} className="p-3 hover:bg-slate-50 dark:hover:bg-[#111] transition-colors flex flex-col gap-2">
               <div className="flex justify-between items-start gap-2">
                 <div className="flex flex-col items-start min-w-0">
                   <p className="font-semibold text-slate-900 dark:text-white text-xs line-clamp-1">{req.resident_name}</p>
