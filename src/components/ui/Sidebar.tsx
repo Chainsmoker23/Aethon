@@ -98,19 +98,18 @@ export function Sidebar() {
       </nav>
 
       {/* User */}
-      <div className="p-4 border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 m-4 rounded-2xl shrink-0">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-black text-sm shadow-sm">
+      <div className="p-3 border border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 m-4 rounded-2xl shrink-0 flex items-center justify-between shadow-sm">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-black text-xs shadow-sm shrink-0">
             {initials}
           </div>
-          <div className="min-w-0">
-            <p className="font-extrabold text-sm text-slate-900 dark:text-white truncate">{userName}</p>
-            <p className="text-slate-500 dark:text-slate-500 dark:text-zinc-400 text-[10px] uppercase tracking-wider font-bold mt-0.5">Management</p>
+          <div className="min-w-0 pr-2">
+            <p className="font-extrabold text-xs text-slate-900 dark:text-white truncate leading-tight">{userName}</p>
+            <p className="text-slate-500 dark:text-zinc-400 text-[9px] uppercase tracking-wider font-bold mt-0.5">Management</p>
           </div>
         </div>
-        <SignOutButton className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg text-sm font-bold text-rose-600 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 hover:bg-rose-50 hover:border-rose-200 transition-all btn-press shadow-sm">
-          <LogOut className="w-4 h-4" />
-          Sign Out
+        <SignOutButton className="w-8 h-8 rounded-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 flex items-center justify-center text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 dark:hover:text-rose-500 dark:hover:border-rose-900 transition-colors shadow-sm shrink-0 group title='Sign Out'">
+          <LogOut className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
         </SignOutButton>
       </div>
     </>
@@ -148,7 +147,7 @@ export function Sidebar() {
 
       {/* Sidebar — desktop only */}
       <aside 
-        className="hidden lg:flex static top-0 left-0 z-50 h-full w-72 bg-white dark:bg-[#0a0a0a] border-r border-slate-200 dark:border-zinc-800 flex-col"
+        className="hidden lg:flex static top-0 left-0 z-50 h-full w-60 bg-white dark:bg-[#0a0a0a] border-r border-slate-200 dark:border-zinc-800 flex-col"
         role="navigation"
         aria-label="Main navigation"
       >
