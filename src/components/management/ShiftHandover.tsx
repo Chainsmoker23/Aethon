@@ -25,10 +25,10 @@ export function ShiftHandover() {
     // Fallback to visit_notes table for MVP
     const { data } = await supabase
       .from('visit_notes')
-      .select(\
+      .select(`
         id, visit_type, tasks_completed, created_at, is_escalation,
         residents(first_name, last_name)
-      \)
+      `)
       .in('visit_type', ['Handover - General', 'Handover - Watch', 'Handover - Critical', 'Handover Note'])
       .gte('created_at', today.toISOString())
       .order('created_at', { ascending: false });
@@ -61,7 +61,6 @@ export function ShiftHandover() {
     const val = e.target.value;
     setNewNote(val);
     
-    // Simple mention detection: last word starts with @
     const cursor = e.target.selectionStart;
     const textBeforeCursor = val.slice(0, cursor);
     const words = textBeforeCursor.split(/\s/);
@@ -81,11 +80,10 @@ export function ShiftHandover() {
     const textAfter = newNote.slice(cursor);
     
     const words = textBefore.split(/\s/);
-    words.pop(); // remove the partial @word
+    words.pop();
     const newTextBefore = words.length > 0 ? words.join(' ') + ' ' : '';
     
-    // Insert @FirstNameLastName
-    const mention = \@\\ \;
+    const mention = `@${firstName}${lastName} `;
     
     setNewNote(newTextBefore + mention + textAfter);
     setMentionQuery(null);
@@ -96,10 +94,9 @@ export function ShiftHandover() {
     e.preventDefault();
     if (!newNote.trim()) return;
 
-    // Use dummy resident if required by schema, otherwise we'd use null
     const note = {
       resident_id: residents.length > 0 ? residents[0].id : null,
-      visit_type: \Handover - \\,
+      visit_type: `Handover - ${priority.charAt(0).toUpperCase() + priority.slice(1)}`,
       tasks_completed: newNote,
       is_escalation: priority === 'critical'
     };
@@ -144,13 +141,10 @@ export function ShiftHandover() {
 
   return (
     <>
-      {/* Mobile Component */}
       <MobileShiftHandover notes={notes} highlightText={highlightText} priorityIcons={priorityIcons} priorityColors={priorityColors} />
 
-      {/* Desktop Component */}
       <div className="hidden md:flex flex-col h-[500px] bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden relative z-10 w-full">
         
-        {/* Header */}
         <div className="px-5 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center">
@@ -163,7 +157,6 @@ export function ShiftHandover() {
           </div>
         </div>
 
-        {/* Notes List */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50/30">
           {notes.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-slate-400 py-10">
@@ -176,7 +169,7 @@ export function ShiftHandover() {
                             n.visit_type?.toLowerCase().includes('watch') ? 'watch' : 'general';
                             
               return (
-                <div key={i} className={\p-3 rounded-xl border shadow-sm flex flex-col gap-2 transition-all hover:shadow-md \\}>
+                <div key={i} className={`p-3 rounded-xl border shadow-sm flex flex-col gap-2 transition-all hover:shadow-md ${priorityColors[pType as keyof typeof priorityColors]}`}>
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2">
                       {priorityIcons[pType as keyof typeof priorityIcons]}
@@ -197,10 +190,8 @@ export function ShiftHandover() {
           )}
         </div>
 
-        {/* Input Area */}
         <div className="p-4 bg-white border-t border-slate-200 relative">
           
-          {/* Mention Popover */}
           {mentionQuery !== null && (
             <div className="absolute bottom-full left-4 mb-2 w-64 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden z-50">
               <div className="bg-slate-50 px-3 py-1.5 border-b border-slate-100 text-[10px] font-bold text-slate-500 uppercase">
@@ -236,13 +227,13 @@ export function ShiftHandover() {
             
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
-                <button type="button" onClick={() => setPriority('general')} className={\px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 \\}>
+                <button type="button" onClick={() => setPriority('general')} className={`px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${priority === 'general' ? 'bg-slate-800 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
                   <Info className="w-3.5 h-3.5" /> General
                 </button>
-                <button type="button" onClick={() => setPriority('watch')} className={\px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 \\}>
+                <button type="button" onClick={() => setPriority('watch')} className={`px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${priority === 'watch' ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'bg-amber-50 text-amber-600 hover:bg-amber-100'}`}>
                   <Eye className="w-3.5 h-3.5" /> Watch
                 </button>
-                <button type="button" onClick={() => setPriority('critical')} className={\px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 \\}>
+                <button type="button" onClick={() => setPriority('critical')} className={`px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${priority === 'critical' ? 'bg-red-500 text-white shadow-lg shadow-red-500/20' : 'bg-red-50 text-red-600 hover:bg-red-100'}`}>
                   <AlertCircle className="w-3.5 h-3.5" /> Critical
                 </button>
               </div>

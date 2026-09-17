@@ -1,4 +1,5 @@
 import { ClipboardList, ChevronRight } from "lucide-react";
+import { ReactNode } from "react";
 
 export function MobileShiftHandover({ 
   notes, 
@@ -7,9 +8,9 @@ export function MobileShiftHandover({
   priorityColors 
 }: { 
   notes: any[], 
-  highlightText: (t: string) => any,
-  priorityIcons: any,
-  priorityColors: any
+  highlightText: (t: string) => ReactNode,
+  priorityIcons: Record<string, ReactNode>,
+  priorityColors: Record<string, string>
 }) {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden relative z-10 md:hidden flex flex-col h-[400px]">
@@ -31,10 +32,10 @@ export function MobileShiftHandover({
                           n.visit_type?.toLowerCase().includes('watch') ? 'watch' : 'general';
             
             return (
-              <div key={i} className={\p-3 flex flex-col gap-2 \\}>
+              <div key={i} className={`p-3 flex flex-col gap-2 ${priorityColors[pType]}`}>
                 <div className="flex justify-between items-center gap-2">
                   <div className="flex items-center gap-1.5">
-                    {priorityIcons[pType as keyof typeof priorityIcons]}
+                    {priorityIcons[pType]}
                     <span className="text-[10px] font-bold uppercase tracking-wider opacity-80">
                       {pType}
                     </span>
