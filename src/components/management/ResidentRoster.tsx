@@ -179,7 +179,7 @@ export function ResidentRoster() {
 
               {/* Expanded Area */}
               {isExpanded && (
-                <div className="bg-slate-50 dark:bg-zinc-900/50/80 px-10 py-6 border-t border-slate-100 dark:border-zinc-800/50 shadow-inner">
+                <div className="bg-slate-50 dark:bg-zinc-900/80 px-10 py-6 border-t border-slate-100 dark:border-zinc-800/50 shadow-inner">
                   <p className="text-xs font-semibold text-slate-500 dark:text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-4">Recent visits</p>
                   {r.recentVisits.length === 0 ? (
                     <p className="text-sm text-slate-500 dark:text-slate-500 dark:text-zinc-400 italic bg-white dark:bg-[#0a0a0a] p-4 rounded-xl border border-slate-200 dark:border-zinc-800 shadow-sm">No recent visits logged.</p>

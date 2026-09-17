@@ -44,7 +44,7 @@ export function MobileResidentRoster({ residents, expandedId, setExpandedId }: {
 
             {/* Expanded Area */}
             {isExpanded && (
-              <div className="bg-slate-50 dark:bg-zinc-900/50/80 px-4 py-4 border-t border-slate-100 dark:border-zinc-800/50 shadow-inner">
+              <div className="bg-slate-50 dark:bg-zinc-900/80 px-4 py-4 border-t border-slate-100 dark:border-zinc-800/50 shadow-inner">
                 <p className="text-[10px] font-semibold text-slate-500 dark:text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-2">Recent visits</p>
                 {r.recentVisits.length === 0 ? (
                   <p className="text-xs text-slate-500 dark:text-slate-500 dark:text-zinc-400 italic bg-white dark:bg-[#0a0a0a] p-3 rounded-lg border border-slate-200 dark:border-zinc-800">No recent visits logged.</p>
