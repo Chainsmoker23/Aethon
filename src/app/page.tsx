@@ -250,16 +250,10 @@ export default function LandingPage() {
             </div>
           </Reveal>
 
-          <Reveal delay={400}>
-            <p className="text-[10px] md:text-xs font-semibold text-text-muted mt-6 md:mt-8 flex items-center gap-2">
-              <Shield className="w-3 h-3 md:w-3.5 md:h-3.5" />
-              HIPAA Compliant · GDPR Ready · SOC 2 Type II
-            </p>
-          </Reveal>
         </div>
 
         {/* Hero Mockup emerging from bottom */}
-        <Reveal delay={500} className="w-full mt-24 relative z-10 hidden md:block">
+        <Reveal delay={500} className="w-full mt-16 md:mt-24 relative z-10 hidden md:block">
           <div>
             <div className="max-w-4xl mx-auto bg-white/40 backdrop-blur-3xl border border-white/60 rounded-t-[40px] shadow-2xl overflow-hidden h-[300px] p-6 flex gap-6 mask-bottom glass-glare">
             {/* Sidebar Mockup */}
@@ -439,7 +433,7 @@ export default function LandingPage() {
             </motion.div>
           </Reveal>
 
-          {/* Bento Item 5: Wide (HIPAA & Security) */}
+          {/* Bento Item 5: Wide (Enterprise Security) */}
           <Reveal delay={500} className="md:col-span-2 h-full">
             <motion.div 
               whileHover={{ scale: 1.02, y: -5 }}
@@ -453,7 +447,7 @@ export default function LandingPage() {
               <div className="z-10">
                 <h3 className="text-lg md:text-2xl font-extrabold text-navy mb-1.5 md:mb-2 tracking-tight">Enterprise Security</h3>
                 <p className="text-sm md:text-base text-text-secondary font-medium leading-relaxed">
-                  Fully HIPAA compliant and GDPR ready. End-to-end encryption ensures patient data never falls into the wrong hands.
+                  Built with enterprise-grade security. End-to-end encryption ensures patient data never falls into the wrong hands.
                 </p>
               </div>
             </motion.div>
@@ -665,7 +659,7 @@ export default function LandingPage() {
                     </div>
                     <h3 className="text-base font-extrabold text-navy mb-2 tracking-tight">Swiss Data Sovereignty</h3>
                     <p className="text-sm text-text-secondary font-medium leading-relaxed">
-                      Your data stays in Switzerland. Fully compliant with the Swiss Federal Act on Data Protection (FADP) and GDPR. Zero compromises on privacy.
+                      Your data stays in Switzerland. Designed in accordance with the Swiss Federal Act on Data Protection (FADP). Zero compromises on privacy.
                     </p>
                   </div>
                 </Reveal>

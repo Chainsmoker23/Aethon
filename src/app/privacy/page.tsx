@@ -88,7 +88,7 @@ export default function PrivacyPage() {
                 <section>
                   <h2 className="text-xl font-extrabold text-slate-900 mb-3">1. Introduction</h2>
                   <p>
-                    Aethon Health is committed to protecting the privacy and security of your data. This Privacy Policy explains how we collect, use, and protect your personal information when you use our care management platform. We adhere strictly to the Swiss Federal Act on Data Protection (FADP) and other relevant healthcare data regulations.
+                    Aethon Health is committed to protecting the privacy and security of your data. This Privacy Policy explains how we collect, use, and protect your personal information when you use our care management platform. Our practices comply with the Swiss Federal Act on Data Protection (FADP).
                   </p>
                 </section>
 

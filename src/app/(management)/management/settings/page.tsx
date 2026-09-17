@@ -362,7 +362,7 @@ export default function SettingsPage() {
                   <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6">
                     <div className="flex-1">
                       <h3 className="text-sm font-bold text-slate-900">Staff Audit Logs</h3>
-                      <p className="text-xs font-medium text-slate-500 mt-1">HIPAA compliance logs showing who accessed what.</p>
+                      <p className="text-xs font-medium text-slate-500 mt-1">Security logs showing who accessed what.</p>
                     </div>
                     <button 
                       onClick={() => handleExport('logs', 'csv')}

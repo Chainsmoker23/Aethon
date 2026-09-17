@@ -85,7 +85,7 @@ function LoginForm() {
 
       <p className="text-xs text-text-muted mt-12 animate-fade-in delay-300 text-center">
         By signing in, you agree to our Terms of Service.<br />
-        All data hosted in EU (Frankfurt) · GDPR Compliant
+        All data is securely hosted in Switzerland and the EU.
       </p>
     </div>
   );
