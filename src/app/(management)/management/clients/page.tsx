@@ -144,9 +144,9 @@ export default function ClientsPage() {
                   <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white truncate">{c.first_name} {c.last_name}</h3>
                   
                   <div className="flex items-center gap-3 mt-2 md:mt-3">
-                    <div className="flex items-center gap-1 text-[11px] md:text-xs font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400">
+                    <div className="flex items-center gap-1 text-[11px] md:text-xs font-medium text-slate-500 dark:text-zinc-400">
                       <MapPin className="w-3 h-3 text-slate-400" />
-                      Room {c.room_number || 'N/A'}
+                      {c.care_stage === 'Facility' ? (c.room_number ? `Room ${c.room_number}` : 'No Room Assigned') : (c.room_number || 'Home Address Pending')}
                     </div>
                   </div>
                 </div>
@@ -207,12 +207,15 @@ export default function ClientsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-900 dark:text-zinc-100 mb-1.5">Room Number</label>
+                <label className="block text-xs font-bold text-slate-900 dark:text-zinc-100 mb-1.5">
+                  {newClient.care_stage === 'Facility' ? 'Room / Bed Number' : 'Home Address / Care Zone'}
+                </label>
                 <input 
                   type="text" required
+                  placeholder={newClient.care_stage === 'Facility' ? 'e.g. Room 204, Bed B' : 'e.g. Bahnhofstrasse 12, Zurich'}
                   value={newClient.room_number}
                   onChange={e => setNewClient({...newClient, room_number: e.target.value})}
-                  className="w-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white"
+                  className="w-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-zinc-600"
                 />
               </div>
 
