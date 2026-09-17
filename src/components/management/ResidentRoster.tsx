@@ -96,13 +96,13 @@ export function ResidentRoster() {
   }
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden relative z-10">
-      <div className="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-800/50/50">
+    <div className="bg-white dark:bg-[#0a0a0a] rounded-xl shadow-sm border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
+      <div className="px-6 py-5 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50/50">
         <h2 className="text-lg font-semibold text-slate-900 dark:text-white tracking-tight">Active Residents</h2>
       </div>
 
       {/* Desktop Table Header */}
-      <div className="hidden md:grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-500 text-xs font-medium uppercase tracking-wider px-4">
+      <div className="hidden md:grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] bg-slate-50 dark:bg-zinc-900/50 border-b border-slate-200 dark:border-zinc-800 text-slate-500 dark:text-slate-500 text-xs font-medium uppercase tracking-wider px-4">
         <div className="px-4 py-3">Client</div>
         <div className="px-3 py-3">Care stage</div>
         <div className="px-3 py-3">Last visit</div>
@@ -115,7 +115,7 @@ export function ResidentRoster() {
       <MobileResidentRoster residents={residents} expandedId={expandedId} setExpandedId={setExpandedId} />
 
       {/* Desktop Rows */}
-      <div className="hidden md:block divide-y divide-slate-100 bg-white dark:bg-slate-900">
+      <div className="hidden md:block divide-y divide-slate-100 bg-white dark:bg-[#0a0a0a]">
         {residents.map((r) => {
           const isExpanded = expandedId === r.id;
           return (
@@ -123,7 +123,7 @@ export function ResidentRoster() {
               
               {/* Desktop Row Wrapper */}
               <div
-                className={`grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] items-center cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-slate-800/50 transition-colors ${r.escalations > 0 ? "bg-red-50/30" : ""} px-4`}
+                className={`grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] items-center cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors ${r.escalations > 0 ? "bg-red-50/30" : ""} px-4`}
                 onClick={() => setExpandedId(isExpanded ? null : r.id)}
               >
                 
@@ -179,21 +179,21 @@ export function ResidentRoster() {
 
               {/* Expanded Area */}
               {isExpanded && (
-                <div className="bg-slate-50 dark:bg-slate-800/50/80 px-10 py-6 border-t border-slate-100 dark:border-slate-800/50 shadow-inner">
+                <div className="bg-slate-50 dark:bg-zinc-900/50/80 px-10 py-6 border-t border-slate-100 dark:border-zinc-800/50 shadow-inner">
                   <p className="text-xs font-semibold text-slate-500 dark:text-slate-500 uppercase tracking-wider mb-4">Recent visits</p>
                   {r.recentVisits.length === 0 ? (
-                    <p className="text-sm text-slate-500 dark:text-slate-500 italic bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">No recent visits logged.</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-500 italic bg-white dark:bg-[#0a0a0a] p-4 rounded-xl border border-slate-200 dark:border-zinc-800 shadow-sm">No recent visits logged.</p>
                   ) : (
                     <div className="space-y-3">
                       {r.recentVisits.map((v: any, i: number) => (
-                        <div key={i} className="flex gap-4 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm max-w-3xl">
+                        <div key={i} className="flex gap-4 bg-white dark:bg-[#0a0a0a] p-4 rounded-xl border border-slate-200 dark:border-zinc-800 shadow-sm max-w-3xl">
                           <div className="flex flex-col items-center mt-1">
                             <div className="w-2 h-2 rounded-full bg-primary" />
                             {i !== r.recentVisits.length - 1 && <div className="w-0.5 h-full bg-slate-200 dark:bg-slate-700 mt-2" />}
                           </div>
                           <div>
                             <div className="flex gap-3 items-center mb-1">
-                              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">{v.type}</span>
+                              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-zinc-900 px-2 py-0.5 rounded-md">{v.type}</span>
                               <span className="text-xs font-medium text-slate-400">{v.date}</span>
                             </div>
                             <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">{v.tasks}</p>

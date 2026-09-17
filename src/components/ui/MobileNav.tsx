@@ -16,7 +16,7 @@ export function MobileNav() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pointer-events-none">
-      <nav className="w-full max-w-[640px] bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center justify-around pb-safe shadow-[0_-4px_24px_rgba(0,0,0,0.02)] pointer-events-auto">
+      <nav className="w-full max-w-[640px] bg-white dark:bg-[#0a0a0a] border-t border-slate-200 dark:border-zinc-800 flex items-center justify-around pb-safe shadow-[0_-4px_24px_rgba(0,0,0,0.02)] pointer-events-auto">
         {links.map((link) => {
           const isActive = pathname === link.href;
           

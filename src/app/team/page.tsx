@@ -10,7 +10,7 @@ export default function TeamPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen flex flex-col overflow-hidden bg-slate-50 dark:bg-slate-800/50/50 landing-grid-bg [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+    <div className="relative min-h-screen flex flex-col overflow-hidden bg-slate-50 dark:bg-zinc-900/50/50 landing-grid-bg [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       
       {/* === Elegant Color-Shifting Siri Aura Background === */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
@@ -21,13 +21,13 @@ export default function TeamPage() {
       </div>
 
       {/* === Navigation === */}
-      <nav className="sticky top-0 z-50 bg-white dark:bg-slate-900/60 backdrop-blur-2xl border-b border-slate-200 dark:border-slate-800/50">
+      <nav className="sticky top-0 z-50 bg-white dark:bg-[#0a0a0a]/60 backdrop-blur-2xl border-b border-slate-200 dark:border-zinc-800/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
             <img 
               src="/logo.jpg" 
               alt="Aethon Health Logo" 
-              className="w-10 h-10 rounded-xl object-contain bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800/50" 
+              className="w-10 h-10 rounded-xl object-contain bg-white dark:bg-[#0a0a0a] shadow-sm border border-slate-200 dark:border-zinc-800/50" 
             />
             <span className="text-xl font-extrabold text-navy tracking-tight">
               Aethon<span className="font-light text-primary ml-0.5">Health</span>
@@ -53,7 +53,7 @@ export default function TeamPage() {
           {/* Mobile Menu Toggle */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-navy hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
+            className="md:hidden w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-900 flex items-center justify-center text-navy hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -67,15 +67,15 @@ export default function TeamPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.2 }}
-              className="md:hidden absolute top-16 left-0 right-0 bg-white dark:bg-slate-900/95 backdrop-blur-2xl border-b border-slate-200 dark:border-slate-800/50 shadow-2xl p-6 flex flex-col gap-4 origin-top"
+              className="md:hidden absolute top-16 left-0 right-0 bg-white dark:bg-[#0a0a0a]/95 backdrop-blur-2xl border-b border-slate-200 dark:border-zinc-800/50 shadow-2xl p-6 flex flex-col gap-4 origin-top"
             >
-              <Link href="/#features" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 dark:border-slate-800/50 flex items-center justify-between">
+              <Link href="/#features" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 dark:border-zinc-800/50 flex items-center justify-between">
                 Features <ChevronRight className="w-4 h-4 text-slate-400" />
               </Link>
-              <Link href="/#how-it-works" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 dark:border-slate-800/50 flex items-center justify-between">
+              <Link href="/#how-it-works" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 dark:border-zinc-800/50 flex items-center justify-between">
                 How It Works <ChevronRight className="w-4 h-4 text-slate-400" />
               </Link>
-              <Link href="/#trust" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 dark:border-slate-800/50 flex items-center justify-between">
+              <Link href="/#trust" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 dark:border-zinc-800/50 flex items-center justify-between">
                 Trust & Security <ChevronRight className="w-4 h-4 text-slate-400" />
               </Link>
               <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="mt-4 px-5 py-3.5 bg-navy text-white text-center text-base font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-navy/20 active:scale-95 transition-transform">
@@ -153,13 +153,13 @@ export default function TeamPage() {
       </section>
 
       {/* === Footer === */}
-      <footer className="border-t border-slate-200 dark:border-slate-800/60 bg-white dark:bg-slate-900/60 backdrop-blur-xl mt-auto">
+      <footer className="border-t border-slate-200 dark:border-zinc-800/60 bg-white dark:bg-[#0a0a0a]/60 backdrop-blur-xl mt-auto">
         <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
             <img 
               src="/logo.jpg" 
               alt="Aethon Health Logo" 
-              className="w-8 h-8 rounded-lg object-contain bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800/50" 
+              className="w-8 h-8 rounded-lg object-contain bg-white dark:bg-[#0a0a0a] shadow-sm border border-slate-200 dark:border-zinc-800/50" 
             />
             <span className="text-lg font-extrabold text-navy tracking-tight">
               Aethon<span className="font-light text-primary ml-0.5">Health</span>

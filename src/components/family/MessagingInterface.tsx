@@ -79,12 +79,12 @@ export function MessagingInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 dark:bg-slate-800/50/50 relative">
+    <div className="flex flex-col h-full bg-slate-50 dark:bg-zinc-900/50/50 relative">
       
       {/* Header */}
-      <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 p-4 pt-6 shrink-0 flex items-center justify-between z-10 sticky top-0 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+      <div className="bg-white dark:bg-[#0a0a0a] border-b border-slate-200 dark:border-zinc-800 p-4 pt-6 shrink-0 flex items-center justify-between z-10 sticky top-0 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
         <div className="flex items-center gap-3">
-          <Link href="/family" className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors">
+          <Link href="/family" className="w-8 h-8 rounded-full bg-slate-100 dark:bg-zinc-900 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors">
             <ArrowLeft className="w-4 h-4 text-slate-700 dark:text-slate-300" />
           </Link>
           <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-sky-500 to-sky-600 flex items-center justify-center shadow-md shadow-sky-500/20">
@@ -107,7 +107,7 @@ export function MessagingInterface() {
           <div className="m-auto"><Loader2 className="w-6 h-6 animate-spin text-sky-600/50" /></div>
         ) : messages.length === 0 ? (
           <div className="m-auto text-center space-y-3 p-6 max-w-[280px]">
-            <div className="w-14 h-14 bg-white dark:bg-slate-900 rounded-2xl flex items-center justify-center mx-auto shadow-sm border border-slate-100 dark:border-slate-800/50 transform -rotate-6">
+            <div className="w-14 h-14 bg-white dark:bg-[#0a0a0a] rounded-2xl flex items-center justify-center mx-auto shadow-sm border border-slate-100 dark:border-zinc-800/50 transform -rotate-6">
               <MessageSquare className="w-6 h-6 text-sky-600" />
             </div>
             <p className="text-base font-bold text-slate-900 dark:text-white">Start the conversation</p>
@@ -127,7 +127,7 @@ export function MessagingInterface() {
                 <div className={`px-4 py-2.5 text-[15px] font-medium leading-relaxed ${
                   isFamily 
                     ? 'bg-gradient-to-tr from-sky-500 to-sky-600 text-white rounded-[20px] rounded-br-sm shadow-md shadow-sky-500/20' 
-                    : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/60 text-slate-900 dark:text-white rounded-[20px] rounded-bl-sm shadow-sm'
+                    : 'bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800/60 text-slate-900 dark:text-white rounded-[20px] rounded-bl-sm shadow-sm'
                 }`}>
                   {m.content}
                 </div>
@@ -142,14 +142,14 @@ export function MessagingInterface() {
       </div>
 
       {/* Input Area (Fixed to bottom, above MobileNav) */}
-      <div className="absolute bottom-0 left-0 right-0 p-3 px-4 bg-white dark:bg-slate-900/80 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800/60 shrink-0">
+      <div className="absolute bottom-0 left-0 right-0 p-3 px-4 bg-white dark:bg-[#0a0a0a]/80 backdrop-blur-xl border-t border-slate-200 dark:border-zinc-800/60 shrink-0">
         {error && (
           <div className="mb-2 px-4 py-2 bg-rose-100 border border-rose-200 rounded-xl text-sm font-bold text-rose-500 animate-fade-in flex items-center justify-between">
             <span>{error}</span>
             <button onClick={() => setError(null)} className="text-rose-500/60 hover:text-rose-500" aria-label="Dismiss error">✕</button>
           </div>
         )}
-        <form onSubmit={handleSend} className="relative flex items-end gap-2 bg-slate-100 dark:bg-slate-800/80 p-1.5 rounded-3xl border border-slate-200 dark:border-slate-800/80 focus-within:ring-2 focus-within:ring-sky-500/20 focus-within:border-sky-500/30 transition-all">
+        <form onSubmit={handleSend} className="relative flex items-end gap-2 bg-slate-100 dark:bg-zinc-900/80 p-1.5 rounded-3xl border border-slate-200 dark:border-zinc-800/80 focus-within:ring-2 focus-within:ring-sky-500/20 focus-within:border-sky-500/30 transition-all">
           <textarea
             placeholder="Type a message..."
             value={message}

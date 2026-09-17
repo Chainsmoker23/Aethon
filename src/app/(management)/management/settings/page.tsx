@@ -179,7 +179,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Mobile Account Block */}
-        <div className="lg:hidden flex items-center justify-between p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm animate-fade-in-up mb-4">
+        <div className="lg:hidden flex items-center justify-between p-3 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl shadow-sm animate-fade-in-up mb-4">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-black text-[10px] shadow-sm shrink-0">
               {userName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'S'}
@@ -202,7 +202,7 @@ export default function SettingsPage() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-2 md:gap-3 px-4 py-2.5 md:py-3 rounded-xl font-semibold text-sm transition-all whitespace-nowrap shrink-0 ${
                   activeTab === tab.id 
-                    ? "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-primary shadow-sm" 
+                    ? "bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 text-primary shadow-sm" 
                     : "text-slate-500 dark:text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-slate-900 dark:text-white"
                 }`}
               >
@@ -213,7 +213,7 @@ export default function SettingsPage() {
           </div>
 
           {/* Settings Content Area */}
-          <div className="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 md:p-8 min-h-[500px] shadow-sm">
+          <div className="flex-1 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-2xl p-5 md:p-8 min-h-[500px] shadow-sm">
             {activeTab === "general" && (
               <div className="animate-fade-in space-y-8">
                 <div>
@@ -228,7 +228,7 @@ export default function SettingsPage() {
                       type="text" 
                       value={settings.facilityName}
                       onChange={(e) => setSettings({...settings, facilityName: e.target.value})}
-                      className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 shadow-sm"
+                      className="w-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 shadow-sm"
                     />
                   </div>
                   <div>
@@ -236,7 +236,7 @@ export default function SettingsPage() {
                     <select 
                       value={settings.timezone}
                       onChange={(e) => setSettings({...settings, timezone: e.target.value})}
-                      className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 appearance-none shadow-sm"
+                      className="w-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 appearance-none shadow-sm"
                     >
                       <option value="Europe/Berlin">Central European Time (CET)</option>
                       <option value="Europe/London">Greenwich Mean Time (GMT)</option>
@@ -255,7 +255,7 @@ export default function SettingsPage() {
                 </div>
                 
                 <div className="space-y-6 max-w-xl">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl gap-4">
                     <div>
                       <p className="font-bold text-slate-900 dark:text-white text-sm">Theme Preference</p>
                       <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-0.5">Switch between Light and Dark mode.</p>
@@ -263,7 +263,7 @@ export default function SettingsPage() {
                     <div className="flex bg-slate-200 dark:bg-slate-700/50 p-1 rounded-xl">
                       <button 
                         onClick={() => setTheme('light')}
-                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'light' ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-500 hover:text-slate-700 dark:text-slate-300'}`}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'light' ? 'bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-500 hover:text-slate-700 dark:text-slate-300'}`}
                       >
                         Light Mode
                       </button>
@@ -287,7 +287,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="space-y-4 max-w-xl">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl gap-4">
                     <div>
                       <p className="font-bold text-slate-900 dark:text-white text-sm">Missing Visit Alert</p>
                       <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-0.5">Trigger an escalation if a client is not seen by this time.</p>
@@ -296,11 +296,11 @@ export default function SettingsPage() {
                       type="time" 
                       value={settings.alertTime}
                       onChange={(e) => setSettings({...settings, alertTime: e.target.value})}
-                      className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 text-sm font-bold text-slate-900 dark:text-white shadow-sm w-full sm:w-auto"
+                      className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-lg px-3 py-1.5 text-sm font-bold text-slate-900 dark:text-white shadow-sm w-full sm:w-auto"
                     />
                   </div>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl gap-4">
                     <div>
                       <p className="font-bold text-slate-900 dark:text-white text-sm">Family Notifications</p>
                       <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-0.5">Send a push notification to family when an escalation is resolved.</p>
@@ -313,24 +313,24 @@ export default function SettingsPage() {
                     </button>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl gap-4">
                     <div>
                       <label className="block font-bold text-slate-900 dark:text-white text-sm">Heart Rate Threshold (BPM)</label>
                       <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-0.5">Alert if heart rate goes outside this range.</p>
                     </div>
                     <div className="flex items-center gap-2 self-start sm:self-auto">
-                      <input type="number" defaultValue="45" className="w-20 px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm text-center" />
+                      <input type="number" defaultValue="45" className="w-20 px-3 py-1.5 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm text-center" />
                       <span className="text-sm font-medium text-slate-400">to</span>
-                      <input type="number" defaultValue="120" className="w-20 px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm text-center" />
+                      <input type="number" defaultValue="120" className="w-20 px-3 py-1.5 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm text-center" />
                     </div>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl gap-4">
                     <div>
                       <label className="block font-bold text-slate-900 dark:text-white text-sm">Missed Medication Window</label>
                       <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-0.5">Hours before escalation is generated.</p>
                     </div>
-                    <input type="number" defaultValue="2" className="w-20 px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm self-start sm:self-auto text-center" />
+                    <input type="number" defaultValue="2" className="w-20 px-3 py-1.5 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm self-start sm:self-auto text-center" />
                   </div>
                 </div>
               </div>
@@ -349,14 +349,14 @@ export default function SettingsPage() {
                   </button>
                 </div>
                 
-                <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
-                  <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <div className="bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl overflow-hidden">
+                  <div className="px-5 py-4 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between">
                      <span className="text-sm font-bold text-slate-900 dark:text-white">Dr. Anna Weber</span>
                      <span className="text-xs font-bold text-primary bg-indigo-50 px-2 py-1 rounded-md">Admin</span>
                   </div>
-                  <div className="px-5 py-4 flex items-center justify-between bg-white dark:bg-slate-900">
+                  <div className="px-5 py-4 flex items-center justify-between bg-white dark:bg-[#0a0a0a]">
                      <span className="text-sm font-bold text-slate-900 dark:text-white">Marcus Schmidt</span>
-                     <span className="text-xs font-bold text-slate-500 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-800">Caregiver</span>
+                     <span className="text-xs font-bold text-slate-500 dark:text-slate-500 bg-slate-100 dark:bg-zinc-900 px-2 py-1 rounded-md border border-slate-200 dark:border-zinc-800">Caregiver</span>
                   </div>
                 </div>
               </div>
@@ -370,7 +370,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6">
+                  <div className="bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6">
                     <div className="flex-1">
                       <h3 className="text-sm font-bold text-slate-900 dark:text-white">Resident Care Records</h3>
                       <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-1">Download complete timeline histories.</p>
@@ -379,7 +379,7 @@ export default function SettingsPage() {
                       <button 
                         onClick={() => handleExport('records', 'pdf')}
                         disabled={isExporting !== null}
-                        className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 text-sm font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-slate-800/50 transition-colors shadow-sm btn-press disabled:opacity-50 w-full sm:w-auto"
+                        className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white border border-slate-200 dark:border-zinc-800 text-sm font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors shadow-sm btn-press disabled:opacity-50 w-full sm:w-auto"
                       >
                         {isExporting === 'records-pdf' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
                         Export PDF
@@ -387,7 +387,7 @@ export default function SettingsPage() {
                       <button 
                         onClick={() => handleExport('records', 'csv')}
                         disabled={isExporting !== null}
-                        className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 text-sm font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-slate-800/50 transition-colors shadow-sm btn-press disabled:opacity-50 w-full sm:w-auto"
+                        className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white border border-slate-200 dark:border-zinc-800 text-sm font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors shadow-sm btn-press disabled:opacity-50 w-full sm:w-auto"
                       >
                         {isExporting === 'records-csv' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
                         Export CSV
@@ -395,7 +395,7 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6">
+                  <div className="bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6">
                     <div className="flex-1">
                       <h3 className="text-sm font-bold text-slate-900 dark:text-white">Staff Audit Logs</h3>
                       <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-1">Security logs showing who accessed what.</p>
@@ -403,7 +403,7 @@ export default function SettingsPage() {
                     <button 
                       onClick={() => handleExport('logs', 'csv')}
                       disabled={isExporting !== null}
-                      className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 text-sm font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-slate-800/50 transition-colors shadow-sm btn-press disabled:opacity-50 w-full sm:w-auto shrink-0 mt-1 sm:mt-0"
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white border border-slate-200 dark:border-zinc-800 text-sm font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors shadow-sm btn-press disabled:opacity-50 w-full sm:w-auto shrink-0 mt-1 sm:mt-0"
                     >
                       {isExporting === 'logs-csv' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
                       Export CSV
@@ -414,7 +414,7 @@ export default function SettingsPage() {
             )}
 
             {/* Save Action Footer */}
-            <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+            <div className="mt-8 pt-6 border-t border-slate-200 dark:border-zinc-800 flex justify-end">
               <button 
                 onClick={handleSave}
                 className={`flex items-center gap-2 px-6 py-2.5 text-white text-sm font-bold rounded-xl transition-all duration-300 shadow-sm btn-press w-full sm:w-auto justify-center ${

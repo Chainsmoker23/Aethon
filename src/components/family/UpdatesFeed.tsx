@@ -39,7 +39,7 @@ export function UpdatesFeed() {
 
   if (loading) {
     return (
-      <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 h-48 flex items-center justify-center">
+      <div className="bg-white dark:bg-[#0a0a0a] rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-zinc-800 h-48 flex items-center justify-center">
          <Loader2 className="w-6 h-6 animate-spin text-sky-600" />
       </div>
     );
@@ -49,14 +49,14 @@ export function UpdatesFeed() {
 
   return (
     <>
-      <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800">
+      <div className="bg-white dark:bg-[#0a0a0a] rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-zinc-800">
         <h2 className="text-lg font-bold text-slate-900 dark:text-white">Recent updates</h2>
         <div className="mt-4 space-y-4">
           {visits.length === 0 ? (
             <p className="text-sm text-slate-400 italic">No recent updates logged.</p>
           ) : (
             visits.map((v, i) => (
-              <div key={v.id || i} className="flex items-start gap-4 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-slate-800/50 transition-colors">
+              <div key={v.id || i} className="flex items-start gap-4 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${v.type === 'escalation' ? 'bg-rose-100' : 'bg-sky-100'}`}>
                   {v.type === 'escalation' ? (
                     <AlertTriangle className="w-4 h-4 text-rose-600" />
@@ -69,7 +69,7 @@ export function UpdatesFeed() {
                     <span className="text-sm font-bold text-slate-900 dark:text-white">
                       {new Date(v.created_at).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                     </span>
-                    <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${v.type === 'escalation' ? 'bg-rose-100 text-rose-600' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-500'}`}>
+                    <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${v.type === 'escalation' ? 'bg-rose-100 text-rose-600' : 'bg-slate-100 dark:bg-zinc-900 text-slate-500 dark:text-slate-500'}`}>
                       {v.type === 'escalation' ? v.severity || 'Alert' : v.visit_type}
                     </span>
                   </div>
@@ -83,7 +83,7 @@ export function UpdatesFeed() {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 mt-5">
+      <div className="bg-white dark:bg-[#0a0a0a] rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-zinc-800 mt-5">
         <h2 className="text-lg font-bold text-slate-900 dark:text-white">What matters to {firstName}</h2>
         <div className="mt-4 space-y-3">
           {goals.map((g, i) => (

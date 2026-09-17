@@ -9,7 +9,7 @@ export default function TermsPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen flex flex-col overflow-hidden bg-slate-50 dark:bg-slate-800/50/50 landing-grid-bg">
+    <div className="relative min-h-screen flex flex-col overflow-hidden bg-slate-50 dark:bg-zinc-900/50/50 landing-grid-bg">
       
       {/* === Elegant Color-Shifting Siri Aura Background === */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
@@ -20,13 +20,13 @@ export default function TermsPage() {
       </div>
 
       {/* === Navigation === */}
-      <nav className="sticky top-0 z-50 bg-white dark:bg-slate-900/60 backdrop-blur-2xl border-b border-slate-200 dark:border-slate-800/50">
+      <nav className="sticky top-0 z-50 bg-white dark:bg-[#0a0a0a]/60 backdrop-blur-2xl border-b border-slate-200 dark:border-zinc-800/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
             <img 
               src="/logo.jpg" 
               alt="Aethon Health Logo" 
-              className="w-10 h-10 rounded-xl object-contain bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800/50" 
+              className="w-10 h-10 rounded-xl object-contain bg-white dark:bg-[#0a0a0a] shadow-sm border border-slate-200 dark:border-zinc-800/50" 
             />
             <span className="text-xl font-extrabold text-navy tracking-tight">
               Aethon<span className="font-light text-primary ml-0.5">Health</span>
@@ -51,7 +51,7 @@ export default function TermsPage() {
           {/* Mobile Menu Toggle */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-navy hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
+            className="md:hidden w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-900 flex items-center justify-center text-navy hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -59,7 +59,7 @@ export default function TermsPage() {
 
         {/* Mobile Nav Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 w-full bg-white dark:bg-slate-900/95 backdrop-blur-3xl border-b border-slate-200 dark:border-slate-800/50 shadow-xl py-6 px-6 flex flex-col gap-4 text-center">
+          <div className="md:hidden absolute top-16 left-0 w-full bg-white dark:bg-[#0a0a0a]/95 backdrop-blur-3xl border-b border-slate-200 dark:border-zinc-800/50 shadow-xl py-6 px-6 flex flex-col gap-4 text-center">
             <Link href="/team" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-text-secondary hover:text-navy transition-colors">Team</Link>
             <Link href="/terms" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy transition-colors">Terms</Link>
             <div className="h-px w-full bg-slate-200 dark:bg-slate-700/60 my-2" />
@@ -78,7 +78,7 @@ export default function TermsPage() {
       <section className="flex-1 py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-6">
           <Reveal>
-            <div className="bg-white dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 shadow-xl shadow-slate-200/50 rounded-3xl p-8 md:p-12 prose prose-slate max-w-none">
+            <div className="bg-white dark:bg-[#0a0a0a]/80 backdrop-blur-xl border border-white/20 shadow-xl shadow-slate-200/50 rounded-3xl p-8 md:p-12 prose prose-slate max-w-none">
               <h1 className="text-3xl md:text-5xl font-black text-navy tracking-tight mb-4">Terms of Service</h1>
               <p className="text-sm font-bold text-slate-500 dark:text-slate-500 uppercase tracking-wider mb-8">Last Updated: September 15, 2026</p>
               
@@ -131,13 +131,13 @@ export default function TermsPage() {
       </section>
 
       {/* === Footer === */}
-      <footer className="border-t border-slate-200 dark:border-slate-800/60 bg-white dark:bg-slate-900/60 backdrop-blur-xl mt-auto">
+      <footer className="border-t border-slate-200 dark:border-zinc-800/60 bg-white dark:bg-[#0a0a0a]/60 backdrop-blur-xl mt-auto">
         <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
             <img 
               src="/logo.jpg" 
               alt="Aethon Health Logo" 
-              className="w-8 h-8 rounded-lg object-contain bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800/50" 
+              className="w-8 h-8 rounded-lg object-contain bg-white dark:bg-[#0a0a0a] shadow-sm border border-slate-200 dark:border-zinc-800/50" 
             />
             <span className="text-lg font-extrabold text-navy tracking-tight">
               Aethon<span className="font-light text-primary ml-0.5">Health</span>

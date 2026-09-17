@@ -82,9 +82,9 @@ export default function ProfilePage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-20 px-6 py-5 flex items-center justify-between shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+      <div className="bg-white dark:bg-[#0a0a0a] border-b border-slate-200 dark:border-zinc-800 sticky top-0 z-20 px-6 py-5 flex items-center justify-between shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
         <div className="flex items-center gap-3">
-          <Link href="/family" className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors">
+          <Link href="/family" className="w-8 h-8 rounded-full bg-slate-100 dark:bg-zinc-900 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors">
             <ArrowLeft className="w-4 h-4 text-slate-700 dark:text-slate-300" />
           </Link>
           <div>
@@ -97,7 +97,7 @@ export default function ProfilePage() {
       </div>
       
       <main className="flex-1 p-6 space-y-6 pb-32">
-        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+        <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-zinc-800 flex items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center text-white text-2xl font-black shadow-md shrink-0">
             {userName[0]?.toUpperCase()}
           </div>
@@ -110,64 +110,64 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+        <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-sm border border-slate-200 dark:border-zinc-800 overflow-hidden">
           
           {/* Notification Preferences */}
-          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50/50 opacity-60 border-b border-slate-200 dark:border-slate-800 cursor-not-allowed">
+          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50/50 opacity-60 border-b border-slate-200 dark:border-zinc-800 cursor-not-allowed">
             <div className="flex items-center gap-3">
               <Bell className="w-5 h-5 text-slate-500 dark:text-slate-500" />
               <span className="font-bold text-slate-900 dark:text-white text-sm">{t.notifications}</span>
             </div>
-            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-800">{t.comingSoon}</span>
+            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 dark:bg-zinc-900 px-2 py-1 rounded-md border border-slate-200 dark:border-zinc-800">{t.comingSoon}</span>
           </button>
 
           {/* Privacy & Security */}
-          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50/50 opacity-60 border-b border-slate-200 dark:border-slate-800 cursor-not-allowed">
+          <button disabled className="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50/50 opacity-60 border-b border-slate-200 dark:border-zinc-800 cursor-not-allowed">
             <div className="flex items-center gap-3">
               <Shield className="w-5 h-5 text-slate-500 dark:text-slate-500" />
               <span className="font-bold text-slate-900 dark:text-white text-sm">{t.privacy}</span>
             </div>
-            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-800">{t.comingSoon}</span>
+            <span className="text-[10px] font-bold text-slate-400 bg-slate-100 dark:bg-zinc-900 px-2 py-1 rounded-md border border-slate-200 dark:border-zinc-800">{t.comingSoon}</span>
           </button>
 
           {/* Account Settings */}
           <Sheet>
-            <SheetTrigger className="w-full flex items-center justify-between p-4 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-slate-800/50 transition-colors active:bg-slate-100 dark:bg-slate-800">
+            <SheetTrigger className="w-full flex items-center justify-between p-4 bg-white dark:bg-[#0a0a0a] hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors active:bg-slate-100 dark:bg-zinc-900">
               <div className="flex items-center gap-3">
                 <Settings className="w-5 h-5 text-violet-500" />
                 <span className="font-bold text-slate-900 dark:text-white text-sm">{t.account}</span>
               </div>
               <ChevronRight className="w-4 h-4 text-slate-400" />
             </SheetTrigger>
-            <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl border-t-0 p-0 overflow-hidden flex flex-col bg-slate-50 dark:bg-slate-800/50">
-              <SheetHeader className="p-6 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10">
+            <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl border-t-0 p-0 overflow-hidden flex flex-col bg-slate-50 dark:bg-zinc-900/50">
+              <SheetHeader className="p-6 bg-white dark:bg-[#0a0a0a] border-b border-slate-200 dark:border-zinc-800 sticky top-0 z-10">
                 <SheetTitle className="text-xl font-black text-slate-900 dark:text-white text-left">{t.accountInfo}</SheetTitle>
                 <p className="text-sm font-medium text-slate-500 dark:text-slate-500 text-left mt-1">{t.manageDetails}</p>
               </SheetHeader>
               <div className="p-6 flex-1 overflow-y-auto space-y-6">
                 
-                <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                <div className="bg-white dark:bg-[#0a0a0a] p-5 rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm space-y-4">
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-slate-500 dark:text-slate-500 uppercase tracking-wider">{t.displayName}</label>
                     <input 
                       type="text" 
                       value={userName}
                       onChange={(e) => setUserName(e.target.value)}
-                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all" 
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all" 
                     />
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-slate-500 dark:text-slate-500 uppercase tracking-wider">{t.email}</label>
-                    <input type="email" value={userEmail || "Loading..."} readOnly className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-bold text-slate-500 dark:text-slate-500 cursor-not-allowed opacity-70" />
+                    <input type="email" value={userEmail || "Loading..."} readOnly className="w-full px-4 py-2.5 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-500 dark:text-slate-500 cursor-not-allowed opacity-70" />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-500 dark:text-slate-500 uppercase tracking-wider pl-1">{t.language}</label>
-                  <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                  <div className="bg-white dark:bg-[#0a0a0a] rounded-2xl border border-slate-200 dark:border-zinc-800 shadow-sm overflow-hidden">
                     <button 
                       onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-                      className="w-full flex items-center justify-between p-4 outline-none hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-slate-800/50 transition-colors"
+                      className="w-full flex items-center justify-between p-4 outline-none hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors"
                     >
                       <div className="flex items-center gap-3">
                         <Globe className="w-5 h-5 text-sky-500" />
@@ -177,7 +177,7 @@ export default function ProfilePage() {
                     </button>
                     
                     {isLanguageOpen && (
-                      <div className="p-2 space-y-1 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800/50">
+                      <div className="p-2 space-y-1 bg-slate-50 dark:bg-zinc-900/50 border-t border-slate-100 dark:border-zinc-800/50">
                         {["English", "German", "French", "Italian"].map(lang => (
                           <button
                             key={lang}
@@ -220,8 +220,8 @@ export default function ProfilePage() {
 
         </div>
 
-        <div className="pt-6 border-t border-slate-200 dark:border-slate-800/50">
-          <SignOutButton className="w-full flex items-center justify-center gap-2 p-4 bg-white dark:bg-slate-900 border border-rose-200 text-rose-500 rounded-2xl font-bold hover:bg-rose-50 transition-colors shadow-sm active:scale-[0.98]">
+        <div className="pt-6 border-t border-slate-200 dark:border-zinc-800/50">
+          <SignOutButton className="w-full flex items-center justify-center gap-2 p-4 bg-white dark:bg-[#0a0a0a] border border-rose-200 text-rose-500 rounded-2xl font-bold hover:bg-rose-50 transition-colors shadow-sm active:scale-[0.98]">
             <LogOut className="w-5 h-5" />
             {t.signOut}
           </SignOutButton>

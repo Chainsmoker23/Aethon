@@ -280,7 +280,7 @@ export default function ClientProfilePage() {
 
   if (loading) {
     return (
-      <div className="relative min-h-screen flex-1 overflow-hidden bg-slate-50 dark:bg-slate-800/50 z-0 p-4 md:p-6 lg:p-10 space-y-6 md:space-y-8 max-w-[1200px] mx-auto w-full">
+      <div className="relative min-h-screen flex-1 overflow-hidden bg-slate-50 dark:bg-zinc-900/50 z-0 p-4 md:p-6 lg:p-10 space-y-6 md:space-y-8 max-w-[1200px] mx-auto w-full">
         {/* Header Skeleton */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="flex items-center gap-4">
@@ -355,7 +355,7 @@ export default function ClientProfilePage() {
           <div className="space-y-8">
             
             {/* Medications Card */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl md:rounded-3xl p-5 md:p-6 shadow-sm">
+            <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-2xl md:rounded-3xl p-5 md:p-6 shadow-sm">
               <div className="flex items-center justify-between mb-4 md:mb-5">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-blue-50 flex items-center justify-center">
@@ -365,7 +365,7 @@ export default function ClientProfilePage() {
                 </div>
                 <button 
                   onClick={() => setIsMedModalOpen(true)}
-                  className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 transition-colors shadow-sm shrink-0"
+                  className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-zinc-900 transition-colors shadow-sm shrink-0"
                 >
                   <Plus className="w-4 h-4 md:w-5 md:h-5 text-slate-700 dark:text-slate-300" />
                 </button>
@@ -376,7 +376,7 @@ export default function ClientProfilePage() {
                   <p className="text-sm text-slate-400 italic">No medications prescribed.</p>
                 ) : (
                   medications.map(med => (
-                    <div key={med.id} className="p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800/50 rounded-xl">
+                    <div key={med.id} className="p-3 bg-slate-50 dark:bg-zinc-900/50 border border-slate-100 dark:border-zinc-800/50 rounded-xl">
                       <p className="font-bold text-slate-900 dark:text-white text-sm">{med.name} <span className="text-slate-500 dark:text-slate-500 font-medium">{med.dosage}</span></p>
                       <div className="flex justify-between items-center mt-1">
                         <span className="text-xs font-medium text-slate-500 dark:text-slate-500">{med.scheduled_time}</span>
@@ -398,7 +398,7 @@ export default function ClientProfilePage() {
             </div>
             
             {/* Family Contacts Card */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl md:rounded-3xl p-5 md:p-6 shadow-sm">
+            <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-2xl md:rounded-3xl p-5 md:p-6 shadow-sm">
               <div className="flex items-center justify-between mb-4 md:mb-5">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-purple-50 flex items-center justify-center">
@@ -408,14 +408,14 @@ export default function ClientProfilePage() {
                 </div>
                 <button 
                   onClick={() => setIsInviteModalOpen(true)}
-                  className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 transition-colors shadow-sm shrink-0"
+                  className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-zinc-900 transition-colors shadow-sm shrink-0"
                 >
                   <Plus className="w-4 h-4 md:w-5 md:h-5 text-slate-700 dark:text-slate-300" />
                 </button>
               </div>
 
               {pendingInvites.length === 0 && activeFamily.length === 0 ? (
-                <div className="text-center p-4 md:p-5 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
+                <div className="text-center p-4 md:p-5 border border-dashed border-slate-200 dark:border-zinc-800 rounded-2xl bg-slate-50 dark:bg-zinc-900/50">
                   <p className="text-xs md:text-sm font-medium text-slate-500 dark:text-slate-500 mb-2 md:mb-3">No family members connected.</p>
                   <button 
                     onClick={() => setIsInviteModalOpen(true)}
@@ -429,7 +429,7 @@ export default function ClientProfilePage() {
                   
                   {/* Active Connected Family Members */}
                   {activeFamily.map((family, idx) => (
-                    <div key={`active-${idx}`} className="flex items-center justify-between p-2.5 md:p-3 bg-white dark:bg-slate-900 border border-emerald-200 rounded-xl animate-fade-in-up">
+                    <div key={`active-${idx}`} className="flex items-center justify-between p-2.5 md:p-3 bg-white dark:bg-[#0a0a0a] border border-emerald-200 rounded-xl animate-fade-in-up">
                       <div className="flex items-center gap-2 md:gap-3 min-w-0">
                         <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-tr from-emerald-400 to-teal-500 flex items-center justify-center text-white font-bold text-xs shadow-sm shrink-0">
                           {family.full_name?.[0] || 'F'}
@@ -456,9 +456,9 @@ export default function ClientProfilePage() {
 
                   {/* Pending Email Invites */}
                   {pendingInvites.map((email, idx) => (
-                    <div key={`pending-${idx}`} className="flex items-center justify-between p-2.5 md:p-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl animate-fade-in-up">
+                    <div key={`pending-${idx}`} className="flex items-center justify-between p-2.5 md:p-3 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl animate-fade-in-up">
                       <div className="flex items-center gap-2 md:gap-3 min-w-0">
-                        <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center border border-slate-200 dark:border-slate-800 shrink-0">
+                        <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white dark:bg-[#0a0a0a] flex items-center justify-center border border-slate-200 dark:border-zinc-800 shrink-0">
                           <Users className="w-3.5 h-3.5 md:w-4 md:h-4 text-slate-400" />
                         </div>
                         <div className="min-w-0">
@@ -487,12 +487,12 @@ export default function ClientProfilePage() {
           </div>
 
           {/* Right Column: Tabbed Content Area */}
-          <Tabs defaultValue="timeline" className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm p-4 sm:p-6 md:p-8 flex flex-col min-h-[500px] lg:h-[700px]">
+          <Tabs defaultValue="timeline" className="lg:col-span-2 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl shadow-sm p-4 sm:p-6 md:p-8 flex flex-col min-h-[500px] lg:h-[700px]">
             
             {/* Header & Tabs */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 shrink-0 pb-6 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10 bg-white dark:bg-slate-900 sm:relative -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 shrink-0 pb-6 border-b border-slate-200 dark:border-zinc-800 sticky top-0 z-10 bg-white dark:bg-[#0a0a0a] sm:relative -mx-4 px-4 sm:mx-0 sm:px-0">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-900 flex items-center justify-center shrink-0">
                   <Activity className="w-5 h-5 text-slate-700 dark:text-slate-300" />
                 </div>
                 <div>
@@ -516,10 +516,10 @@ export default function ClientProfilePage() {
                 <>
                   {/* Note / Escalation Toggle */}
                   <div className="flex justify-end mb-4">
-                    <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl shadow-inner border border-slate-200 dark:border-slate-800">
+                    <div className="flex bg-slate-100 dark:bg-zinc-900 p-1 rounded-xl shadow-inner border border-slate-200 dark:border-zinc-800">
                       <button 
                         onClick={() => setNoteMode("note")}
-                        className={`px-4 py-1.5 text-[11px] md:text-xs font-bold rounded-lg transition-all ${noteMode === "note" ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm" : "text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:text-white"}`}
+                        className={`px-4 py-1.5 text-[11px] md:text-xs font-bold rounded-lg transition-all ${noteMode === "note" ? "bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white shadow-sm" : "text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:text-white"}`}
                       >
                         Note
                       </button>
@@ -539,10 +539,10 @@ export default function ClientProfilePage() {
                 value={newNote}
                 onChange={(e) => setNewNote(e.target.value)}
                 placeholder={noteMode === "escalation" ? `Describe emergency...` : `Log a quick note...`}
-                className={`w-full h-10 md:h-12 pl-4 pr-12 bg-slate-50 dark:bg-slate-800/50 border rounded-xl text-xs md:text-sm font-medium focus:outline-none focus:ring-2 transition-all shadow-sm ${
+                className={`w-full h-10 md:h-12 pl-4 pr-12 bg-slate-50 dark:bg-zinc-900/50 border rounded-xl text-xs md:text-sm font-medium focus:outline-none focus:ring-2 transition-all shadow-sm ${
                   noteMode === "escalation" 
                     ? "border-rose-200 focus:ring-rose-500/40 text-rose-700 placeholder:text-rose-300" 
-                    : "border-slate-200 dark:border-slate-800 focus:ring-primary/40 focus:bg-white dark:bg-slate-900"
+                    : "border-slate-200 dark:border-zinc-800 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a]"
                 }`}
               />
               <button 
@@ -568,8 +568,8 @@ export default function ClientProfilePage() {
                     {/* Timeline line */}
                     <div className="absolute left-[11px] md:left-[17px] top-8 bottom-0 w-0.5 bg-slate-200 dark:bg-slate-700" />
                     
-                    <div className={`bg-white dark:bg-slate-900 border p-4 md:p-5 rounded-2xl shadow-sm transition-colors ${
-                      item.type === 'escalation' ? 'border-rose-200 hover:bg-rose-50' : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-slate-800/50'
+                    <div className={`bg-white dark:bg-[#0a0a0a] border p-4 md:p-5 rounded-2xl shadow-sm transition-colors ${
+                      item.type === 'escalation' ? 'border-rose-200 hover:bg-rose-50' : 'border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50'
                     }`}>
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-2 md:gap-3">
@@ -579,7 +579,7 @@ export default function ClientProfilePage() {
                             {item.type === 'escalation' ? <AlertTriangle className="w-3 h-3 md:w-3.5 md:h-3.5" /> : <ClipboardList className="w-3 h-3 md:w-3.5 md:h-3.5" />}
                           </div>
                           <span className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
-                            item.type === 'escalation' ? 'bg-rose-100 text-rose-700' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                            item.type === 'escalation' ? 'bg-rose-100 text-rose-700' : 'bg-slate-100 dark:bg-zinc-900 text-slate-700 dark:text-slate-300'
                           }`}>
                             {item.type === 'escalation' ? 'Escalation' : item.visit_type}
                           </span>
@@ -625,13 +625,13 @@ export default function ClientProfilePage() {
       {/* Add Medication Modal */}
       {isMedModalOpen && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
+          <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
             {/* Mobile drag handle indicator */}
             <div className="w-10 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-5 md:hidden" />
             
             <button 
               onClick={() => setIsMedModalOpen(false)}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
             >
               <X className="w-4 h-4 text-slate-500 dark:text-slate-500" />
             </button>
@@ -652,7 +652,7 @@ export default function ClientProfilePage() {
                   type="text" required placeholder="e.g. Lisinopril"
                   value={newMed.name}
                   onChange={e => setNewMed({...newMed, name: e.target.value})}
-                  className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-slate-900 transition-colors"
+                  className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
                 />
               </div>
               
@@ -663,7 +663,7 @@ export default function ClientProfilePage() {
                     type="text" required placeholder="e.g. 50mg"
                     value={newMed.dosage}
                     onChange={e => setNewMed({...newMed, dosage: e.target.value})}
-                    className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-slate-900 transition-colors"
+                    className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
                   />
                 </div>
                 <div>
@@ -672,7 +672,7 @@ export default function ClientProfilePage() {
                     type="time" required
                     value={newMed.scheduled_time}
                     onChange={e => setNewMed({...newMed, scheduled_time: e.target.value})}
-                    className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-slate-900 transition-colors"
+                    className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
                   />
                 </div>
               </div>
@@ -694,13 +694,13 @@ export default function ClientProfilePage() {
       {/* Invite Family Modal */}
       {isInviteModalOpen && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
+          <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
             {/* Mobile drag handle indicator */}
             <div className="w-10 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-5 md:hidden" />
             
             <button 
               onClick={() => setIsInviteModalOpen(false)}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
             >
               <X className="w-4 h-4 text-slate-500 dark:text-slate-500" />
             </button>
@@ -721,7 +721,7 @@ export default function ClientProfilePage() {
                   type="email" required placeholder="e.g. sarah@example.com"
                   value={inviteEmail}
                   onChange={e => setInviteEmail(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-slate-900 transition-colors"
+                  className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
                 />
               </div>
 
@@ -742,18 +742,18 @@ export default function ClientProfilePage() {
       {/* Edit Resident Modal */}
       {isEditModalOpen && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
+          <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
             <div className="w-10 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-5 md:hidden" />
             
             <button 
               onClick={() => setIsEditModalOpen(false)}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
             >
               <X className="w-4 h-4 text-slate-500 dark:text-slate-500" />
             </button>
             
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-900 flex items-center justify-center shrink-0">
                 <Edit className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               </div>
               <div>
@@ -769,7 +769,7 @@ export default function ClientProfilePage() {
                     type="text" required
                     value={editForm.first_name}
                     onChange={e => setEditForm({...editForm, first_name: e.target.value})}
-                    className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-slate-900 transition-colors"
+                    className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
                   />
                 </div>
                 <div>
@@ -778,7 +778,7 @@ export default function ClientProfilePage() {
                     type="text" required
                     value={editForm.last_name}
                     onChange={e => setEditForm({...editForm, last_name: e.target.value})}
-                    className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-slate-900 transition-colors"
+                    className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
                   />
                 </div>
               </div>
@@ -790,7 +790,7 @@ export default function ClientProfilePage() {
                     type="text"
                     value={editForm.room_number}
                     onChange={e => setEditForm({...editForm, room_number: e.target.value})}
-                    className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-slate-900 transition-colors"
+                    className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
                   />
                 </div>
                 <div>
@@ -798,7 +798,7 @@ export default function ClientProfilePage() {
                   <select 
                     value={editForm.care_stage}
                     onChange={e => setEditForm({...editForm, care_stage: e.target.value})}
-                    className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-slate-900 transition-colors"
+                    className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
                   >
                     <option value="Independent">Independent</option>
                     <option value="Home care">Home care</option>
@@ -824,12 +824,12 @@ export default function ClientProfilePage() {
       {/* Discharge Resident Modal */}
       {isDischargeModalOpen && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
+          <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
             <div className="w-10 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-5 md:hidden" />
             
             <button 
               onClick={() => setIsDischargeModalOpen(false)}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
             >
               <X className="w-4 h-4 text-slate-500 dark:text-slate-500" />
             </button>
@@ -857,7 +857,7 @@ export default function ClientProfilePage() {
                   value={dischargeConfirm}
                   onChange={e => setDischargeConfirm(e.target.value)}
                   placeholder="DISCHARGE"
-                  className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white dark:bg-slate-900 transition-colors uppercase"
+                  className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white dark:bg-[#0a0a0a] transition-colors uppercase"
                 />
               </div>
 

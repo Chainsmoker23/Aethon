@@ -104,14 +104,14 @@ export default function ClientsPage() {
               placeholder="Search by name or room..." 
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full h-[42px] pl-10 pr-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/40 shadow-sm transition-all"
+              className="w-full h-[42px] pl-10 pr-4 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/40 shadow-sm transition-all"
             />
           </div>
         </div>
 
         {/* Client Grid */}
         {loading ? (
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl h-96 flex items-center justify-center animate-fade-in-up delay-100 shadow-sm">
+          <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-2xl h-96 flex items-center justify-center animate-fade-in-up delay-100 shadow-sm">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
         ) : (
@@ -120,7 +120,7 @@ export default function ClientsPage() {
             {/* Add New Client Card */}
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-4 md:p-6 flex flex-col items-center justify-center gap-3 md:gap-4 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 transition-all border-dashed border-2 border-slate-300 dark:border-slate-700 min-h-[160px] md:min-h-[200px] group cursor-pointer btn-press"
+              className="bg-slate-50 dark:bg-zinc-900/50 rounded-2xl p-4 md:p-6 flex flex-col items-center justify-center gap-3 md:gap-4 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-zinc-900 transition-all border-dashed border-2 border-slate-300 dark:border-slate-700 min-h-[160px] md:min-h-[200px] group cursor-pointer btn-press"
             >
               <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary transition-all shadow-sm">
                 <UserPlus className="w-5 h-5 md:w-6 md:h-6 text-slate-500 dark:text-slate-500 group-hover:text-white transition-colors" />
@@ -130,13 +130,13 @@ export default function ClientsPage() {
 
             {/* Render Clients */}
             {filteredClients.map((c, i) => (
-              <Link href={`/management/clients/${c.id}`} key={c.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 md:p-6 hover:shadow-md hover:border-slate-300 dark:border-slate-700 transition-all flex flex-col justify-between min-h-[160px] md:min-h-[200px] shadow-sm group" style={{animationDelay: `${i * 50}ms`}}>
+              <Link href={`/management/clients/${c.id}`} key={c.id} className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-2xl p-4 md:p-6 hover:shadow-md hover:border-slate-300 dark:border-slate-700 transition-all flex flex-col justify-between min-h-[160px] md:min-h-[200px] shadow-sm group" style={{animationDelay: `${i * 50}ms`}}>
                 <div>
                   <div className="flex items-start justify-between mb-3 md:mb-4">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center border border-slate-200 dark:border-slate-800 group-hover:border-slate-300 dark:border-slate-700 transition-colors">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-100 dark:bg-zinc-900 flex items-center justify-center border border-slate-200 dark:border-zinc-800 group-hover:border-slate-300 dark:border-slate-700 transition-colors">
                       <span className="font-bold text-slate-700 dark:text-slate-300 text-sm md:text-base">{c.first_name[0]}{c.last_name[0]}</span>
                     </div>
-                    <span className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <span className="inline-flex items-center px-2 py-0.5 md:px-3 md:py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-slate-50 dark:bg-zinc-900/50 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-zinc-800 shadow-sm">
                       {c.care_stage}
                     </span>
                   </div>
@@ -151,7 +151,7 @@ export default function ClientsPage() {
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 md:pt-4 border-t border-slate-100 dark:border-slate-800/50 flex items-center justify-between">
+                <div className="mt-4 pt-3 md:pt-4 border-t border-slate-100 dark:border-zinc-800/50 flex items-center justify-between">
                   <span className="text-[10px] md:text-xs font-medium text-slate-400">Latest update</span>
                   <span className="text-[10px] md:text-xs font-bold text-slate-600 dark:text-slate-400 truncate max-w-[120px] text-right">
                     {c.last_note ? `${c.last_note.date} - ${c.last_note.task}` : "No notes yet"}
@@ -166,7 +166,7 @@ export default function ClientsPage() {
       {/* Admit Client Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/20 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white dark:bg-slate-900/80 backdrop-blur-2xl border border-white w-full max-w-md rounded-3xl p-6 shadow-2xl relative animate-fade-in-up">
+          <div className="bg-white dark:bg-[#0a0a0a]/80 backdrop-blur-2xl border border-white w-full max-w-md rounded-3xl p-6 shadow-2xl relative animate-fade-in-up">
             <button 
               onClick={() => setIsModalOpen(false)}
               className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-surface hover:bg-surface-alt transition-colors"
@@ -192,7 +192,7 @@ export default function ClientsPage() {
                     type="text" required
                     value={newClient.first_name}
                     onChange={e => setNewClient({...newClient, first_name: e.target.value})}
-                    className="w-full bg-white dark:bg-slate-900 border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
+                    className="w-full bg-white dark:bg-[#0a0a0a] border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
                   />
                 </div>
                 <div>
@@ -201,7 +201,7 @@ export default function ClientsPage() {
                     type="text" required
                     value={newClient.last_name}
                     onChange={e => setNewClient({...newClient, last_name: e.target.value})}
-                    className="w-full bg-white dark:bg-slate-900 border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
+                    className="w-full bg-white dark:bg-[#0a0a0a] border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
                   />
                 </div>
               </div>
@@ -212,7 +212,7 @@ export default function ClientsPage() {
                   type="text" required
                   value={newClient.room_number}
                   onChange={e => setNewClient({...newClient, room_number: e.target.value})}
-                  className="w-full bg-white dark:bg-slate-900 border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="w-full bg-white dark:bg-[#0a0a0a] border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
                 />
               </div>
 
@@ -221,7 +221,7 @@ export default function ClientsPage() {
                 <select 
                   value={newClient.care_stage}
                   onChange={e => setNewClient({...newClient, care_stage: e.target.value})}
-                  className="w-full bg-white dark:bg-slate-900 border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 appearance-none"
+                  className="w-full bg-white dark:bg-[#0a0a0a] border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 appearance-none"
                 >
                   <option value="Independent">Independent</option>
                   <option value="Home care">Home care</option>
