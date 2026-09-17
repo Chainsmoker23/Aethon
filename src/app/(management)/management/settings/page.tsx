@@ -213,7 +213,7 @@ export default function SettingsPage() {
           </div>
 
           {/* Settings Content Area */}
-          <div className="flex-1 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-2xl p-5 md:p-8 min-h-[500px] shadow-sm">
+          <div className="flex-1 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-2xl p-5 md:p-8 md:min-h-[500px] shadow-sm">
             {activeTab === "general" && (
               <div className="animate-fade-in space-y-8">
                 <div>
@@ -260,16 +260,16 @@ export default function SettingsPage() {
                       <p className="font-bold text-slate-900 dark:text-white text-sm">Theme Preference</p>
                       <p className="text-xs font-medium text-slate-500 dark:text-zinc-400 mt-0.5">Switch between Light and Dark mode.</p>
                     </div>
-                    <div className="flex bg-slate-200/70 dark:bg-zinc-950 p-1 rounded-xl border border-slate-300/50 dark:border-zinc-800">
+                    <div className="flex w-full sm:w-auto bg-slate-200/70 dark:bg-zinc-950 p-1 rounded-xl border border-slate-300/50 dark:border-zinc-800">
                       <button 
                         onClick={() => setTheme('light')}
-                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'light' ? 'bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300'}`}
+                        className={`flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'light' ? 'bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300'}`}
                       >
                         Light Mode
                       </button>
                       <button 
                         onClick={() => setTheme('dark')}
-                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'dark' ? 'bg-slate-900 dark:bg-zinc-800 text-white dark:text-white shadow-sm' : 'text-slate-500 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300'}`}
+                        className={`flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'dark' ? 'bg-slate-900 dark:bg-zinc-800 text-white dark:text-white shadow-sm' : 'text-slate-500 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300'}`}
                       >
                         Dark Mode
                       </button>
