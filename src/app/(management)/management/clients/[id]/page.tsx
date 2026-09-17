@@ -43,6 +43,16 @@ export default function ClientProfilePage() {
   // Right Column Tab State
   const [activeTab, setActiveTab] = useState<"timeline" | "chat">("timeline");
 
+  // Edit Modal State
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [editForm, setEditForm] = useState({ first_name: "", last_name: "", room_number: "", care_stage: "Independent" });
+
+  // Discharge Modal State
+  const [isDischargeModalOpen, setIsDischargeModalOpen] = useState(false);
+  const [isDischarging, setIsDischarging] = useState(false);
+  const [dischargeConfirm, setDischargeConfirm] = useState("");
+
   const fetchProfile = async () => {
     // 1. Fetch resident info
     const { data: resData } = await supabase
@@ -210,6 +220,64 @@ export default function ClientProfilePage() {
     setInviteEmail("");
   };
 
+  const openEditModal = () => {
+    if (!resident) return;
+    setEditForm({
+      first_name: resident.first_name,
+      last_name: resident.last_name,
+      room_number: resident.room_number || "",
+      care_stage: resident.care_stage || "Independent"
+    });
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsUpdating(true);
+    
+    const { error } = await supabase
+      .from('residents')
+      .update({
+        first_name: editForm.first_name.trim(),
+        last_name: editForm.last_name.trim(),
+        room_number: editForm.room_number.trim() || null,
+        care_stage: editForm.care_stage
+      })
+      .eq('id', residentId);
+
+    if (error) {
+      alert("Failed to update resident: " + error.message);
+    } else {
+      await fetchProfile();
+      setIsEditModalOpen(false);
+    }
+    setIsUpdating(false);
+  };
+
+  const handleDischarge = async () => {
+    setIsDischarging(true);
+
+    // 1. Delete related records first (cascading cleanup)
+    await supabase.from('medications').delete().eq('resident_id', residentId);
+    await supabase.from('visit_notes').delete().eq('resident_id', residentId);
+    await supabase.from('escalations').delete().eq('resident_id', residentId);
+    await supabase.from('family_access').delete().eq('resident_id', residentId);
+    await supabase.from('family_invitations').delete().eq('resident_id', residentId);
+    await supabase.from('messages').delete().eq('resident_id', residentId);
+
+    // 2. Delete the resident
+    const { error } = await supabase.from('residents').delete().eq('id', residentId);
+
+    if (error) {
+      alert("Failed to discharge resident: " + error.message);
+      setIsDischarging(false);
+      return;
+    }
+
+    // 3. Navigate back to the directory
+    router.push('/management/clients');
+  };
+
   if (loading) {
     return (
       <div className="relative min-h-screen flex-1 overflow-hidden bg-slate-50 z-0 p-4 md:p-6 lg:p-10 space-y-6 md:space-y-8 max-w-[1200px] mx-auto w-full">
@@ -271,10 +339,10 @@ export default function ClientProfilePage() {
             </div>
             
             <div className="flex items-center gap-2 md:gap-3 mt-1 md:mt-0">
-              <Button variant="outline" className="rounded-xl flex items-center gap-2 text-xs md:text-sm h-9 md:h-10 flex-1 md:flex-none">
+              <Button onClick={openEditModal} variant="outline" className="rounded-xl flex items-center gap-2 text-xs md:text-sm h-9 md:h-10 flex-1 md:flex-none">
                 <Edit className="w-3.5 h-3.5 md:w-4 md:h-4" /> Edit
               </Button>
-              <Button variant="destructive" className="rounded-xl flex items-center gap-2 text-xs md:text-sm h-9 md:h-10 flex-1 md:flex-none">
+              <Button onClick={() => setIsDischargeModalOpen(true)} variant="destructive" className="rounded-xl flex items-center gap-2 text-xs md:text-sm h-9 md:h-10 flex-1 md:flex-none">
                 <UserMinus className="w-3.5 h-3.5 md:w-4 md:h-4" /> Discharge
               </Button>
             </div>
@@ -667,6 +735,142 @@ export default function ClientProfilePage() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Resident Modal */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white border border-slate-200 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
+            <div className="w-10 h-1.5 bg-slate-200 rounded-full mx-auto mb-5 md:hidden" />
+            
+            <button 
+              onClick={() => setIsEditModalOpen(false)}
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
+            >
+              <X className="w-4 h-4 text-slate-500" />
+            </button>
+            
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
+                <Edit className="w-5 h-5 text-slate-600" />
+              </div>
+              <div>
+                <h2 className="text-lg md:text-xl font-bold text-slate-900 tracking-tight">Edit Profile</h2>
+              </div>
+            </div>
+
+            <form onSubmit={handleEditSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">First Name</label>
+                  <input 
+                    type="text" required
+                    value={editForm.first_name}
+                    onChange={e => setEditForm({...editForm, first_name: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Last Name</label>
+                  <input 
+                    type="text" required
+                    value={editForm.last_name}
+                    onChange={e => setEditForm({...editForm, last_name: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white transition-colors"
+                  />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Room Number</label>
+                  <input 
+                    type="text"
+                    value={editForm.room_number}
+                    onChange={e => setEditForm({...editForm, room_number: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Care Stage</label>
+                  <select 
+                    value={editForm.care_stage}
+                    onChange={e => setEditForm({...editForm, care_stage: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white transition-colors"
+                  >
+                    <option value="Independent">Independent</option>
+                    <option value="Home care">Home care</option>
+                    <option value="Facility">Facility</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="pt-4">
+                <button 
+                  type="submit" 
+                  disabled={isUpdating}
+                  className="w-full py-3 bg-slate-900 text-white text-sm font-bold rounded-xl hover:bg-slate-800 transition-colors shadow-sm flex items-center justify-center gap-2"
+                >
+                  {isUpdating ? <Loader2 className="w-5 h-5 animate-spin" /> : "Save Changes"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Discharge Resident Modal */}
+      {isDischargeModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white border border-slate-200 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
+            <div className="w-10 h-1.5 bg-slate-200 rounded-full mx-auto mb-5 md:hidden" />
+            
+            <button 
+              onClick={() => setIsDischargeModalOpen(false)}
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
+            >
+              <X className="w-4 h-4 text-slate-500" />
+            </button>
+            
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center shrink-0">
+                <AlertTriangle className="w-5 h-5 text-red-600" />
+              </div>
+              <div>
+                <h2 className="text-lg md:text-xl font-bold text-slate-900 tracking-tight">Discharge Resident</h2>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <p className="text-sm text-slate-600">
+                Are you sure you want to discharge <span className="font-bold text-slate-900">{resident?.first_name} {resident?.last_name}</span>? This will permanently delete their profile, visit history, and immediately revoke family access.
+              </p>
+              
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  Type <span className="text-red-600 select-none">DISCHARGE</span> to confirm
+                </label>
+                <input 
+                  type="text"
+                  value={dischargeConfirm}
+                  onChange={e => setDischargeConfirm(e.target.value)}
+                  placeholder="DISCHARGE"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white transition-colors uppercase"
+                />
+              </div>
+
+              <div className="pt-4">
+                <button 
+                  onClick={handleDischarge}
+                  disabled={isDischarging || dischargeConfirm !== 'DISCHARGE'}
+                  className="w-full py-3 bg-red-600 text-white text-sm font-bold rounded-xl hover:bg-red-700 transition-colors shadow-sm flex items-center justify-center gap-2 disabled:opacity-50 disabled:hover:bg-red-600"
+                >
+                  {isDischarging ? <Loader2 className="w-5 h-5 animate-spin" /> : "Permanently Discharge"}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
