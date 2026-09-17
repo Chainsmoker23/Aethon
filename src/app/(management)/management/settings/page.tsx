@@ -202,8 +202,8 @@ export default function SettingsPage() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-2 md:gap-3 px-4 py-2.5 md:py-3 rounded-xl font-semibold text-sm transition-all whitespace-nowrap shrink-0 ${
                   activeTab === tab.id 
-                    ? "bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 text-primary shadow-sm" 
-                    : "text-slate-500 dark:text-slate-500 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-slate-900 dark:text-white"
+                    ? "bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-primary dark:text-white shadow-sm" 
+                    : "text-slate-500 dark:text-zinc-400 hover:bg-slate-200/50 dark:hover:bg-zinc-900 hover:text-slate-900 dark:hover:text-white"
                 }`}
               >
                 {tab.icon}
@@ -258,18 +258,18 @@ export default function SettingsPage() {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl gap-4">
                     <div>
                       <p className="font-bold text-slate-900 dark:text-white text-sm">Theme Preference</p>
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-0.5">Switch between Light and Dark mode.</p>
+                      <p className="text-xs font-medium text-slate-500 dark:text-zinc-400 mt-0.5">Switch between Light and Dark mode.</p>
                     </div>
-                    <div className="flex bg-slate-200 dark:bg-slate-700/50 p-1 rounded-xl">
+                    <div className="flex bg-slate-200/70 dark:bg-zinc-950 p-1 rounded-xl border border-slate-300/50 dark:border-zinc-800">
                       <button 
                         onClick={() => setTheme('light')}
-                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'light' ? 'bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:text-slate-300'}`}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'light' ? 'bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300'}`}
                       >
                         Light Mode
                       </button>
                       <button 
                         onClick={() => setTheme('dark')}
-                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'dark' ? 'bg-slate-900 dark:bg-zinc-100 dark:text-zinc-900 text-white shadow-sm' : 'text-slate-500 dark:text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:text-slate-300'}`}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'dark' ? 'bg-slate-900 dark:bg-zinc-800 text-white dark:text-white shadow-sm' : 'text-slate-500 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300'}`}
                       >
                         Dark Mode
                       </button>
