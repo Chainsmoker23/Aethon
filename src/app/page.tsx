@@ -59,7 +59,7 @@ function LiveChatDemo() {
     <div className="w-full md:w-1/2 relative z-10 md:translate-x-6">
       <div
         ref={scrollRef}
-        className="flex flex-col gap-2 md:gap-2.5 max-h-[180px] md:max-h-[200px] overflow-y-auto pr-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+        className="flex flex-col gap-2 md:gap-2.5 h-[180px] md:h-[200px] overflow-y-auto pr-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
       >
         <AnimatePresence>
           {chatMessages.slice(0, visibleCount).map((msg, i) => (
