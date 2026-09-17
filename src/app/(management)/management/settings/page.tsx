@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Settings, Shield, Bell, Download, Building, Users, ToggleLeft, ToggleRight, Save, Check, Loader2, LogOut, User } from "lucide-react";
+import { Settings, Shield, Bell, Download, Building, Users, ToggleLeft, ToggleRight, Save, Check, Loader2, LogOut, User, AlertTriangle } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { SignOutButton } from "@/components/auth/SignOutButton";
 
@@ -145,6 +145,7 @@ export default function SettingsPage() {
   const [settings, setSettings] = useState({
     facilityName: "Aethon Pro Care Center",
     timezone: "Europe/Berlin",
+    theme: "light",
     alertTime: "14:00",
     notifyFamily: true,
     requireHandoverSignoff: true
@@ -157,6 +158,7 @@ export default function SettingsPage() {
 
   const tabs = [
     { id: "general", label: "Facility Profile", icon: <Building className="w-4 h-4" /> },
+    { id: "appearance", label: "Appearance", icon: <ToggleLeft className="w-4 h-4" /> },
     { id: "staff", label: "Staff & Roles", icon: <Shield className="w-4 h-4" /> },
     { id: "alerts", label: "Alert Thresholds", icon: <Bell className="w-4 h-4" /> },
     { id: "export", label: "Data & Export", icon: <Download className="w-4 h-4" /> },
@@ -238,6 +240,50 @@ export default function SettingsPage() {
                       <option value="Europe/London">Greenwich Mean Time (GMT)</option>
                       <option value="America/New_York">Eastern Standard Time (EST)</option>
                     </select>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === "appearance" && (
+              <div className="animate-fade-in space-y-8">
+                <div>
+                  <h2 className="text-xl font-bold text-navy">Theme & Appearance</h2>
+                  <p className="text-sm font-medium text-text-secondary mt-1">Customize the look and feel of the management dashboard.</p>
+                </div>
+                
+                <div className="space-y-6 max-w-xl">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-2xl gap-4">
+                    <div>
+                      <p className="font-bold text-slate-900 text-sm">Theme Preference</p>
+                      <p className="text-xs font-medium text-slate-500 mt-0.5">Switch between Light and Dark mode.</p>
+                    </div>
+                    <div className="flex bg-slate-200/50 p-1 rounded-xl">
+                      <button 
+                        onClick={() => setSettings({...settings, theme: 'light'})}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${settings.theme === 'light' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                      >
+                        Light Mode
+                      </button>
+                      <button 
+                        onClick={() => setSettings({...settings, theme: 'dark'})}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${settings.theme === 'dark' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                      >
+                        Dark Mode
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="p-4 border border-blue-100 bg-blue-50/50 rounded-2xl flex gap-3">
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                      <AlertTriangle className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-900">Developer Note</p>
+                      <p className="text-xs font-medium text-slate-600 mt-1 leading-relaxed">
+                        Currently, this toggle saves your preference but does not fully re-render the app in Dark Mode. Aethon was built with hardcoded light-mode colors (e.g. `bg-white`, `text-slate-900`). To fully support Dark Mode, every component needs updated Tailwind utility classes (like `dark:bg-slate-900 dark:text-slate-100`).
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
