@@ -147,7 +147,7 @@ export function Sidebar() {
 
       {/* Sidebar — desktop only */}
       <aside 
-        className="hidden lg:flex static top-0 left-0 z-50 h-full w-60 bg-white dark:bg-[#0a0a0a] border-r border-slate-200 dark:border-zinc-800 flex-col"
+        className="hidden lg:flex static top-0 left-0 z-50 h-full w-56 bg-white dark:bg-[#0a0a0a] border-r border-slate-200 dark:border-zinc-800 flex-col"
         role="navigation"
         aria-label="Main navigation"
       >
