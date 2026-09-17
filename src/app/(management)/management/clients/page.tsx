@@ -165,63 +165,63 @@ export default function ClientsPage() {
 
       {/* Admit Client Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/20 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white dark:bg-[#0a0a0a]/80 backdrop-blur-2xl border border-white w-full max-w-md rounded-3xl p-6 shadow-2xl relative animate-fade-in-up">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 w-full max-w-md rounded-3xl p-6 shadow-2xl relative animate-fade-in-up">
             <button 
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-surface hover:bg-surface-alt transition-colors"
+              className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 dark:hover:bg-zinc-800 transition-colors"
             >
-              <X className="w-4 h-4 text-text-muted dark:text-zinc-500" />
+              <X className="w-4 h-4 text-slate-500 dark:text-zinc-500" />
             </button>
             
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-primary-light flex items-center justify-center shrink-0">
-                <UserPlus className="w-5 h-5 text-primary" />
+              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center shrink-0 border border-blue-100 dark:border-blue-800/30">
+                <UserPlus className="w-5 h-5 text-blue-600 dark:text-blue-400" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-navy dark:text-zinc-100">Admit New Client</h2>
-                <p className="text-xs font-semibold text-text-muted dark:text-zinc-500 mt-0.5">Add a resident to the facility.</p>
+                <h2 className="text-xl font-bold text-slate-900 dark:text-zinc-100">Admit New Client</h2>
+                <p className="text-xs font-semibold text-slate-500 dark:text-zinc-500 mt-0.5">Add a resident to the facility.</p>
               </div>
             </div>
 
             <form onSubmit={handleAddClient} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-navy dark:text-zinc-100 mb-1.5">First Name</label>
+                  <label className="block text-xs font-bold text-slate-900 dark:text-zinc-100 mb-1.5">First Name</label>
                   <input 
                     type="text" required
                     value={newClient.first_name}
                     onChange={e => setNewClient({...newClient, first_name: e.target.value})}
-                    className="w-full bg-white dark:bg-[#0a0a0a] border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
+                    className="w-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-navy dark:text-zinc-100 mb-1.5">Last Name</label>
+                  <label className="block text-xs font-bold text-slate-900 dark:text-zinc-100 mb-1.5">Last Name</label>
                   <input 
                     type="text" required
                     value={newClient.last_name}
                     onChange={e => setNewClient({...newClient, last_name: e.target.value})}
-                    className="w-full bg-white dark:bg-[#0a0a0a] border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
+                    className="w-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-navy dark:text-zinc-100 mb-1.5">Room Number</label>
+                <label className="block text-xs font-bold text-slate-900 dark:text-zinc-100 mb-1.5">Room Number</label>
                 <input 
                   type="text" required
                   value={newClient.room_number}
                   onChange={e => setNewClient({...newClient, room_number: e.target.value})}
-                  className="w-full bg-white dark:bg-[#0a0a0a] border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="w-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-navy dark:text-zinc-100 mb-1.5">Care Stage</label>
+                <label className="block text-xs font-bold text-slate-900 dark:text-zinc-100 mb-1.5">Care Stage</label>
                 <select 
                   value={newClient.care_stage}
                   onChange={e => setNewClient({...newClient, care_stage: e.target.value})}
-                  className="w-full bg-white dark:bg-[#0a0a0a] border border-border rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 appearance-none"
+                  className="w-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/40 appearance-none text-slate-900 dark:text-white"
                 >
                   <option value="Independent">Independent</option>
                   <option value="Home care">Home care</option>
@@ -233,14 +233,14 @@ export default function ClientsPage() {
                 <button 
                   type="button" 
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 py-3 bg-surface text-navy dark:text-zinc-100 text-sm font-bold rounded-xl hover:bg-surface-alt transition-colors"
+                  className="flex-1 py-3 bg-slate-100 dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 text-sm font-bold rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 transition-colors"
                 >
                   Cancel
                 </button>
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="flex-1 py-3 bg-primary text-white text-sm font-bold rounded-xl hover:bg-primary-dark transition-colors shadow-sm shadow-primary/30 flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-blue-600 text-white text-sm font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-sm flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : "Admit Client"}
                 </button>
