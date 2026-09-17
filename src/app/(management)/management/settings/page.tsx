@@ -73,9 +73,9 @@ export default function SettingsPage() {
                     ${combined.map(d => `
                       <tr>
                         <td style="white-space: nowrap">${new Date(d.created_at).toLocaleString()}</td>
-                        <td style="font-weight: 600">${d.residents?.first_name || ''} ${d.residents?.last_name || ''}</td>
+                        <td style="font-weight: 600">${d.residents?.first_name ? `${d.residents.first_name} ${d.residents.last_name}` : 'General / Facility'}</td>
                         <td><span class="type-badge ${d.type === 'escalation' ? 'escalation' : ''}">${d.type.replace('_', ' ')}</span></td>
-                        <td>${d.notes || d.reason || ''}</td>
+                        <td>${d.tasks_completed || d.reason || ''}</td>
                       </tr>
                     `).join('')}
                   </tbody>
@@ -95,9 +95,9 @@ export default function SettingsPage() {
         const headers = ['Date', 'Resident', 'Type', 'Details'];
         const rows = combined.map((d: any) => [
           new Date(d.created_at).toLocaleString(),
-          `${d.residents?.first_name || ''} ${d.residents?.last_name || ''}`,
+          d.residents?.first_name ? `${d.residents.first_name} ${d.residents.last_name}` : 'General / Facility',
           d.type,
-          `"${(d.notes || d.reason || '').replace(/"/g, '""')}"`
+          `"${(d.tasks_completed || d.reason || '').replace(/"/g, '""')}"`
         ]);
         const csvContent = [headers, ...rows].map(e => e.join(",")).join("\n");
         const filename = `resident_care_records_${new Date().toISOString().split('T')[0]}.csv`;

@@ -67,7 +67,7 @@ export default function ClientProfilePage() {
 
     // 3. Fetch Notes & Escalations to merge into a single feed
     const [notesRes, escRes] = await Promise.all([
-      supabase.from('visit_notes').select('*').eq('resident_id', residentId),
+      supabase.from('visit_notes').select('*').eq('resident_id', residentId).not('visit_type', 'ilike', 'Handover%'),
       supabase.from('escalations').select('*').eq('resident_id', residentId)
     ]);
 

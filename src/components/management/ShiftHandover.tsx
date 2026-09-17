@@ -94,8 +94,9 @@ export function ShiftHandover() {
     e.preventDefault();
     if (!newNote.trim()) return;
 
+    // General shift handovers shouldn't be tied to a specific resident record
     const note = {
-      resident_id: residents.length > 0 ? residents[0].id : null,
+      resident_id: null,
       visit_type: `Handover - ${priority.charAt(0).toUpperCase() + priority.slice(1)}`,
       tasks_completed: newNote,
       is_escalation: priority === 'critical'
