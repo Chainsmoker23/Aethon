@@ -184,22 +184,32 @@ export default function ClientProfilePage() {
     }
   };
 
+  const [confirmAction, setConfirmAction] = useState<{ type: 'revoke' | 'cancelInvite', id: string, name: string } | null>(null);
+  const [revokingId, setRevokingId] = useState<string | null>(null);
+  const [cancelingEmail, setCancelingEmail] = useState<string | null>(null);
+
   const handleRevokeAccess = async (userId: string) => {
+    setRevokingId(userId);
     await supabase
       .from('family_access')
       .delete()
       .eq('resident_id', residentId)
       .eq('user_id', userId);
     await fetchProfile();
+    setRevokingId(null);
+    setConfirmAction(null);
   };
 
   const handleCancelInvite = async (email: string) => {
+    setCancelingEmail(email);
     await supabase
       .from('family_invitations')
       .delete()
       .eq('resident_id', residentId)
       .eq('email', email);
     await fetchProfile();
+    setCancelingEmail(null);
+    setConfirmAction(null);
   };
 
   const handleInvite = async (e: React.FormEvent) => {
@@ -311,6 +321,41 @@ export default function ClientProfilePage() {
 
   return (
     <>
+      {confirmAction && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 shadow-2xl rounded-2xl w-full max-w-sm overflow-hidden transform animate-fade-in-up">
+            <div className="p-6">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-zinc-100 mb-2">
+                {confirmAction.type === 'revoke' ? 'Revoke Access?' : 'Cancel Invitation?'}
+              </h3>
+              <p className="text-sm font-medium text-slate-500 dark:text-zinc-400">
+                {confirmAction.type === 'revoke' 
+                  ? `Are you sure you want to remove ${confirmAction.name}'s access to the family portal? They will no longer be able to view updates or message staff.` 
+                  : `Are you sure you want to cancel the pending invitation for ${confirmAction.name}?`}
+              </p>
+            </div>
+            <div className="p-4 bg-slate-50 dark:bg-zinc-900/50 border-t border-slate-200 dark:border-zinc-800 flex gap-3 justify-end">
+              <button 
+                onClick={() => setConfirmAction(null)}
+                className="px-4 py-2 rounded-xl text-sm font-bold text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-800 transition-colors"
+                disabled={revokingId !== null || cancelingEmail !== null}
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={() => {
+                  if (confirmAction.type === 'revoke') handleRevokeAccess(confirmAction.id);
+                  else handleCancelInvite(confirmAction.id);
+                }}
+                className="px-4 py-2 rounded-xl text-sm font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-sm flex items-center justify-center min-w-[100px] transition-all"
+                disabled={revokingId !== null || cancelingEmail !== null}
+              >
+                {(revokingId === confirmAction.id || cancelingEmail === confirmAction.id) ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Yes, Remove'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <main className="p-4 md:p-6 lg:p-10 space-y-6 md:space-y-8 max-w-[1200px] mx-auto w-full pb-20 lg:pb-32">
         {/* Header Navigation */}
         <div className="animate-fade-in-up">
@@ -444,11 +489,11 @@ export default function ClientProfilePage() {
                           Active
                         </span>
                         <button
-                          onClick={() => handleRevokeAccess(family.id)}
+                          onClick={() => setConfirmAction({ type: 'revoke', id: family.id, name: family.full_name || 'this member' })}
                           className="w-6 h-6 rounded-full bg-rose-50 dark:bg-rose-900/30 border border-rose-200 flex items-center justify-center hover:bg-rose-100 transition-colors group"
                           title="Revoke access"
                         >
-                          <X className="w-3 h-3 text-rose-400 group-hover:text-rose-600" />
+                          {revokingId === family.id ? <Loader2 className="w-3 h-3 animate-spin text-rose-500" /> : <X className="w-3 h-3 text-rose-400 group-hover:text-rose-600" />}
                         </button>
                       </div>
                     </div>
@@ -471,11 +516,11 @@ export default function ClientProfilePage() {
                           Pending
                         </span>
                         <button
-                          onClick={() => handleCancelInvite(email)}
+                          onClick={() => setConfirmAction({ type: 'cancelInvite', id: email, name: email })}
                           className="w-6 h-6 rounded-full bg-rose-50 dark:bg-rose-900/30 border border-rose-200 flex items-center justify-center hover:bg-rose-100 transition-colors group"
                           title="Cancel invite"
                         >
-                          <X className="w-3 h-3 text-rose-400 group-hover:text-rose-600" />
+                          {cancelingEmail === email ? <Loader2 className="w-3 h-3 animate-spin text-rose-500" /> : <X className="w-3 h-3 text-rose-400 group-hover:text-rose-600" />}
                         </button>
                       </div>
                     </div>
