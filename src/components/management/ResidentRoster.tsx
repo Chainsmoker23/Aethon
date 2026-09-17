@@ -53,7 +53,7 @@ export function ResidentRoster() {
       
       if (data) {
         const formatted = data.map((r: any) => {
-          const notes = r.visit_notes || [];
+          const notes = (r.visit_notes || []).filter((n: any) => !n.visit_type?.toLowerCase().startsWith('handover'));
           const activeEscalations = (r.escalations || []).filter((e: any) => !e.is_resolved).length;
           
           // Sort notes newest first

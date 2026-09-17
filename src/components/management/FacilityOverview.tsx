@@ -20,7 +20,7 @@ export function FacilityOverview() {
       // Fetch residents with notes and escalations
       const { data } = await supabase.from('residents').select(`
         id,
-        visit_notes ( created_at ),
+        visit_notes ( visit_type, created_at ),
         escalations ( is_resolved )
       `);
       
@@ -38,7 +38,7 @@ export function FacilityOverview() {
           activeEscalations += openEscalations;
 
           // Check notes
-          const notes = r.visit_notes || [];
+          const notes = (r.visit_notes || []).filter((n: any) => !n.visit_type?.toLowerCase().startsWith('handover'));
           let residentSeenToday = false;
           
           notes.forEach((n: any) => {

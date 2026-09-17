@@ -34,12 +34,12 @@ export default function ClientsPage() {
   const fetchClients = async () => {
     const { data } = await supabase.from('residents').select(`
       id, first_name, last_name, room_number, care_stage,
-      visit_notes ( created_at, tasks_completed )
+      visit_notes ( visit_type, created_at, tasks_completed )
     `);
 
     if (data) {
       const formatted = data.map((r: any) => {
-        const notes = r.visit_notes || [];
+        const notes = (r.visit_notes || []).filter((n: any) => !n.visit_type?.toLowerCase().startsWith('handover'));
         notes.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
         
         return {
