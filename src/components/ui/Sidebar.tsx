@@ -116,7 +116,7 @@ export function Sidebar() {
             <p className="text-slate-500 dark:text-zinc-400 text-[9px] uppercase tracking-wider font-bold mt-0.5">Management</p>
           </div>
         </div>
-        <SignOutButton className="w-8 h-8 rounded-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 flex items-center justify-center text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 dark:hover:text-rose-500 dark:hover:border-rose-900 transition-colors shadow-sm shrink-0 group title='Sign Out'">
+        <SignOutButton className="w-8 h-8 rounded-full bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 flex items-center justify-center text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 dark:hover:text-rose-500 dark:hover:border-rose-900 transition-colors shadow-sm shrink-0 group">
           <LogOut className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
         </SignOutButton>
       </div>
@@ -125,6 +125,26 @@ export function Sidebar() {
 
   return (
     <>
+      {/* Mobile Top Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-12 bg-white dark:bg-[#0a0a0a] border-b border-slate-200 dark:border-zinc-800 z-50 flex items-center justify-between px-4 shadow-sm">
+        <div className="flex items-center gap-2">
+          <img src="/logo.jpg" alt="Aethon Health Logo" className="w-6 h-6 rounded-md object-contain border border-slate-200 dark:border-zinc-800" />
+          <span className="font-bold text-slate-900 dark:text-white tracking-tight text-sm">Management</span>
+        </div>
+        <div className="flex items-center gap-3">
+          {avatarUrl ? (
+            <img src={avatarUrl} alt={userName} className="w-7 h-7 rounded-lg object-cover shadow-sm border border-slate-200 dark:border-zinc-800" />
+          ) : (
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-black text-[10px] shadow-sm">
+              {initials}
+            </div>
+          )}
+          <SignOutButton className="w-7 h-7 rounded-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 flex items-center justify-center text-slate-500 hover:text-rose-600 transition-colors shadow-sm">
+            <LogOut className="w-3.5 h-3.5" />
+          </SignOutButton>
+        </div>
+      </div>
+
       {/* Mobile Bottom Nav — visible below lg */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-[#0a0a0a] border-t border-slate-200 dark:border-zinc-800 flex items-center justify-around pb-safe shadow-[0_-4px_24px_rgba(0,0,0,0.02)]">
         {links.map((link) => {
