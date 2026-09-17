@@ -97,12 +97,12 @@ export function ResidentRoster() {
 
   return (
     <div className="bg-white dark:bg-[#0a0a0a] rounded-xl shadow-sm border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
-      <div className="px-6 py-5 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50">
+      <div className="px-6 py-5 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-[#0a0a0a]">
         <h2 className="text-lg font-semibold text-slate-900 dark:text-white tracking-tight">Active Residents</h2>
       </div>
 
       {/* Desktop Table Header */}
-      <div className="hidden md:grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] bg-slate-50 dark:bg-zinc-900/50 border-b border-slate-200 dark:border-zinc-800 text-slate-500 dark:text-slate-500 dark:text-zinc-400 text-xs font-medium uppercase tracking-wider px-4">
+      <div className="hidden md:grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] bg-slate-50 dark:bg-[#0a0a0a] border-b border-slate-200 dark:border-zinc-800 text-slate-500 dark:text-slate-500 dark:text-zinc-400 text-xs font-medium uppercase tracking-wider px-4">
         <div className="px-4 py-3">Client</div>
         <div className="px-3 py-3">Care stage</div>
         <div className="px-3 py-3">Last visit</div>
@@ -123,7 +123,7 @@ export function ResidentRoster() {
               
               {/* Desktop Row Wrapper */}
               <div
-                className={`grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] items-center cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors ${r.escalations > 0 ? "bg-red-50 dark:bg-red-900/30/30" : ""} px-4`}
+                className={`grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] items-center cursor-pointer hover:bg-slate-50 dark:hover:bg-[#111] transition-colors ${r.escalations > 0 ? "bg-red-50 dark:bg-red-900/30" : ""} px-4`}
                 onClick={() => setExpandedId(isExpanded ? null : r.id)}
               >
                 
@@ -179,7 +179,7 @@ export function ResidentRoster() {
 
               {/* Expanded Area */}
               {isExpanded && (
-                <div className="bg-slate-50 dark:bg-zinc-900/80 px-10 py-6 border-t border-slate-100 dark:border-zinc-800/50 shadow-inner">
+                <div className="bg-slate-50 dark:bg-[#0a0a0a] px-10 py-6 border-t border-slate-100 dark:border-zinc-800/50 shadow-inner">
                   <p className="text-xs font-semibold text-slate-500 dark:text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-4">Recent visits</p>
                   {r.recentVisits.length === 0 ? (
                     <p className="text-sm text-slate-500 dark:text-slate-500 dark:text-zinc-400 italic bg-white dark:bg-[#0a0a0a] p-4 rounded-xl border border-slate-200 dark:border-zinc-800 shadow-sm">No recent visits logged.</p>
