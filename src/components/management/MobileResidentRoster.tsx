@@ -16,7 +16,7 @@ export function MobileResidentRoster({ residents, expandedId, setExpandedId }: {
                 <div className="flex items-center gap-2 shrink-0">
                   <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                     r.careStage === "Independent" ? "bg-slate-100 dark:bg-zinc-900 text-slate-600 dark:text-slate-400" :
-                    r.careStage === "Home care" ? "bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600" : "bg-blue-50 text-blue-600"
+                    r.careStage === "Home care" ? "bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600" : "bg-blue-50 dark:bg-blue-900/30 text-blue-600"
                   }`}>
                     {r.careStage}
                   </span>
