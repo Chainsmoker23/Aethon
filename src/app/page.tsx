@@ -708,7 +708,7 @@ export default function LandingPage() {
 
 
  <div className="relative z-20 px-5 py-12 md:px-16 md:py-24 text-center">
- <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-white/20 mb-5 md:mb-8">
+ <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 mb-5 md:mb-8">
  <svg width="16" height="16" viewBox="0 0 32 32" fill="none" className="shrink-0">
  <rect width="32" height="32" rx="4" fill="#FF0000"/>
  <rect x="13" y="6" width="6" height="20" rx="1" fill="white"/>
@@ -726,7 +726,7 @@ export default function LandingPage() {
  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }} className="w-full sm:w-auto">
  <Link
  href="/login"
- className="group px-6 md:px-8 py-3.5 md:py-4 bg-white text-navy text-sm md:text-base font-bold rounded-2xl hover:bg-slate-100 :bg-slate-800 shadow-xl hover:shadow-2xl flex items-center justify-center gap-2"
+ className="group px-6 md:px-8 py-3.5 md:py-4 bg-white text-navy text-sm md:text-base font-bold rounded-2xl hover:bg-slate-100 shadow-xl hover:shadow-2xl flex items-center justify-center gap-2"
  >
  Start Free Trial
  <ChevronRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
@@ -735,7 +735,7 @@ export default function LandingPage() {
  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }} className="w-full sm:w-auto">
  <a
  href="#how-it-works"
- className="px-6 md:px-8 py-3.5 md:py-4 bg-white text-white text-sm md:text-base font-bold rounded-2xl border border-white/20 hover:bg-white backdrop-blur-sm flex items-center justify-center"
+ className="px-6 md:px-8 py-3.5 md:py-4 bg-white/10 text-white text-sm md:text-base font-bold rounded-2xl border border-white/20 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center"
  >
  Learn More
  </a>
