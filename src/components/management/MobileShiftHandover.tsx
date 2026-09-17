@@ -14,7 +14,7 @@ export function MobileShiftHandover({
 }) {
   return (
     <div className="bg-white dark:bg-[#0a0a0a] rounded-xl shadow-sm border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10 md:hidden flex flex-col h-[400px]">
-      <div className="px-4 py-3 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50">
+      <div className="px-4 py-3 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-[#0a0a0a]">
         <h2 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 tracking-tight">
           <ClipboardList className="w-4 h-4 text-indigo-500" /> Smart Handover
         </h2>
