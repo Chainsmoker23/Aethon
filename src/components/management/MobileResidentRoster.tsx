@@ -8,7 +8,7 @@ export function MobileResidentRoster({ residents, expandedId, setExpandedId }: {
         return (
           <div key={r.id} className="group">
             <div
-              className={`flex flex-col gap-1.5 cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors p-3 ${r.escalations > 0 ? "bg-red-50/30 border-l-[4px] border-red-500" : "border-l-[4px] border-transparent"}`}
+              className={`flex flex-col gap-1.5 cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors p-3 ${r.escalations > 0 ? "bg-red-50 dark:bg-red-900/30/30 border-l-[4px] border-red-500" : "border-l-[4px] border-transparent"}`}
               onClick={() => setExpandedId(isExpanded ? null : r.id)}
             >
               <div className="flex items-start justify-between gap-2">
@@ -16,7 +16,7 @@ export function MobileResidentRoster({ residents, expandedId, setExpandedId }: {
                 <div className="flex items-center gap-2 shrink-0">
                   <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                     r.careStage === "Independent" ? "bg-slate-100 dark:bg-zinc-900 text-slate-600 dark:text-slate-400" :
-                    r.careStage === "Home care" ? "bg-indigo-50 text-indigo-600" : "bg-blue-50 text-blue-600"
+                    r.careStage === "Home care" ? "bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600" : "bg-blue-50 text-blue-600"
                   }`}>
                     {r.careStage}
                   </span>
@@ -32,7 +32,7 @@ export function MobileResidentRoster({ residents, expandedId, setExpandedId }: {
                   {r.lastVisit}
                 </div>
                 {r.escalations > 0 && (
-                  <div className="flex items-center gap-1 text-red-600 font-semibold bg-red-50 px-1.5 py-0.5 rounded">
+                  <div className="flex items-center gap-1 text-red-600 font-semibold bg-red-50 dark:bg-red-900/30 px-1.5 py-0.5 rounded">
                     <AlertTriangle className="w-3 h-3" /> {r.escalations}
                   </div>
                 )}

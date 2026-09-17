@@ -186,7 +186,7 @@ export default function SettingsPage() {
             </div>
             <p className="font-bold text-xs text-slate-900 dark:text-white truncate max-w-[140px]">{userName}</p>
           </div>
-          <SignOutButton className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 transition-colors shrink-0">
+          <SignOutButton className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold text-rose-600 bg-rose-50 dark:bg-rose-900/30 hover:bg-rose-100 transition-colors shrink-0">
             <LogOut className="w-3 h-3" />
             Sign Out
           </SignOutButton>

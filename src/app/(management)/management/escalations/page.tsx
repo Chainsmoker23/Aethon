@@ -131,7 +131,7 @@ export default function EscalationsPage() {
                     {/* Status Badge */}
                     <div className="shrink-0 pt-1">
                       {e.is_resolved ? (
-                        <div className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 flex items-center justify-center">
                           <Check className="w-5 h-5 text-emerald-600" />
                         </div>
                       ) : (
@@ -168,7 +168,7 @@ export default function EscalationsPage() {
                       </div>
                       
                       {e.is_resolved && e.resolved_at && (
-                        <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-100 text-emerald-600 font-bold text-[11px] uppercase tracking-wider rounded-full">
+                        <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-100 text-emerald-600 font-bold text-[11px] uppercase tracking-wider rounded-full">
                           <Check className="w-3 h-3" /> Resolved
                         </div>
                       )}

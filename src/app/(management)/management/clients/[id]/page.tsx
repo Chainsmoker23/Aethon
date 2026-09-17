@@ -383,9 +383,9 @@ export default function ClientProfilePage() {
                         <button 
                           onClick={() => handleUpdateMedStatus(med.id, med.status)}
                           className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md hover:opacity-80 transition-opacity cursor-pointer ${
-                            med.status === 'taken' ? 'bg-emerald-100 text-emerald-700' : 
-                            med.status === 'missed' ? 'bg-rose-100 text-rose-700' : 
-                            'bg-amber-100 text-amber-700'
+                            med.status === 'taken' ? 'bg-emerald-100 text-emerald-700 dark:text-emerald-400' : 
+                            med.status === 'missed' ? 'bg-rose-100 text-rose-700 dark:text-rose-400' : 
+                            'bg-amber-100 text-amber-700 dark:text-amber-400'
                           }`}
                         >
                           {med.status}
@@ -401,7 +401,7 @@ export default function ClientProfilePage() {
             <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-2xl md:rounded-3xl p-5 md:p-6 shadow-sm">
               <div className="flex items-center justify-between mb-4 md:mb-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-purple-50 flex items-center justify-center">
+                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center">
                     <Users className="w-4 h-4 md:w-5 md:h-5 text-purple-500" />
                   </div>
                   <h2 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">Family Access</h2>
@@ -440,12 +440,12 @@ export default function ClientProfilePage() {
                         </div>
                       </div>
                       <div className="flex items-center gap-1.5 shrink-0 ml-2">
-                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md">
+                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-100 px-2 py-0.5 rounded-md">
                           Active
                         </span>
                         <button
                           onClick={() => handleRevokeAccess(family.id)}
-                          className="w-6 h-6 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center hover:bg-rose-100 transition-colors group"
+                          className="w-6 h-6 rounded-full bg-rose-50 dark:bg-rose-900/30 border border-rose-200 flex items-center justify-center hover:bg-rose-100 transition-colors group"
                           title="Revoke access"
                         >
                           <X className="w-3 h-3 text-rose-400 group-hover:text-rose-600" />
@@ -472,7 +472,7 @@ export default function ClientProfilePage() {
                         </span>
                         <button
                           onClick={() => handleCancelInvite(email)}
-                          className="w-6 h-6 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center hover:bg-rose-100 transition-colors group"
+                          className="w-6 h-6 rounded-full bg-rose-50 dark:bg-rose-900/30 border border-rose-200 flex items-center justify-center hover:bg-rose-100 transition-colors group"
                           title="Cancel invite"
                         >
                           <X className="w-3 h-3 text-rose-400 group-hover:text-rose-600" />
@@ -541,7 +541,7 @@ export default function ClientProfilePage() {
                 placeholder={noteMode === "escalation" ? `Describe emergency...` : `Log a quick note...`}
                 className={`w-full h-10 md:h-12 pl-4 pr-12 bg-slate-50 dark:bg-zinc-900/50 border rounded-xl text-xs md:text-sm font-medium focus:outline-none focus:ring-2 transition-all shadow-sm ${
                   noteMode === "escalation" 
-                    ? "border-rose-200 focus:ring-rose-500/40 text-rose-700 placeholder:text-rose-300" 
+                    ? "border-rose-200 focus:ring-rose-500/40 text-rose-700 dark:text-rose-400 placeholder:text-rose-300" 
                     : "border-slate-200 dark:border-zinc-800 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a]"
                 }`}
               />
@@ -569,7 +569,7 @@ export default function ClientProfilePage() {
                     <div className="absolute left-[11px] md:left-[17px] top-8 bottom-0 w-0.5 bg-slate-200 dark:bg-slate-700" />
                     
                     <div className={`bg-white dark:bg-[#0a0a0a] border p-4 md:p-5 rounded-2xl shadow-sm transition-colors ${
-                      item.type === 'escalation' ? 'border-rose-200 hover:bg-rose-50' : 'border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50'
+                      item.type === 'escalation' ? 'border-rose-200 hover:bg-rose-50 dark:bg-rose-900/30' : 'border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50'
                     }`}>
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-2 md:gap-3">
@@ -579,7 +579,7 @@ export default function ClientProfilePage() {
                             {item.type === 'escalation' ? <AlertTriangle className="w-3 h-3 md:w-3.5 md:h-3.5" /> : <ClipboardList className="w-3 h-3 md:w-3.5 md:h-3.5" />}
                           </div>
                           <span className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
-                            item.type === 'escalation' ? 'bg-rose-100 text-rose-700' : 'bg-slate-100 dark:bg-zinc-900 text-slate-700 dark:text-slate-300'
+                            item.type === 'escalation' ? 'bg-rose-100 text-rose-700 dark:text-rose-400' : 'bg-slate-100 dark:bg-zinc-900 text-slate-700 dark:text-slate-300'
                           }`}>
                             {item.type === 'escalation' ? 'Escalation' : item.visit_type}
                           </span>
@@ -595,13 +595,13 @@ export default function ClientProfilePage() {
                       </div>
                       
                       <p className={`text-xs md:text-sm font-medium leading-relaxed mt-2 ${
-                        item.type === 'escalation' ? 'text-rose-700 font-semibold' : 'text-slate-600 dark:text-slate-400'
+                        item.type === 'escalation' ? 'text-rose-700 dark:text-rose-400 font-semibold' : 'text-slate-600 dark:text-slate-400'
                       }`}>
                         {item.type === 'escalation' ? item.reason : item.tasks_completed}
                       </p>
                       
                       {item.type === 'escalation' && item.is_resolved && (
-                        <div className="mt-3 text-[10px] font-bold text-emerald-700 bg-emerald-100 inline-flex px-2 py-1 rounded-md uppercase tracking-wider">
+                        <div className="mt-3 text-[10px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-100 inline-flex px-2 py-1 rounded-md uppercase tracking-wider">
                           Resolved
                         </div>
                       )}
@@ -835,7 +835,7 @@ export default function ClientProfilePage() {
             </button>
             
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-900/30 flex items-center justify-center shrink-0">
                 <AlertTriangle className="w-5 h-5 text-red-600" />
               </div>
               <div>

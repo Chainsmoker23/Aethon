@@ -26,7 +26,7 @@ function getRowBg(r: Resident): string {
 function CareStageTag({ stage }: { stage: string }) {
   const styles: Record<string, string> = {
     "Independent": "bg-primary-light text-primary-dark border-primary/20",
-    "Home care": "bg-indigo-100 text-indigo-700 border-indigo-200",
+    "Home care": "bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-400 border-indigo-200",
     "Facility": "bg-navy/10 text-navy dark:text-zinc-100 border-navy/20",
   };
   return (
@@ -123,7 +123,7 @@ export function ResidentRoster() {
               
               {/* Desktop Row Wrapper */}
               <div
-                className={`grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] items-center cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors ${r.escalations > 0 ? "bg-red-50/30" : ""} px-4`}
+                className={`grid grid-cols-[2.5fr_1fr_1fr_1fr_1fr_1fr_40px] items-center cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors ${r.escalations > 0 ? "bg-red-50 dark:bg-red-900/30/30" : ""} px-4`}
                 onClick={() => setExpandedId(isExpanded ? null : r.id)}
               >
                 

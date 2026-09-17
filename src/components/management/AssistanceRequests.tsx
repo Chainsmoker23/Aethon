@@ -140,7 +140,7 @@ export function AssistanceRequests() {
                 {!e.is_resolved && (
                   <button 
                     onClick={() => resolve(e.id)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 text-sm font-bold hover:bg-emerald-100 transition-colors border border-emerald-200/50"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-sm font-bold hover:bg-emerald-100 transition-colors border border-emerald-200/50"
                   >
                     <Check className="w-4 h-4" /> Resolve
                   </button>
@@ -151,7 +151,7 @@ export function AssistanceRequests() {
           
           {escalations.length === 0 && (
             <div className="p-8 text-center flex flex-col items-center justify-center">
-              <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center mb-3">
+              <div className="w-12 h-12 rounded-full bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center mb-3">
                 <Check className="w-6 h-6 text-emerald-500" />
               </div>
               <p className="text-slate-900 dark:text-white font-semibold text-sm">All clear</p>

@@ -110,15 +110,15 @@ export function ShiftHandover() {
   const highlightText = (text: string) => {
     return text.split(/(\s+)/).map((word, i) => {
       if (word.startsWith('@') && word.length > 1) {
-        return <span key={i} className="bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded font-bold text-xs">{word}</span>;
+        return <span key={i} className="bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-400 px-1.5 py-0.5 rounded font-bold text-xs">{word}</span>;
       }
       return word;
     });
   };
 
   const priorityColors = {
-    critical: 'bg-red-50 text-red-700 border-red-200',
-    watch: 'bg-amber-50 text-amber-700 border-amber-200',
+    critical: 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 border-red-200',
+    watch: 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200',
     general: 'bg-slate-50 dark:bg-zinc-900/50 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-zinc-800'
   };
   
@@ -148,7 +148,7 @@ export function ShiftHandover() {
         
         <div className="px-5 py-4 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center">
               <ClipboardList className="w-4 h-4 text-indigo-600" />
             </div>
             <div>
@@ -207,7 +207,7 @@ export function ShiftHandover() {
                       key={r.id}
                       type="button"
                       onClick={() => insertMention(r.first_name, r.last_name)}
-                      className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                      className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:bg-indigo-900/30 hover:text-indigo-700 dark:text-indigo-400 transition-colors"
                     >
                       {r.first_name} {r.last_name}
                     </button>
@@ -231,10 +231,10 @@ export function ShiftHandover() {
                 <button type="button" onClick={() => setPriority('general')} className={`px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${priority === 'general' ? 'bg-slate-800 text-white' : 'bg-slate-100 dark:bg-zinc-900 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700'}`}>
                   <Info className="w-3.5 h-3.5" /> General
                 </button>
-                <button type="button" onClick={() => setPriority('watch')} className={`px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${priority === 'watch' ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'bg-amber-50 text-amber-600 hover:bg-amber-100'}`}>
+                <button type="button" onClick={() => setPriority('watch')} className={`px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${priority === 'watch' ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'bg-amber-50 dark:bg-amber-900/30 text-amber-600 hover:bg-amber-100'}`}>
                   <Eye className="w-3.5 h-3.5" /> Watch
                 </button>
-                <button type="button" onClick={() => setPriority('critical')} className={`px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${priority === 'critical' ? 'bg-red-500 text-white shadow-lg shadow-red-500/20' : 'bg-red-50 text-red-600 hover:bg-red-100'}`}>
+                <button type="button" onClick={() => setPriority('critical')} className={`px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${priority === 'critical' ? 'bg-red-500 text-white shadow-lg shadow-red-500/20' : 'bg-red-50 dark:bg-red-900/30 text-red-600 hover:bg-red-100'}`}>
                   <AlertCircle className="w-3.5 h-3.5" /> Critical
                 </button>
               </div>
