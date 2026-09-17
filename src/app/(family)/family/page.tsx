@@ -12,12 +12,12 @@ export default function FamilyDashboard() {
   if (loading) return (
     <div className="relative min-h-full pb-6">
       <main className="px-5 py-6 space-y-6 animate-pulse">
-        <div className="bg-white/50 rounded-3xl p-6 h-[140px]" />
+        <div className="bg-white dark:bg-slate-900/50 rounded-3xl p-6 h-[140px]" />
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-white/50 rounded-3xl h-[100px]" />
-          <div className="bg-white/50 rounded-3xl h-[100px]" />
+          <div className="bg-white dark:bg-slate-900/50 rounded-3xl h-[100px]" />
+          <div className="bg-white dark:bg-slate-900/50 rounded-3xl h-[100px]" />
         </div>
-        <div className="bg-white/50 rounded-3xl h-[200px]" />
+        <div className="bg-white dark:bg-slate-900/50 rounded-3xl h-[200px]" />
       </main>
     </div>
   );
@@ -36,17 +36,17 @@ export default function FamilyDashboard() {
       <main className="px-5 py-6">
 
         {/* Premium iOS-style Header Card */}
-        <div className="animate-fade-in-up bg-white rounded-3xl p-6 shadow-sm border border-slate-200 mb-6 relative overflow-hidden">
+        <div className="animate-fade-in-up bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 mb-6 relative overflow-hidden">
           
           <div className="flex items-center gap-4 mb-6 relative z-10">
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white text-2xl font-extrabold shadow-md shadow-sky-500/20">
               {initial}
             </div>
             <div>
-              <h1 className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
+              <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
                 {firstName}&apos;s Day
               </h1>
-              <p className="text-sm font-semibold text-slate-500 mt-0.5">{today}</p>
+              <p className="text-sm font-semibold text-slate-500 dark:text-slate-500 mt-0.5">{today}</p>
             </div>
           </div>
 
@@ -71,31 +71,31 @@ export default function FamilyDashboard() {
         <div className="animate-fade-in-up delay-100 grid grid-cols-2 gap-4 mb-8">
           <Link 
             href="/family/messages" 
-            className="group bg-white border border-slate-200 rounded-3xl p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:border-sky-200 hover:shadow-md active:scale-95 transition-all"
+            className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:border-sky-200 hover:shadow-md active:scale-95 transition-all"
           >
             <div className="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center group-hover:scale-110 group-hover:bg-sky-100 transition-transform">
               <MessageCircle className="w-6 h-6 text-sky-600" />
             </div>
-            <span className="text-sm font-bold text-slate-900">Message Team</span>
+            <span className="text-sm font-bold text-slate-900 dark:text-white">Message Team</span>
           </Link>
           
           <Link 
             href="/family/vitals" 
-            className="group bg-white border border-slate-200 rounded-3xl p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:border-rose-200 hover:shadow-md active:scale-95 transition-all"
+            className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:border-rose-200 hover:shadow-md active:scale-95 transition-all"
           >
             <div className="w-12 h-12 rounded-full bg-rose-50 flex items-center justify-center group-hover:scale-110 group-hover:bg-rose-100 transition-transform">
               <Heart className="w-6 h-6 text-rose-600" />
             </div>
-            <span className="text-sm font-bold text-slate-900">Health & Meds</span>
+            <span className="text-sm font-bold text-slate-900 dark:text-white">Health & Meds</span>
           </Link>
         </div>
 
         {/* Timeline Section */}
         <div className="animate-fade-in-up delay-200">
           <div className="flex items-center justify-between mb-4 px-1">
-            <h2 className="text-lg font-extrabold text-slate-900">Today's Care Timeline</h2>
+            <h2 className="text-lg font-extrabold text-slate-900 dark:text-white">Today's Care Timeline</h2>
           </div>
-          <div className="bg-white rounded-3xl p-2 border border-slate-200 shadow-sm">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-2 border border-slate-200 dark:border-slate-800 shadow-sm">
             <UpdatesFeed />
           </div>
         </div>

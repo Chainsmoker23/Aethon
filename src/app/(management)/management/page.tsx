@@ -15,16 +15,16 @@ export default function ManagementDashboard() {
         <div className="hidden md:flex items-start justify-between animate-fade-in-up">
           <div className="w-full">
             <div className="flex items-center gap-3">
-              <h1 className="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">
+              <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
                 Facility Intelligence
               </h1>
             </div>
-            <div className="text-xs md:text-sm font-medium text-slate-500 mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
+            <div className="text-xs md:text-sm font-medium text-slate-500 dark:text-slate-500 mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
               <span className="whitespace-nowrap">{dateStr}</span>
               <span className="hidden sm:block w-1 h-1 rounded-full bg-slate-300" />
               <span className="whitespace-nowrap">{timeStr}</span>
               <span className="hidden sm:block mx-1 text-slate-300">|</span>
-              <span className="inline-flex items-center gap-1.5 text-[10px] md:text-[11px] uppercase tracking-wider font-bold text-slate-700 bg-white px-2 py-1 md:px-3 md:py-1.5 rounded-md shadow-sm border border-slate-200 shrink-0">
+              <span className="inline-flex items-center gap-1.5 text-[10px] md:text-[11px] uppercase tracking-wider font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 px-2 py-1 md:px-3 md:py-1.5 rounded-md shadow-sm border border-slate-200 dark:border-slate-800 shrink-0">
                 <RefreshCw className="w-3.5 h-3.5" /> Live Sync Active
               </span>
             </div>

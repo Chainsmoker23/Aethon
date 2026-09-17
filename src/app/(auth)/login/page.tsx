@@ -26,7 +26,7 @@ function LoginForm() {
       
       {/* Back Button */}
       <div className="absolute top-0 left-6">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm font-bold text-text-muted hover:text-navy transition-colors bg-white/50 px-4 py-2 rounded-full border border-slate-200/50 backdrop-blur-sm">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm font-bold text-text-muted hover:text-navy transition-colors bg-white dark:bg-slate-900/50 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-800/50 backdrop-blur-sm">
           <ArrowRight className="w-4 h-4 rotate-180" /> Back to Home
         </Link>
       </div>
@@ -36,7 +36,7 @@ function LoginForm() {
         <img 
           src="/logo.jpg" 
           alt="Aethon Health Logo" 
-          className="w-16 h-16 rounded-2xl object-contain bg-white shadow-sm border border-slate-200/50 mb-4" 
+          className="w-16 h-16 rounded-2xl object-contain bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800/50 mb-4" 
         />
         <h1 className="text-4xl font-bold text-navy tracking-tight">
           Aethon <span className="text-primary font-light">Health</span>

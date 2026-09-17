@@ -75,7 +75,7 @@ export function ResidentChat({ residentId }: { residentId: string }) {
   };
 
   return (
-    <div className="flex flex-col h-full bg-slate-50/50 rounded-2xl border border-border/50 overflow-hidden shadow-inner relative animate-fade-in">
+    <div className="flex flex-col h-full bg-slate-50 dark:bg-slate-800/50/50 rounded-2xl border border-border/50 overflow-hidden shadow-inner relative animate-fade-in">
       
       {/* Messages Feed */}
       <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
@@ -83,7 +83,7 @@ export function ResidentChat({ residentId }: { residentId: string }) {
           <div className="m-auto"><Loader2 className="w-6 h-6 animate-spin text-primary/50" /></div>
         ) : messages.length === 0 ? (
           <div className="m-auto flex flex-col items-center justify-center text-center max-w-[260px] opacity-70">
-            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-border/50 mb-4 transform -rotate-3">
+            <div className="w-16 h-16 bg-white dark:bg-slate-900 rounded-2xl flex items-center justify-center shadow-sm border border-border/50 mb-4 transform -rotate-3">
               <MessageSquare className="w-6 h-6 text-primary" />
             </div>
             <h3 className="text-base font-bold text-navy">No messages</h3>
@@ -101,7 +101,7 @@ export function ResidentChat({ residentId }: { residentId: string }) {
                 <div className={`px-4 py-2.5 text-[15px] font-medium leading-relaxed max-w-[80%] ${
                   isStaff 
                     ? 'bg-navy text-white rounded-2xl rounded-br-sm shadow-sm' 
-                    : 'bg-white text-navy border border-slate-200/80 rounded-2xl rounded-bl-sm shadow-sm'
+                    : 'bg-white dark:bg-slate-900 text-navy border border-slate-200 dark:border-slate-800/80 rounded-2xl rounded-bl-sm shadow-sm'
                 }`}>
                   {msg.content}
                 </div>
@@ -120,14 +120,14 @@ export function ResidentChat({ residentId }: { residentId: string }) {
       </div>
 
       {/* Embedded Input Area */}
-      <div className="p-4 bg-white border-t border-border/50 shrink-0">
+      <div className="p-4 bg-white dark:bg-slate-900 border-t border-border/50 shrink-0">
         {error && (
           <div className="mb-3 px-4 py-2 bg-danger/10 border border-danger/20 rounded-xl text-sm font-bold text-danger animate-fade-in flex items-center justify-between">
             <span>{error}</span>
             <button onClick={() => setError(null)} className="text-danger/60 hover:text-danger" aria-label="Dismiss error">✕</button>
           </div>
         )}
-        <form onSubmit={handleSend} className="flex items-end gap-2 bg-slate-50 border border-slate-200/80 rounded-2xl p-1.5 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary/40 focus-within:bg-white transition-all shadow-sm">
+        <form onSubmit={handleSend} className="flex items-end gap-2 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-1.5 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary/40 focus-within:bg-white dark:bg-slate-900 transition-all shadow-sm">
           <textarea
             placeholder="Type a message to the family..."
             value={newMessage}

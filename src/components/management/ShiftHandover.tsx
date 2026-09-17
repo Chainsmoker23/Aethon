@@ -119,18 +119,18 @@ export function ShiftHandover() {
   const priorityColors = {
     critical: 'bg-red-50 text-red-700 border-red-200',
     watch: 'bg-amber-50 text-amber-700 border-amber-200',
-    general: 'bg-slate-50 text-slate-700 border-slate-200'
+    general: 'bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800'
   };
   
   const priorityIcons = {
     critical: <AlertCircle className="w-4 h-4 text-red-600" />,
     watch: <Eye className="w-4 h-4 text-amber-600" />,
-    general: <Info className="w-4 h-4 text-slate-500" />
+    general: <Info className="w-4 h-4 text-slate-500 dark:text-slate-500" />
   };
 
   if (loading) {
     return (
-      <div className="bg-white border border-slate-200 rounded-xl shadow-sm h-64 flex items-center justify-center w-full relative z-10">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm h-64 flex items-center justify-center w-full relative z-10">
         <Loader2 className="w-8 h-8 animate-spin text-slate-400" />
       </div>
     );
@@ -144,21 +144,21 @@ export function ShiftHandover() {
     <>
       <MobileShiftHandover notes={notes} highlightText={highlightText} priorityIcons={priorityIcons} priorityColors={priorityColors} />
 
-      <div className="hidden md:flex flex-col h-[500px] bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden relative z-10 w-full">
+      <div className="hidden md:flex flex-col h-[500px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden relative z-10 w-full">
         
-        <div className="px-5 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
+        <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-800/50/50">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center">
               <ClipboardList className="w-4 h-4 text-indigo-600" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-slate-900 tracking-tight">Smart Handover</h2>
-              <p className="text-[10px] text-slate-500 font-medium">Type @ to mention residents</p>
+              <h2 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Smart Handover</h2>
+              <p className="text-[10px] text-slate-500 dark:text-slate-500 font-medium">Type @ to mention residents</p>
             </div>
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50/30">
+        <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50 dark:bg-slate-800/50/30">
           {notes.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-slate-400 py-10">
               <ClipboardList className="w-8 h-8 mb-2 opacity-20" />
@@ -191,11 +191,11 @@ export function ShiftHandover() {
           )}
         </div>
 
-        <div className="p-4 bg-white border-t border-slate-200 relative">
+        <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 relative">
           
           {mentionQuery !== null && (
-            <div className="absolute bottom-full left-4 mb-2 w-64 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden z-50">
-              <div className="bg-slate-50 px-3 py-1.5 border-b border-slate-100 text-[10px] font-bold text-slate-500 uppercase">
+            <div className="absolute bottom-full left-4 mb-2 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl overflow-hidden z-50">
+              <div className="bg-slate-50 dark:bg-slate-800/50 px-3 py-1.5 border-b border-slate-100 dark:border-slate-800/50 text-[10px] font-bold text-slate-500 dark:text-slate-500 uppercase">
                 Mention Resident
               </div>
               <div className="max-h-40 overflow-y-auto p-1">
@@ -207,7 +207,7 @@ export function ShiftHandover() {
                       key={r.id}
                       type="button"
                       onClick={() => insertMention(r.first_name, r.last_name)}
-                      className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                      className="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
                     >
                       {r.first_name} {r.last_name}
                     </button>
@@ -223,12 +223,12 @@ export function ShiftHandover() {
               value={newNote}
               onChange={handleTextChange}
               placeholder="Type @ to tag a resident..."
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-medium text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white resize-none h-20"
+              className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-sm font-medium text-slate-700 dark:text-slate-300 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:bg-slate-900 resize-none h-20"
             />
             
             <div className="flex items-center justify-between">
               <div className="flex gap-2">
-                <button type="button" onClick={() => setPriority('general')} className={`px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${priority === 'general' ? 'bg-slate-800 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                <button type="button" onClick={() => setPriority('general')} className={`px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${priority === 'general' ? 'bg-slate-800 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700'}`}>
                   <Info className="w-3.5 h-3.5" /> General
                 </button>
                 <button type="button" onClick={() => setPriority('watch')} className={`px-2 md:px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${priority === 'watch' ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'bg-amber-50 text-amber-600 hover:bg-amber-100'}`}>

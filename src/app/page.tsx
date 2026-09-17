@@ -73,7 +73,7 @@ function LiveChatDemo() {
               <div
                 className={`max-w-[85%] p-2.5 md:p-3 shadow-sm ${
                   msg.from === "staff"
-                    ? "bg-white rounded-2xl rounded-br-sm border border-slate-100"
+                    ? "bg-white dark:bg-slate-900 rounded-2xl rounded-br-sm border border-slate-100 dark:border-slate-800/50"
                     : "bg-primary text-white rounded-2xl rounded-bl-sm"
                 }`}
               >
@@ -98,7 +98,7 @@ function LiveChatDemo() {
             >
               <div className={`px-4 py-2.5 rounded-2xl shadow-sm ${
                 chatMessages[visibleCount].from === "staff"
-                  ? "bg-white border border-slate-100 rounded-br-sm"
+                  ? "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/50 rounded-br-sm"
                   : "bg-primary rounded-bl-sm"
               }`}>
                 <div className="flex items-center gap-1">
@@ -106,7 +106,7 @@ function LiveChatDemo() {
                     <motion.div
                       key={dot}
                       className={`w-1.5 h-1.5 rounded-full ${
-                        chatMessages[visibleCount].from === "staff" ? "bg-slate-400" : "bg-white/70"
+                        chatMessages[visibleCount].from === "staff" ? "bg-slate-400" : "bg-white dark:bg-slate-900/70"
                       }`}
                       animate={{ y: [0, -4, 0] }}
                       transition={{ duration: 0.6, repeat: Infinity, delay: dot * 0.15 }}
@@ -126,7 +126,7 @@ export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-50/50 landing-grid-bg [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+    <div className="relative min-h-screen overflow-hidden bg-slate-50 dark:bg-slate-800/50/50 landing-grid-bg [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       
       {/* === Elegant Color-Shifting Siri Aura Background === */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
@@ -137,13 +137,13 @@ export default function LandingPage() {
       </div>
 
       {/* === Navigation === */}
-      <nav className="sticky top-0 z-50 bg-white/60 backdrop-blur-2xl border-b border-slate-200/50">
+      <nav className="sticky top-0 z-50 bg-white dark:bg-slate-900/60 backdrop-blur-2xl border-b border-slate-200 dark:border-slate-800/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <img 
               src="/logo.jpg" 
               alt="Aethon Health Logo" 
-              className="w-10 h-10 rounded-xl object-contain bg-white shadow-sm border border-slate-200/50" 
+              className="w-10 h-10 rounded-xl object-contain bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800/50" 
             />
             <span className="text-xl font-extrabold text-navy tracking-tight">
               Aethon<span className="font-light text-primary ml-0.5">Health</span>
@@ -173,7 +173,7 @@ export default function LandingPage() {
           {/* Mobile Menu Toggle */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-navy hover:bg-slate-200 transition-colors"
+            className="md:hidden w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-navy hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -187,15 +187,15 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.2 }}
-              className="md:hidden absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-2xl border-b border-slate-200/50 shadow-2xl p-6 flex flex-col gap-4 origin-top"
+              className="md:hidden absolute top-16 left-0 right-0 bg-white dark:bg-slate-900/95 backdrop-blur-2xl border-b border-slate-200 dark:border-slate-800/50 shadow-2xl p-6 flex flex-col gap-4 origin-top"
             >
-              <a href="#features" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 flex items-center justify-between">
+              <a href="#features" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 dark:border-slate-800/50 flex items-center justify-between">
                 Features <ChevronRight className="w-4 h-4 text-text-muted" />
               </a>
-              <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 flex items-center justify-between">
+              <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 dark:border-slate-800/50 flex items-center justify-between">
                 How It Works <ChevronRight className="w-4 h-4 text-text-muted" />
               </a>
-              <a href="#trust" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 flex items-center justify-between">
+              <a href="#trust" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-navy py-2 border-b border-slate-100 dark:border-slate-800/50 flex items-center justify-between">
                 Trust & Security <ChevronRight className="w-4 h-4 text-text-muted" />
               </a>
               <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="mt-4 px-5 py-3.5 bg-navy text-white text-center text-base font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-navy/20 active:scale-95 transition-transform">
@@ -242,7 +242,7 @@ export default function LandingPage() {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }} className="w-full sm:w-auto">
                 <a
                   href="#how-it-works"
-                  className="px-6 md:px-8 py-3.5 md:py-4 bg-white/70 backdrop-blur-lg text-navy text-sm md:text-base font-bold rounded-2xl border border-slate-200/60 hover:bg-white shadow-sm hover:shadow-md flex items-center justify-center"
+                  className="px-6 md:px-8 py-3.5 md:py-4 bg-white dark:bg-slate-900/70 backdrop-blur-lg text-navy text-sm md:text-base font-bold rounded-2xl border border-slate-200 dark:border-slate-800/60 hover:bg-white dark:bg-slate-900 shadow-sm hover:shadow-md flex items-center justify-center"
                 >
                   See How It Works
                 </a>
@@ -255,24 +255,24 @@ export default function LandingPage() {
         {/* Hero Mockup emerging from bottom */}
         <Reveal delay={500} className="w-full mt-16 md:mt-24 relative z-10 hidden md:block">
           <div>
-            <div className="max-w-4xl mx-auto bg-white/40 backdrop-blur-3xl border border-white/60 rounded-t-[40px] shadow-2xl overflow-hidden h-[300px] p-6 flex gap-6 mask-bottom glass-glare">
+            <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900/40 backdrop-blur-3xl border border-white/60 rounded-t-[40px] shadow-2xl overflow-hidden h-[300px] p-6 flex gap-6 mask-bottom glass-glare">
             {/* Sidebar Mockup */}
-            <div className="w-48 bg-white/50 rounded-2xl p-4 border border-white/40 flex flex-col gap-3">
-              <div className="w-full h-8 bg-slate-200/50 rounded-lg mb-4" />
+            <div className="w-48 bg-white dark:bg-slate-900/50 rounded-2xl p-4 border border-white/40 flex flex-col gap-3">
+              <div className="w-full h-8 bg-slate-200 dark:bg-slate-700/50 rounded-lg mb-4" />
               <div className="w-full h-10 bg-primary/10 rounded-xl" />
-              <div className="w-full h-10 bg-white/40 rounded-xl" />
-              <div className="w-full h-10 bg-white/40 rounded-xl" />
+              <div className="w-full h-10 bg-white dark:bg-slate-900/40 rounded-xl" />
+              <div className="w-full h-10 bg-white dark:bg-slate-900/40 rounded-xl" />
             </div>
             {/* Main Area Mockup */}
             <div className="flex-1 flex flex-col gap-6">
               <div className="flex justify-between items-center">
-                <div className="w-48 h-10 bg-white/60 rounded-xl" />
-                <div className="w-32 h-10 bg-white/60 rounded-xl" />
+                <div className="w-48 h-10 bg-white dark:bg-slate-900/60 rounded-xl" />
+                <div className="w-32 h-10 bg-white dark:bg-slate-900/60 rounded-xl" />
               </div>
               <div className="flex-1 grid grid-cols-3 gap-4">
-                <div className="col-span-2 bg-white/60 border border-white/40 rounded-2xl p-5 shadow-sm flex flex-col gap-3">
-                  <div className="w-32 h-4 bg-slate-200/80 rounded-full" />
-                  <div className="w-full h-20 bg-slate-100/50 rounded-xl mt-auto" />
+                <div className="col-span-2 bg-white dark:bg-slate-900/60 border border-white/40 rounded-2xl p-5 shadow-sm flex flex-col gap-3">
+                  <div className="w-32 h-4 bg-slate-200 dark:bg-slate-700/80 rounded-full" />
+                  <div className="w-full h-20 bg-slate-100 dark:bg-slate-800/50 rounded-xl mt-auto" />
                 </div>
                 <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-2xl p-5 shadow-sm" />
               </div>
@@ -283,7 +283,7 @@ export default function LandingPage() {
       </section>
 
       {/* === The Challenge Section === */}
-      <section className="relative max-w-6xl mx-auto px-5 md:px-6 py-12 md:py-24 border-t border-slate-200/50">
+      <section className="relative max-w-6xl mx-auto px-5 md:px-6 py-12 md:py-24 border-t border-slate-200 dark:border-slate-800/50">
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
           <Reveal direction="left">
             <div>
@@ -312,11 +312,11 @@ export default function LandingPage() {
           
           <Reveal direction="right">
             <div className="relative max-w-[200px] sm:max-w-[240px] md:max-w-[320px] mx-auto">
-              <div className="absolute inset-0 bg-slate-200/50 rounded-[40px] -rotate-3 blur-sm transform scale-105 opacity-60" />
+              <div className="absolute inset-0 bg-slate-200 dark:bg-slate-700/50 rounded-[40px] -rotate-3 blur-sm transform scale-105 opacity-60" />
               <img 
                 src="/cartoon%20Images/a-depressed-senior-in-a-wheelchair-1.jpg" 
                 alt="Depressed senior" 
-                className="relative z-10 w-full h-auto drop-shadow-xl object-cover rounded-[40px] border border-slate-100"
+                className="relative z-10 w-full h-auto drop-shadow-xl object-cover rounded-[40px] border border-slate-100 dark:border-slate-800/50"
               />
             </div>
           </Reveal>
@@ -377,7 +377,7 @@ export default function LandingPage() {
               <p className="text-sm md:text-base text-text-secondary font-medium leading-relaxed relative z-10">
                 Live health tracking with intelligent alerts. Families see what matters, exactly when it matters.
               </p>
-              <div className="mt-auto relative z-10 bg-white/60 border border-white/80 p-3 md:p-4 rounded-xl md:rounded-2xl shadow-sm">
+              <div className="mt-auto relative z-10 bg-white dark:bg-slate-900/60 border border-white/80 p-3 md:p-4 rounded-xl md:rounded-2xl shadow-sm">
                 <div className="flex justify-between items-end mb-2">
                   <span className="text-xs md:text-sm font-bold text-navy">Heart Rate</span>
                   <span className="text-xl md:text-2xl font-black text-emerald-600">72 <span className="text-[10px] md:text-sm text-text-muted">bpm</span></span>
@@ -466,7 +466,7 @@ export default function LandingPage() {
               <img 
                 src="/cartoon%20Images/nurse-assisting.webp" 
                 alt="Nurse assisting elderly patient" 
-                className="relative z-10 w-full h-auto drop-shadow-2xl object-cover rounded-[40px] bg-white p-6 md:p-8 border border-slate-100"
+                className="relative z-10 w-full h-auto drop-shadow-2xl object-cover rounded-[40px] bg-white dark:bg-slate-900 p-6 md:p-8 border border-slate-100 dark:border-slate-800/50"
               />
 
             </div>
@@ -547,7 +547,7 @@ export default function LandingPage() {
                 </p>
                 <ul className="space-y-2.5 md:space-y-4">
                   {["Daily care updates & photos", "Medication tracking", "Direct staff messaging", "Escalation notifications"].map((item) => (
-                    <li key={item} className="flex items-center gap-2.5 md:gap-3 text-xs md:text-sm font-bold text-navy bg-white/40 p-2 rounded-xl">
+                    <li key={item} className="flex items-center gap-2.5 md:gap-3 text-xs md:text-sm font-bold text-navy bg-white dark:bg-slate-900/40 p-2 rounded-xl">
                       <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-success shrink-0" />
                       {item}
                     </li>
@@ -581,7 +581,7 @@ export default function LandingPage() {
                 </p>
                 <ul className="space-y-2.5 md:space-y-4">
                   {["Resident management dashboard", "Visit notes & care timeline", "Medication prescriptions", "Family communication hub"].map((item) => (
-                    <li key={item} className="flex items-center gap-2.5 md:gap-3 text-xs md:text-sm font-bold text-navy bg-white/40 p-2 rounded-xl">
+                    <li key={item} className="flex items-center gap-2.5 md:gap-3 text-xs md:text-sm font-bold text-navy bg-white dark:bg-slate-900/40 p-2 rounded-xl">
                       <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-success shrink-0" />
                       {item}
                     </li>
@@ -632,7 +632,7 @@ export default function LandingPage() {
             <div className="relative z-10 px-6 py-12 md:px-16 md:py-16">
               <div className="flex flex-col items-center text-center mb-10 md:mb-14">
                 {/* Swiss badge */}
-                <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-red-200 shadow-sm mb-6">
+                <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white dark:bg-slate-900 border border-red-200 shadow-sm mb-6">
                   <svg width="20" height="20" viewBox="0 0 32 32" fill="none" className="shrink-0">
                     <rect width="32" height="32" rx="4" fill="#FF0000"/>
                     <rect x="13" y="6" width="6" height="20" rx="1" fill="white"/>
@@ -653,7 +653,7 @@ export default function LandingPage() {
               <div className="grid md:grid-cols-3 gap-5 md:gap-6">
                 {/* Pillar 1: Data Sovereignty */}
                 <Reveal delay={100}>
-                  <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm h-full">
+                  <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800/50 shadow-sm h-full">
                     <div className="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center mb-4">
                       <Shield className="w-5 h-5 text-red-600" />
                     </div>
@@ -666,7 +666,7 @@ export default function LandingPage() {
 
                 {/* Pillar 2: Multilingual */}
                 <Reveal delay={200}>
-                  <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm h-full">
+                  <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800/50 shadow-sm h-full">
                     <div className="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center mb-4">
                       <Users className="w-5 h-5 text-red-600" />
                     </div>
@@ -679,7 +679,7 @@ export default function LandingPage() {
 
                 {/* Pillar 3: Precision */}
                 <Reveal delay={300}>
-                  <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm h-full">
+                  <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800/50 shadow-sm h-full">
                     <div className="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center mb-4">
                       <CheckCheck className="w-5 h-5 text-red-600" />
                     </div>
@@ -708,7 +708,7 @@ export default function LandingPage() {
 
 
             <div className="relative z-20 px-5 py-12 md:px-16 md:py-24 text-center">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 mb-5 md:mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-slate-900/10 border border-white/20 mb-5 md:mb-8">
                 <svg width="16" height="16" viewBox="0 0 32 32" fill="none" className="shrink-0">
                   <rect width="32" height="32" rx="4" fill="#FF0000"/>
                   <rect x="13" y="6" width="6" height="20" rx="1" fill="white"/>
@@ -726,7 +726,7 @@ export default function LandingPage() {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }} className="w-full sm:w-auto">
                   <Link
                     href="/login"
-                    className="group px-6 md:px-8 py-3.5 md:py-4 bg-white text-navy text-sm md:text-base font-bold rounded-2xl hover:bg-slate-100 shadow-xl hover:shadow-2xl flex items-center justify-center gap-2"
+                    className="group px-6 md:px-8 py-3.5 md:py-4 bg-white dark:bg-slate-900 text-navy text-sm md:text-base font-bold rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-slate-800 shadow-xl hover:shadow-2xl flex items-center justify-center gap-2"
                   >
                     Start Free Trial
                     <ChevronRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
@@ -735,7 +735,7 @@ export default function LandingPage() {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }} className="w-full sm:w-auto">
                   <a
                     href="#how-it-works"
-                    className="px-6 md:px-8 py-3.5 md:py-4 bg-white/10 text-white text-sm md:text-base font-bold rounded-2xl border border-white/20 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center"
+                    className="px-6 md:px-8 py-3.5 md:py-4 bg-white dark:bg-slate-900/10 text-white text-sm md:text-base font-bold rounded-2xl border border-white/20 hover:bg-white dark:bg-slate-900/20 backdrop-blur-sm flex items-center justify-center"
                   >
                     Learn More
                   </a>
@@ -747,13 +747,13 @@ export default function LandingPage() {
       </section>
 
       {/* === Footer === */}
-      <footer className="border-t border-slate-200/60 bg-white/60 backdrop-blur-xl">
+      <footer className="border-t border-slate-200 dark:border-slate-800/60 bg-white dark:bg-slate-900/60 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2.5">
             <img 
               src="/logo.jpg" 
               alt="Aethon Health Logo" 
-              className="w-8 h-8 rounded-lg object-contain bg-white shadow-sm border border-slate-200/50" 
+              className="w-8 h-8 rounded-lg object-contain bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800/50" 
             />
             <span className="text-lg font-extrabold text-navy tracking-tight">
               Aethon<span className="font-light text-primary ml-0.5">Health</span>

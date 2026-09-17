@@ -13,16 +13,16 @@ export function MobileShiftHandover({
   priorityColors: Record<string, string>
 }) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden relative z-10 md:hidden flex flex-col h-[400px]">
-      <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
-        <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2 tracking-tight">
+    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden relative z-10 md:hidden flex flex-col h-[400px]">
+      <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-800/50/50">
+        <h2 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 tracking-tight">
           <ClipboardList className="w-4 h-4 text-indigo-500" /> Smart Handover
         </h2>
       </div>
 
       <div className="divide-y divide-slate-100 flex-1 overflow-y-auto">
         {notes.length === 0 ? (
-          <div className="p-6 text-center text-slate-500 text-xs flex flex-col items-center">
+          <div className="p-6 text-center text-slate-500 dark:text-slate-500 text-xs flex flex-col items-center">
             <ClipboardList className="w-8 h-8 opacity-20 mb-2" />
             <p>No handovers found</p>
           </div>

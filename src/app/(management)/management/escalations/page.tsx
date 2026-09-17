@@ -58,35 +58,35 @@ export default function EscalationsPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 animate-fade-in-up">
           <div className="hidden md:block">
             <div className="flex items-center gap-3">
-              <h1 className="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">
+              <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
                 Escalation Log
               </h1>
               <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-500 to-orange-400 flex items-center justify-center shadow-md">
                 <AlertTriangle className="w-4 h-4 text-white" />
               </div>
             </div>
-            <p className="text-sm font-medium text-slate-500 mt-1">
+            <p className="text-sm font-medium text-slate-500 dark:text-slate-500 mt-1">
               Historical record of all alerts and assistance requests.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-            <div className="flex bg-slate-100 p-1 rounded-xl shadow-inner border border-slate-200">
+            <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl shadow-inner border border-slate-200 dark:border-slate-800">
               <button 
                 onClick={() => setFilter("all")}
-                className={`flex-1 sm:flex-none px-4 py-2 text-sm font-bold rounded-lg transition-all ${filter === "all" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-900"}`}
+                className={`flex-1 sm:flex-none px-4 py-2 text-sm font-bold rounded-lg transition-all ${filter === "all" ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm" : "text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:text-white"}`}
               >
                 All
               </button>
               <button 
                 onClick={() => setFilter("open")}
-                className={`flex-1 sm:flex-none px-4 py-2 text-sm font-bold rounded-lg transition-all ${filter === "open" ? "bg-white text-rose-600 shadow-sm" : "text-slate-500 hover:text-rose-600"}`}
+                className={`flex-1 sm:flex-none px-4 py-2 text-sm font-bold rounded-lg transition-all ${filter === "open" ? "bg-white dark:bg-slate-900 text-rose-600 shadow-sm" : "text-slate-500 dark:text-slate-500 hover:text-rose-600"}`}
               >
                 Open
               </button>
               <button 
                 onClick={() => setFilter("resolved")}
-                className={`flex-1 sm:flex-none px-4 py-2 text-sm font-bold rounded-lg transition-all ${filter === "resolved" ? "bg-white text-emerald-600 shadow-sm" : "text-slate-500 hover:text-emerald-600"}`}
+                className={`flex-1 sm:flex-none px-4 py-2 text-sm font-bold rounded-lg transition-all ${filter === "resolved" ? "bg-white dark:bg-slate-900 text-emerald-600 shadow-sm" : "text-slate-500 dark:text-slate-500 hover:text-emerald-600"}`}
               >
                 Resolved
               </button>
@@ -99,7 +99,7 @@ export default function EscalationsPage() {
                 placeholder="Search..." 
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full h-[42px] pl-10 pr-4 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/40 shadow-sm transition-all"
+                className="w-full h-[42px] pl-10 pr-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/40 shadow-sm transition-all"
               />
             </div>
           </div>
@@ -107,18 +107,18 @@ export default function EscalationsPage() {
 
         {/* Escalations List */}
         {loading ? (
-          <div className="bg-white border border-slate-200 rounded-2xl h-96 flex items-center justify-center animate-fade-in-up delay-100 shadow-sm">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl h-96 flex items-center justify-center animate-fade-in-up delay-100 shadow-sm">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
         ) : (
-          <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden animate-fade-in-up delay-100 divide-y divide-slate-100 shadow-sm">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden animate-fade-in-up delay-100 divide-y divide-slate-100 shadow-sm">
             {filtered.length === 0 ? (
               <div className="p-16 text-center">
-                <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-200 shadow-sm">
+                <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-200 dark:border-slate-800 shadow-sm">
                   <Check className="w-8 h-8 text-emerald-500" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900">No escalations found</h3>
-                <p className="text-sm font-medium text-slate-500 mt-2">Try adjusting your search or filters.</p>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">No escalations found</h3>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-500 mt-2">Try adjusting your search or filters.</p>
               </div>
             ) : (
               filtered.map((e, i) => {
@@ -126,7 +126,7 @@ export default function EscalationsPage() {
                 const isToday = date.toDateString() === new Date().toDateString();
 
                 return (
-                  <div key={e.id} className="p-6 md:p-8 hover:bg-slate-50 transition-colors flex flex-col md:flex-row gap-6 md:items-start group">
+                  <div key={e.id} className="p-6 md:p-8 hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-slate-800/50 transition-colors flex flex-col md:flex-row gap-6 md:items-start group">
                     
                     {/* Status Badge */}
                     <div className="shrink-0 pt-1">
@@ -144,25 +144,25 @@ export default function EscalationsPage() {
                     {/* Content */}
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center gap-3 mb-2">
-                        <h3 className="text-lg font-bold text-slate-900 truncate">
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-white truncate">
                           {e.residents?.first_name} {e.residents?.last_name}
                         </h3>
-                        <span className="text-xs font-bold text-slate-600 bg-slate-100 px-2 py-1 rounded-md border border-slate-200 shadow-sm">
+                        <span className="text-xs font-bold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-800 shadow-sm">
                           Room {e.residents?.room_number || 'N/A'}
                         </span>
                       </div>
-                      <p className="text-sm text-slate-600 font-medium leading-relaxed max-w-3xl">
+                      <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-3xl">
                         {e.reason}
                       </p>
                     </div>
 
                     {/* Meta Info */}
-                    <div className="shrink-0 flex flex-row md:flex-col items-center md:items-end gap-4 md:gap-2 text-sm border-t border-slate-100 md:border-t-0 pt-4 md:pt-0">
-                      <div className="flex items-center gap-2 text-slate-500 font-medium">
+                    <div className="shrink-0 flex flex-row md:flex-col items-center md:items-end gap-4 md:gap-2 text-sm border-t border-slate-100 dark:border-slate-800/50 md:border-t-0 pt-4 md:pt-0">
+                      <div className="flex items-center gap-2 text-slate-500 dark:text-slate-500 font-medium">
                         <Calendar className="w-4 h-4" />
                         {isToday ? "Today" : date.toLocaleDateString([], { month: 'short', day: 'numeric' })}
                       </div>
-                      <div className="flex items-center gap-2 text-slate-500 font-medium">
+                      <div className="flex items-center gap-2 text-slate-500 dark:text-slate-500 font-medium">
                         <Clock className="w-4 h-4" />
                         {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </div>

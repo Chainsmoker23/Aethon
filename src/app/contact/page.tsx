@@ -41,7 +41,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col overflow-hidden bg-slate-50/50 landing-grid-bg">
+    <div className="relative min-h-screen flex flex-col overflow-hidden bg-slate-50 dark:bg-slate-800/50/50 landing-grid-bg">
       
       {/* === Elegant Color-Shifting Siri Aura Background === */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
@@ -52,13 +52,13 @@ export default function ContactPage() {
       </div>
 
       {/* === Navigation === */}
-      <nav className="sticky top-0 z-50 bg-white/60 backdrop-blur-2xl border-b border-slate-200/50">
+      <nav className="sticky top-0 z-50 bg-white dark:bg-slate-900/60 backdrop-blur-2xl border-b border-slate-200 dark:border-slate-800/50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
             <img 
               src="/logo.jpg" 
               alt="Aethon Health Logo" 
-              className="w-10 h-10 rounded-xl object-contain bg-white shadow-sm border border-slate-200/50" 
+              className="w-10 h-10 rounded-xl object-contain bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800/50" 
             />
             <span className="text-xl font-extrabold text-navy tracking-tight">
               Aethon<span className="font-light text-primary ml-0.5">Health</span>
@@ -84,7 +84,7 @@ export default function ContactPage() {
           {/* Mobile Menu Toggle */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-navy hover:bg-slate-200 transition-colors"
+            className="md:hidden w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-navy hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -92,11 +92,11 @@ export default function ContactPage() {
 
         {/* Mobile Nav Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 w-full bg-white/95 backdrop-blur-3xl border-b border-slate-200/50 shadow-xl py-6 px-6 flex flex-col gap-4 text-center">
+          <div className="md:hidden absolute top-16 left-0 w-full bg-white dark:bg-slate-900/95 backdrop-blur-3xl border-b border-slate-200 dark:border-slate-800/50 shadow-xl py-6 px-6 flex flex-col gap-4 text-center">
             <Link href="/team" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-text-secondary hover:text-navy transition-colors">Team</Link>
             <Link href="/privacy" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-text-secondary hover:text-navy transition-colors">Privacy</Link>
             <Link href="/terms" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-text-secondary hover:text-navy transition-colors">Terms</Link>
-            <div className="h-px w-full bg-slate-200/60 my-2" />
+            <div className="h-px w-full bg-slate-200 dark:bg-slate-700/60 my-2" />
             <Link
               href="/login"
               onClick={() => setMobileMenuOpen(false)}
@@ -120,7 +120,7 @@ export default function ContactPage() {
                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-navy tracking-tight mb-4 leading-tight">
                     Get in touch <br/>with our team
                   </h1>
-                  <p className="text-lg text-slate-500 font-medium">
+                  <p className="text-lg text-slate-500 dark:text-slate-500 font-medium">
                     Whether you have a question about features, pricing, or need a demo for your care facility, our team is ready to answer all your questions.
                   </p>
                 </div>
@@ -132,7 +132,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-navy">Email Us</h3>
-                      <p className="text-slate-500 font-medium mb-1">Our friendly team is here to help.</p>
+                      <p className="text-slate-500 dark:text-slate-500 font-medium mb-1">Our friendly team is here to help.</p>
                       <div className="flex flex-col space-y-1 mt-2">
                         <a href="mailto:selena@alpinahealth.ch" className="text-primary font-bold hover:underline">selena@alpinahealth.ch</a>
                         <a href="mailto:flynn@alpinahealth.ch" className="text-primary font-bold hover:underline">flynn@alpinahealth.ch</a>
@@ -146,7 +146,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-navy">Call Us</h3>
-                      <p className="text-slate-500 font-medium mb-1">Mon-Fri from 8am to 5pm.</p>
+                      <p className="text-slate-500 dark:text-slate-500 font-medium mb-1">Mon-Fri from 8am to 5pm.</p>
                       <a href="tel:+41767250208" className="text-navy font-bold hover:text-primary transition-colors">+41 767 250 20 8</a>
                     </div>
                   </div>
@@ -157,7 +157,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-navy">Office</h3>
-                      <p className="text-slate-500 font-medium mb-1">Come say hello at our headquarters.</p>
+                      <p className="text-slate-500 dark:text-slate-500 font-medium mb-1">Come say hello at our headquarters.</p>
                       <p className="text-navy font-bold">Zurich, Switzerland</p>
                     </div>
                   </div>
@@ -165,44 +165,44 @@ export default function ContactPage() {
               </div>
 
               {/* Right Column: Form */}
-              <div className="bg-white/80 backdrop-blur-xl border border-white/20 shadow-2xl shadow-slate-200/50 rounded-3xl p-8">
+              <div className="bg-white dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 shadow-2xl shadow-slate-200/50 rounded-3xl p-8">
                 {isSuccess ? (
                   <div className="h-full flex flex-col items-center justify-center text-center py-12 space-y-4 animate-fade-in-up">
                     <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center">
                       <CheckCircle2 className="w-10 h-10 text-emerald-500" />
                     </div>
                     <h3 className="text-2xl font-black text-navy">Message Sent!</h3>
-                    <p className="text-slate-500 font-medium">We'll get back to you within 24 hours.</p>
+                    <p className="text-slate-500 dark:text-slate-500 font-medium">We'll get back to you within 24 hours.</p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5 animate-fade-in">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Full Name</label>
+                      <label className="text-xs font-bold text-slate-500 dark:text-slate-500 uppercase tracking-wider">Full Name</label>
                       <input 
                         required
                         type="text" 
                         name="name"
-                        className="w-full px-4 py-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
+                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-800/50/50 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
                         placeholder="Jane Doe"
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Email Address</label>
+                      <label className="text-xs font-bold text-slate-500 dark:text-slate-500 uppercase tracking-wider">Email Address</label>
                       <input 
                         required
                         type="email" 
                         name="email"
-                        className="w-full px-4 py-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
+                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-800/50/50 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
                         placeholder="jane@example.com"
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Message</label>
+                      <label className="text-xs font-bold text-slate-500 dark:text-slate-500 uppercase tracking-wider">Message</label>
                       <textarea 
                         required
                         name="message"
                         rows={4}
-                        className="w-full px-4 py-3.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none" 
+                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-800/50/50 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none" 
                         placeholder="How can we help you?"
                       />
                     </div>
@@ -232,13 +232,13 @@ export default function ContactPage() {
       </section>
 
       {/* === Footer === */}
-      <footer className="border-t border-slate-200/60 bg-white/60 backdrop-blur-xl mt-auto">
+      <footer className="border-t border-slate-200 dark:border-slate-800/60 bg-white dark:bg-slate-900/60 backdrop-blur-xl mt-auto">
         <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
             <img 
               src="/logo.jpg" 
               alt="Aethon Health Logo" 
-              className="w-8 h-8 rounded-lg object-contain bg-white shadow-sm border border-slate-200/50" 
+              className="w-8 h-8 rounded-lg object-contain bg-white dark:bg-slate-900 shadow-sm border border-slate-200 dark:border-slate-800/50" 
             />
             <span className="text-lg font-extrabold text-navy tracking-tight">
               Aethon<span className="font-light text-primary ml-0.5">Health</span>
@@ -247,7 +247,7 @@ export default function ContactPage() {
           <p className="text-sm font-bold text-slate-400">
             © {new Date().getFullYear()} Aethon Health. All rights reserved.
           </p>
-          <div className="flex items-center gap-6 text-sm font-bold text-slate-500">
+          <div className="flex items-center gap-6 text-sm font-bold text-slate-500 dark:text-slate-500">
             <Link href="/team" className="hover:text-navy transition-colors">Team</Link>
             <Link href="/privacy" className="hover:text-navy transition-colors">Privacy</Link>
             <Link href="/terms" className="hover:text-navy transition-colors">Terms</Link>

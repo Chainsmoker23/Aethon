@@ -77,7 +77,7 @@ export function FacilityOverview() {
       <div className={`hidden md:grid md:grid-cols-2 xl:grid-cols-4 gap-4 relative z-10 w-full`}>
         {loading ? (
           [1,2,3,4].map((i) => (
-             <div key={i} className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 h-32 flex items-center justify-center shrink-0">
+             <div key={i} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm p-6 h-32 flex items-center justify-center shrink-0">
                <Loader2 className="w-6 h-6 animate-spin text-slate-400" />
              </div>
           ))
@@ -85,15 +85,15 @@ export function FacilityOverview() {
           displayStats.map((stat) => (
             <div 
               key={stat.label} 
-              className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 flex flex-col justify-between hover:shadow-md transition-shadow"
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm p-6 flex flex-col justify-between hover:shadow-md transition-shadow"
             >
               <div className="flex items-start justify-between mb-4 gap-3">
-                <span className="text-sm font-medium text-slate-500 tracking-tight leading-tight pt-1">{stat.label}</span>
+                <span className="text-sm font-medium text-slate-500 dark:text-slate-500 tracking-tight leading-tight pt-1">{stat.label}</span>
                 <div className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center bg-gradient-to-br ${stat.gradient} ${stat.shadow} shadow-sm text-white`}>
                   {stat.icon}
                 </div>
               </div>
-              <p className="text-3xl font-bold text-slate-900 tracking-tight">{stat.value}</p>
+              <p className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">{stat.value}</p>
             </div>
           ))
         )}

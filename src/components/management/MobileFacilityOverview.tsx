@@ -12,7 +12,7 @@ export function MobileFacilityOverview({ stats, loading }: { stats: any, loading
     return (
       <div className="grid grid-cols-2 gap-3 md:hidden">
         {[1,2,3,4].map((i) => (
-           <div key={i} className="bg-white border border-slate-200 rounded-xl shadow-sm p-4 h-24 flex items-center justify-center">
+           <div key={i} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm p-4 h-24 flex items-center justify-center">
              <Loader2 className="w-5 h-5 animate-spin text-slate-400" />
            </div>
         ))}
@@ -25,15 +25,15 @@ export function MobileFacilityOverview({ stats, loading }: { stats: any, loading
       {displayStats.map((stat) => (
         <div 
           key={stat.label} 
-          className="bg-white border border-slate-200 rounded-xl shadow-sm p-3 flex flex-col justify-between"
+          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm p-3 flex flex-col justify-between"
         >
           <div className="flex items-center gap-2 mb-2">
             <div className={`w-6 h-6 rounded-md flex items-center justify-center bg-gradient-to-br ${stat.gradient} shadow-sm text-white shrink-0`}>
               {stat.icon}
             </div>
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-tight leading-none">{stat.label}</span>
+            <span className="text-[11px] font-bold text-slate-500 dark:text-slate-500 uppercase tracking-tight leading-none">{stat.label}</span>
           </div>
-          <p className="text-xl font-bold text-slate-900 tracking-tight">{stat.value}</p>
+          <p className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">{stat.value}</p>
         </div>
       ))}
     </div>
