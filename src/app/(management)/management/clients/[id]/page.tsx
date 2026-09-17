@@ -314,25 +314,25 @@ export default function ClientProfilePage() {
       <main className="p-4 md:p-6 lg:p-10 space-y-6 md:space-y-8 max-w-[1200px] mx-auto w-full pb-20 lg:pb-32">
         {/* Header Navigation */}
         <div className="animate-fade-in-up">
-          <Link href="/management/clients" className="inline-flex items-center gap-2 text-xs md:text-sm font-medium text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white dark:text-zinc-100 dark:text-zinc-900 transition-colors mb-3 md:mb-4">
+          <Link href="/management/clients" className="inline-flex items-center gap-2 text-xs md:text-sm font-medium text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:text-white transition-colors mb-3 md:mb-4">
             <ArrowLeft className="w-4 h-4" /> Back to Directory
           </Link>
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6">
             <div className="flex flex-row items-center gap-3 md:gap-5">
-              <div className="w-12 h-12 md:w-20 md:h-20 rounded-xl md:rounded-3xl bg-slate-900 dark:bg-zinc-100 flex items-center justify-center text-white dark:text-zinc-900 text-xl md:text-3xl font-bold shrink-0">
+              <div className="w-12 h-12 md:w-20 md:h-20 rounded-xl md:rounded-3xl bg-slate-900 flex items-center justify-center text-white text-xl md:text-3xl font-bold shrink-0">
                 {resident.first_name[0]}{resident.last_name[0]}
               </div>
               <div>
                 <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-0.5 md:mb-1">
-                  <h1 className="text-xl md:text-3xl font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900 tracking-tight">
+                  <h1 className="text-xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
                     {resident.first_name} {resident.last_name}
                   </h1>
                   <Badge variant="secondary" className="text-[10px] md:text-xs uppercase tracking-wider font-semibold">
                     {resident.care_stage}
                   </Badge>
                 </div>
-                <p className="text-xs md:text-sm font-medium text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500">
+                <p className="text-xs md:text-sm font-medium text-slate-500 dark:text-slate-500">
                   Room {resident.room_number || 'N/A'} · Admitted 2026
                 </p>
               </div>
@@ -361,13 +361,13 @@ export default function ClientProfilePage() {
                   <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-blue-50 flex items-center justify-center">
                     <Pill className="w-4 h-4 md:w-5 md:h-5 text-blue-500" />
                   </div>
-                  <h2 className="text-base md:text-lg font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900">Medications</h2>
+                  <h2 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">Medications</h2>
                 </div>
                 <button 
                   onClick={() => setIsMedModalOpen(true)}
-                  className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-zinc-800 dark:bg-zinc-900 dark:hover:bg-slate-800 dark:hover:bg-zinc-300 dark:bg-zinc-900 transition-colors shadow-sm shrink-0"
+                  className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-zinc-900 transition-colors shadow-sm shrink-0"
                 >
-                  <Plus className="w-4 h-4 md:w-5 md:h-5 text-slate-700 dark:text-zinc-300 dark:text-slate-300" />
+                  <Plus className="w-4 h-4 md:w-5 md:h-5 text-slate-700 dark:text-slate-300" />
                 </button>
               </div>
               
@@ -377,9 +377,9 @@ export default function ClientProfilePage() {
                 ) : (
                   medications.map(med => (
                     <div key={med.id} className="p-3 bg-slate-50 dark:bg-zinc-900/50 border border-slate-100 dark:border-zinc-800/50 rounded-xl">
-                      <p className="font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900 text-sm">{med.name} <span className="text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500 font-medium">{med.dosage}</span></p>
+                      <p className="font-bold text-slate-900 dark:text-white text-sm">{med.name} <span className="text-slate-500 dark:text-slate-500 font-medium">{med.dosage}</span></p>
                       <div className="flex justify-between items-center mt-1">
-                        <span className="text-xs font-medium text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500">{med.scheduled_time}</span>
+                        <span className="text-xs font-medium text-slate-500 dark:text-slate-500">{med.scheduled_time}</span>
                         <button 
                           onClick={() => handleUpdateMedStatus(med.id, med.status)}
                           className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md hover:opacity-80 transition-opacity cursor-pointer ${
@@ -404,19 +404,19 @@ export default function ClientProfilePage() {
                   <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-purple-50 flex items-center justify-center">
                     <Users className="w-4 h-4 md:w-5 md:h-5 text-purple-500" />
                   </div>
-                  <h2 className="text-base md:text-lg font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900">Family Access</h2>
+                  <h2 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">Family Access</h2>
                 </div>
                 <button 
                   onClick={() => setIsInviteModalOpen(true)}
-                  className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-zinc-800 dark:bg-zinc-900 dark:hover:bg-slate-800 dark:hover:bg-zinc-300 dark:bg-zinc-900 transition-colors shadow-sm shrink-0"
+                  className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-zinc-900 transition-colors shadow-sm shrink-0"
                 >
-                  <Plus className="w-4 h-4 md:w-5 md:h-5 text-slate-700 dark:text-zinc-300 dark:text-slate-300" />
+                  <Plus className="w-4 h-4 md:w-5 md:h-5 text-slate-700 dark:text-slate-300" />
                 </button>
               </div>
 
               {pendingInvites.length === 0 && activeFamily.length === 0 ? (
                 <div className="text-center p-4 md:p-5 border border-dashed border-slate-200 dark:border-zinc-800 rounded-2xl bg-slate-50 dark:bg-zinc-900/50">
-                  <p className="text-xs md:text-sm font-medium text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500 mb-2 md:mb-3">No family members connected.</p>
+                  <p className="text-xs md:text-sm font-medium text-slate-500 dark:text-slate-500 mb-2 md:mb-3">No family members connected.</p>
                   <button 
                     onClick={() => setIsInviteModalOpen(true)}
                     className="text-[11px] md:text-xs font-bold text-primary hover:text-primary-dark transition-colors"
@@ -431,12 +431,12 @@ export default function ClientProfilePage() {
                   {activeFamily.map((family, idx) => (
                     <div key={`active-${idx}`} className="flex items-center justify-between p-2.5 md:p-3 bg-white dark:bg-[#0a0a0a] border border-emerald-200 rounded-xl animate-fade-in-up">
                       <div className="flex items-center gap-2 md:gap-3 min-w-0">
-                        <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-tr from-emerald-400 to-teal-500 flex items-center justify-center text-white dark:text-zinc-900 font-bold text-xs shadow-sm shrink-0">
+                        <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-tr from-emerald-400 to-teal-500 flex items-center justify-center text-white font-bold text-xs shadow-sm shrink-0">
                           {family.full_name?.[0] || 'F'}
                         </div>
                         <div className="min-w-0">
-                          <p className="text-xs md:text-sm font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900 truncate">{family.full_name}</p>
-                          <p className="text-[9px] md:text-[10px] font-medium text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500">Connected</p>
+                          <p className="text-xs md:text-sm font-bold text-slate-900 dark:text-white truncate">{family.full_name}</p>
+                          <p className="text-[9px] md:text-[10px] font-medium text-slate-500 dark:text-slate-500">Connected</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-1.5 shrink-0 ml-2">
@@ -462,12 +462,12 @@ export default function ClientProfilePage() {
                           <Users className="w-3.5 h-3.5 md:w-4 md:h-4 text-slate-400" />
                         </div>
                         <div className="min-w-0">
-                          <p className="text-xs md:text-sm font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900 truncate">{email}</p>
-                          <p className="text-[9px] md:text-[10px] font-medium text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500">Invite Sent</p>
+                          <p className="text-xs md:text-sm font-bold text-slate-900 dark:text-white truncate">{email}</p>
+                          <p className="text-[9px] md:text-[10px] font-medium text-slate-500 dark:text-slate-500">Invite Sent</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-1.5 shrink-0 ml-2">
-                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-400 bg-slate-200 dark:bg-slate-700 px-2 py-0.5 rounded-md">
+                        <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 bg-slate-200 dark:bg-slate-700 px-2 py-0.5 rounded-md">
                           Pending
                         </span>
                         <button
@@ -493,11 +493,11 @@ export default function ClientProfilePage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 shrink-0 pb-6 border-b border-slate-200 dark:border-zinc-800 sticky top-0 z-10 bg-white dark:bg-[#0a0a0a] sm:relative -mx-4 px-4 sm:mx-0 sm:px-0">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-900 flex items-center justify-center shrink-0">
-                  <Activity className="w-5 h-5 text-slate-700 dark:text-zinc-300 dark:text-slate-300" />
+                  <Activity className="w-5 h-5 text-slate-700 dark:text-slate-300" />
                 </div>
                 <div>
-                  <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900 tracking-tight">Patient Record</h2>
-                  <p className="text-[11px] md:text-sm font-medium text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500 mt-0.5 max-w-[200px] md:max-w-none">
+                  <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Patient Record</h2>
+                  <p className="text-[11px] md:text-sm font-medium text-slate-500 dark:text-slate-500 mt-0.5 max-w-[200px] md:max-w-none">
                     Combined history and family communications
                   </p>
                 </div>
@@ -519,13 +519,13 @@ export default function ClientProfilePage() {
                     <div className="flex bg-slate-100 dark:bg-zinc-900 p-1 rounded-xl shadow-inner border border-slate-200 dark:border-zinc-800">
                       <button 
                         onClick={() => setNoteMode("note")}
-                        className={`px-4 py-1.5 text-[11px] md:text-xs font-bold rounded-lg transition-all ${noteMode === "note" ? "bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-zinc-100 dark:text-zinc-900 shadow-sm" : "text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white dark:text-zinc-100 dark:text-zinc-900"}`}
+                        className={`px-4 py-1.5 text-[11px] md:text-xs font-bold rounded-lg transition-all ${noteMode === "note" ? "bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white shadow-sm" : "text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:text-white"}`}
                       >
                         Note
                       </button>
                       <button 
                         onClick={() => setNoteMode("escalation")}
-                        className={`px-4 py-1.5 text-[11px] md:text-xs font-bold rounded-lg transition-all ${noteMode === "escalation" ? "bg-rose-500 text-white dark:text-zinc-900 shadow-sm" : "text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500 hover:text-rose-600"}`}
+                        className={`px-4 py-1.5 text-[11px] md:text-xs font-bold rounded-lg transition-all ${noteMode === "escalation" ? "bg-rose-500 text-white shadow-sm" : "text-slate-500 dark:text-slate-500 hover:text-rose-600"}`}
                       >
                         Emergency
                       </button>
@@ -548,8 +548,8 @@ export default function ClientProfilePage() {
               <button 
                 type="submit"
                 disabled={!newNote.trim() || isSubmittingNote}
-                className={`absolute right-1 top-1 md:w-10 md:h-10 w-8 h-8 text-white dark:text-zinc-900 rounded-lg flex items-center justify-center transition-colors disabled:opacity-50 shadow-sm btn-press ${
-                  noteMode === "escalation" ? "bg-rose-600 hover:bg-rose-700" : "bg-slate-900 dark:bg-zinc-100 hover:bg-slate-800 dark:hover:bg-zinc-300"
+                className={`absolute right-1 top-1 md:w-10 md:h-10 w-8 h-8 text-white rounded-lg flex items-center justify-center transition-colors disabled:opacity-50 shadow-sm btn-press ${
+                  noteMode === "escalation" ? "bg-rose-600 hover:bg-rose-700" : "bg-slate-900 hover:bg-slate-800"
                 }`}
               >
                 {isSubmittingNote ? <Loader2 className="w-4 h-4 md:w-5 md:h-5 animate-spin" /> : <Plus className="w-4 h-4 md:w-5 md:h-5" />}
@@ -560,7 +560,7 @@ export default function ClientProfilePage() {
               {feed.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center opacity-50">
                   <ClipboardList className="w-12 h-12 text-slate-400 mb-3" />
-                  <p className="font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900">No history recorded.</p>
+                  <p className="font-bold text-slate-900 dark:text-white">No history recorded.</p>
                 </div>
               ) : (
                 feed.map(item => (
@@ -569,23 +569,23 @@ export default function ClientProfilePage() {
                     <div className="absolute left-[11px] md:left-[17px] top-8 bottom-0 w-0.5 bg-slate-200 dark:bg-slate-700" />
                     
                     <div className={`bg-white dark:bg-[#0a0a0a] border p-4 md:p-5 rounded-2xl shadow-sm transition-colors ${
-                      item.type === 'escalation' ? 'border-rose-200 hover:bg-rose-50' : 'border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-800/50 dark:bg-zinc-900/50 dark:hover:bg-slate-800 dark:hover:bg-zinc-300/50 dark:bg-zinc-900/50'
+                      item.type === 'escalation' ? 'border-rose-200 hover:bg-rose-50' : 'border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50'
                     }`}>
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-2 md:gap-3">
                           <div className={`absolute left-0 md:left-1 w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center border-2 border-white shadow-sm ${
-                            item.type === 'escalation' ? 'bg-rose-500 text-white dark:text-zinc-900' : 'bg-slate-900 dark:bg-zinc-100 text-white dark:text-zinc-900'
+                            item.type === 'escalation' ? 'bg-rose-500 text-white' : 'bg-slate-900 text-white'
                           }`}>
                             {item.type === 'escalation' ? <AlertTriangle className="w-3 h-3 md:w-3.5 md:h-3.5" /> : <ClipboardList className="w-3 h-3 md:w-3.5 md:h-3.5" />}
                           </div>
                           <span className={`text-[9px] md:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
-                            item.type === 'escalation' ? 'bg-rose-100 text-rose-700' : 'bg-slate-100 dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 dark:text-slate-300'
+                            item.type === 'escalation' ? 'bg-rose-100 text-rose-700' : 'bg-slate-100 dark:bg-zinc-900 text-slate-700 dark:text-slate-300'
                           }`}>
                             {item.type === 'escalation' ? 'Escalation' : item.visit_type}
                           </span>
                         </div>
                         <div className="text-right">
-                          <p className="text-[11px] md:text-xs font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900">
+                          <p className="text-[11px] md:text-xs font-bold text-slate-900 dark:text-white">
                             {new Date(item.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })}
                           </p>
                           <p className="text-[9px] md:text-[10px] font-bold text-slate-400 mt-0.5">
@@ -595,7 +595,7 @@ export default function ClientProfilePage() {
                       </div>
                       
                       <p className={`text-xs md:text-sm font-medium leading-relaxed mt-2 ${
-                        item.type === 'escalation' ? 'text-rose-700 font-semibold' : 'text-slate-600 dark:text-zinc-400'
+                        item.type === 'escalation' ? 'text-rose-700 font-semibold' : 'text-slate-600 dark:text-slate-400'
                       }`}>
                         {item.type === 'escalation' ? item.reason : item.tasks_completed}
                       </p>
@@ -624,7 +624,7 @@ export default function ClientProfilePage() {
 
       {/* Add Medication Modal */}
       {isMedModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900 dark:bg-zinc-100/40 backdrop-blur-sm animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
           <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
             {/* Mobile drag handle indicator */}
             <div className="w-10 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-5 md:hidden" />
@@ -633,7 +633,7 @@ export default function ClientProfilePage() {
               onClick={() => setIsMedModalOpen(false)}
               className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
             >
-              <X className="w-4 h-4 text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500" />
+              <X className="w-4 h-4 text-slate-500 dark:text-slate-500" />
             </button>
             
             <div className="flex items-center gap-3 mb-5">
@@ -641,13 +641,13 @@ export default function ClientProfilePage() {
                 <Pill className="w-5 h-5 text-blue-500" />
               </div>
               <div>
-                <h2 className="text-lg md:text-xl font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900 tracking-tight">Add Medication</h2>
+                <h2 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white tracking-tight">Add Medication</h2>
               </div>
             </div>
 
             <form onSubmit={handleAddMed} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 dark:text-slate-300 mb-1.5">Medication Name</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Medication Name</label>
                 <input 
                   type="text" required placeholder="e.g. Lisinopril"
                   value={newMed.name}
@@ -658,7 +658,7 @@ export default function ClientProfilePage() {
               
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 dark:text-slate-300 mb-1.5">Dosage</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Dosage</label>
                   <input 
                     type="text" required placeholder="e.g. 50mg"
                     value={newMed.dosage}
@@ -667,7 +667,7 @@ export default function ClientProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 dark:text-slate-300 mb-1.5">Time</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Time</label>
                   <input 
                     type="time" required
                     value={newMed.scheduled_time}
@@ -681,7 +681,7 @@ export default function ClientProfilePage() {
                 <button 
                   type="submit" 
                   disabled={isSubmittingMed}
-                  className="w-full py-3 bg-slate-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-bold rounded-xl hover:bg-slate-800 dark:hover:bg-zinc-300 transition-colors shadow-sm flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-slate-900 text-white text-sm font-bold rounded-xl hover:bg-slate-800 transition-colors shadow-sm flex items-center justify-center gap-2"
                 >
                   {isSubmittingMed ? <Loader2 className="w-5 h-5 animate-spin" /> : "Save Medication"}
                 </button>
@@ -693,7 +693,7 @@ export default function ClientProfilePage() {
 
       {/* Invite Family Modal */}
       {isInviteModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900 dark:bg-zinc-100/40 backdrop-blur-sm animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
           <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
             {/* Mobile drag handle indicator */}
             <div className="w-10 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-5 md:hidden" />
@@ -702,7 +702,7 @@ export default function ClientProfilePage() {
               onClick={() => setIsInviteModalOpen(false)}
               className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
             >
-              <X className="w-4 h-4 text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500" />
+              <X className="w-4 h-4 text-slate-500 dark:text-slate-500" />
             </button>
             
             <div className="flex items-center gap-3 mb-5">
@@ -710,13 +710,13 @@ export default function ClientProfilePage() {
                 <Users className="w-5 h-5 text-purple-600" />
               </div>
               <div>
-                <h2 className="text-lg md:text-xl font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900 tracking-tight">Invite Family</h2>
+                <h2 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white tracking-tight">Invite Family</h2>
               </div>
             </div>
 
             <form onSubmit={handleInvite} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 dark:text-slate-300 mb-1.5">Family Member's Email</label>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Family Member's Email</label>
                 <input 
                   type="email" required placeholder="e.g. sarah@example.com"
                   value={inviteEmail}
@@ -729,7 +729,7 @@ export default function ClientProfilePage() {
                 <button 
                   type="submit" 
                   disabled={isInviting}
-                  className="w-full py-3 bg-slate-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-bold rounded-xl hover:bg-slate-800 dark:hover:bg-zinc-300 transition-colors shadow-sm flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-slate-900 text-white text-sm font-bold rounded-xl hover:bg-slate-800 transition-colors shadow-sm flex items-center justify-center gap-2"
                 >
                   {isInviting ? <Loader2 className="w-5 h-5 animate-spin" /> : "Send Invitation"}
                 </button>
@@ -741,7 +741,7 @@ export default function ClientProfilePage() {
 
       {/* Edit Resident Modal */}
       {isEditModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900 dark:bg-zinc-100/40 backdrop-blur-sm animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
           <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
             <div className="w-10 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-5 md:hidden" />
             
@@ -749,22 +749,22 @@ export default function ClientProfilePage() {
               onClick={() => setIsEditModalOpen(false)}
               className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
             >
-              <X className="w-4 h-4 text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500" />
+              <X className="w-4 h-4 text-slate-500 dark:text-slate-500" />
             </button>
             
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-900 flex items-center justify-center shrink-0">
-                <Edit className="w-5 h-5 text-slate-600 dark:text-zinc-400" />
+                <Edit className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               </div>
               <div>
-                <h2 className="text-lg md:text-xl font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900 tracking-tight">Edit Profile</h2>
+                <h2 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white tracking-tight">Edit Profile</h2>
               </div>
             </div>
 
             <form onSubmit={handleEditSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 dark:text-slate-300 mb-1.5">First Name</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">First Name</label>
                   <input 
                     type="text" required
                     value={editForm.first_name}
@@ -773,7 +773,7 @@ export default function ClientProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 dark:text-slate-300 mb-1.5">Last Name</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Last Name</label>
                   <input 
                     type="text" required
                     value={editForm.last_name}
@@ -785,7 +785,7 @@ export default function ClientProfilePage() {
               
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 dark:text-slate-300 mb-1.5">Room Number</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Room Number</label>
                   <input 
                     type="text"
                     value={editForm.room_number}
@@ -794,7 +794,7 @@ export default function ClientProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 dark:text-slate-300 mb-1.5">Care Stage</label>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Care Stage</label>
                   <select 
                     value={editForm.care_stage}
                     onChange={e => setEditForm({...editForm, care_stage: e.target.value})}
@@ -811,7 +811,7 @@ export default function ClientProfilePage() {
                 <button 
                   type="submit" 
                   disabled={isUpdating}
-                  className="w-full py-3 bg-slate-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-bold rounded-xl hover:bg-slate-800 dark:hover:bg-zinc-300 transition-colors shadow-sm flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-slate-900 text-white text-sm font-bold rounded-xl hover:bg-slate-800 transition-colors shadow-sm flex items-center justify-center gap-2"
                 >
                   {isUpdating ? <Loader2 className="w-5 h-5 animate-spin" /> : "Save Changes"}
                 </button>
@@ -823,7 +823,7 @@ export default function ClientProfilePage() {
 
       {/* Discharge Resident Modal */}
       {isDischargeModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900 dark:bg-zinc-100/40 backdrop-blur-sm animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
           <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl p-5 md:p-6 shadow-xl relative animate-slide-up sm:animate-fade-in-up pb-safe">
             <div className="w-10 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-5 md:hidden" />
             
@@ -831,7 +831,7 @@ export default function ClientProfilePage() {
               onClick={() => setIsDischargeModalOpen(false)}
               className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-zinc-900 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 transition-colors"
             >
-              <X className="w-4 h-4 text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500" />
+              <X className="w-4 h-4 text-slate-500 dark:text-slate-500" />
             </button>
             
             <div className="flex items-center gap-3 mb-5">
@@ -839,17 +839,17 @@ export default function ClientProfilePage() {
                 <AlertTriangle className="w-5 h-5 text-red-600" />
               </div>
               <div>
-                <h2 className="text-lg md:text-xl font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900 tracking-tight">Discharge Resident</h2>
+                <h2 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white tracking-tight">Discharge Resident</h2>
               </div>
             </div>
 
             <div className="space-y-4">
-              <p className="text-sm text-slate-600 dark:text-zinc-400">
-                Are you sure you want to discharge <span className="font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900">{resident?.first_name} {resident?.last_name}</span>? This will permanently delete their profile, visit history, and immediately revoke family access.
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Are you sure you want to discharge <span className="font-bold text-slate-900 dark:text-white">{resident?.first_name} {resident?.last_name}</span>? This will permanently delete their profile, visit history, and immediately revoke family access.
               </p>
               
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-zinc-300 dark:text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                   Type <span className="text-red-600 select-none">DISCHARGE</span> to confirm
                 </label>
                 <input 
@@ -865,7 +865,7 @@ export default function ClientProfilePage() {
                 <button 
                   onClick={handleDischarge}
                   disabled={isDischarging || dischargeConfirm !== 'DISCHARGE'}
-                  className="w-full py-3 bg-red-600 text-white dark:text-zinc-900 text-sm font-bold rounded-xl hover:bg-red-700 transition-colors shadow-sm flex items-center justify-center gap-2 disabled:opacity-50 disabled:hover:bg-red-600"
+                  className="w-full py-3 bg-red-600 text-white text-sm font-bold rounded-xl hover:bg-red-700 transition-colors shadow-sm flex items-center justify-center gap-2 disabled:opacity-50 disabled:hover:bg-red-600"
                 >
                   {isDischarging ? <Loader2 className="w-5 h-5 animate-spin" /> : "Permanently Discharge"}
                 </button>

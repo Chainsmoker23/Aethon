@@ -25,13 +25,13 @@ export function MobileNav() {
               key={link.name}
               href={link.href}
               className={`relative flex flex-col items-center justify-center w-full py-3 gap-1 transition-colors active:scale-95 ${
-                isActive ? "text-sky-600" : "text-slate-400 hover:text-slate-600 dark:text-zinc-400"
+                isActive ? "text-sky-600" : "text-slate-400 hover:text-slate-600 dark:text-slate-400"
               }`}
             >
               <div className="relative">
                 {link.icon}
               </div>
-              <span className={`text-[10px] font-bold ${isActive ? "text-slate-900 dark:text-zinc-100 dark:text-zinc-900" : "text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500"}`}>
+              <span className={`text-[10px] font-bold ${isActive ? "text-slate-900 dark:text-white" : "text-slate-500 dark:text-slate-500"}`}>
                 {link.name}
               </span>
             </Link>

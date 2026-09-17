@@ -63,10 +63,10 @@ export function FacilityOverview() {
   }, []);
 
   const displayStats = [
-    { label: "Total clients", value: stats.totalClients, icon: <Users className="w-5 h-5 text-white dark:text-zinc-900" />, gradient: "from-blue-500 to-cyan-400", shadow: "shadow-cyan-500/30", delay: "delay-100" },
-    { label: "Seen today", value: stats.seenToday, icon: <Eye className="w-5 h-5 text-white dark:text-zinc-900" />, gradient: "from-emerald-400 to-teal-500", shadow: "shadow-emerald-500/30", delay: "delay-200" },
-    { label: "Open escalations", value: stats.escalations, icon: <AlertTriangle className="w-5 h-5 text-white dark:text-zinc-900" />, gradient: "from-rose-500 to-orange-400", shadow: "shadow-rose-500/30", delay: "delay-300" },
-    { label: "Notes this week", value: stats.notesThisWeek, icon: <FileText className="w-5 h-5 text-white dark:text-zinc-900" />, gradient: "from-indigo-500 to-purple-500", shadow: "shadow-indigo-500/30", delay: "delay-400" },
+    { label: "Total clients", value: stats.totalClients, icon: <Users className="w-5 h-5 text-white" />, gradient: "from-blue-500 to-cyan-400", shadow: "shadow-cyan-500/30", delay: "delay-100" },
+    { label: "Seen today", value: stats.seenToday, icon: <Eye className="w-5 h-5 text-white" />, gradient: "from-emerald-400 to-teal-500", shadow: "shadow-emerald-500/30", delay: "delay-200" },
+    { label: "Open escalations", value: stats.escalations, icon: <AlertTriangle className="w-5 h-5 text-white" />, gradient: "from-rose-500 to-orange-400", shadow: "shadow-rose-500/30", delay: "delay-300" },
+    { label: "Notes this week", value: stats.notesThisWeek, icon: <FileText className="w-5 h-5 text-white" />, gradient: "from-indigo-500 to-purple-500", shadow: "shadow-indigo-500/30", delay: "delay-400" },
   ];
 
   return (
@@ -88,12 +88,12 @@ export function FacilityOverview() {
               className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl shadow-sm p-6 flex flex-col justify-between hover:shadow-md transition-shadow"
             >
               <div className="flex items-start justify-between mb-4 gap-3">
-                <span className="text-sm font-medium text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500 tracking-tight leading-tight pt-1">{stat.label}</span>
-                <div className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center bg-gradient-to-br ${stat.gradient} ${stat.shadow} shadow-sm text-white dark:text-zinc-900`}>
+                <span className="text-sm font-medium text-slate-500 dark:text-slate-500 tracking-tight leading-tight pt-1">{stat.label}</span>
+                <div className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center bg-gradient-to-br ${stat.gradient} ${stat.shadow} shadow-sm text-white`}>
                   {stat.icon}
                 </div>
               </div>
-              <p className="text-3xl font-bold text-slate-900 dark:text-zinc-100 dark:text-zinc-900 tracking-tight">{stat.value}</p>
+              <p className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">{stat.value}</p>
             </div>
           ))
         )}

@@ -88,11 +88,11 @@ export function AssistanceRequests() {
       <div className="hidden md:flex bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl shadow-sm overflow-hidden flex-col relative z-10 w-full">
         <div className="px-6 py-5 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50">
           <div>
-            <h2 className="font-semibold text-slate-900 dark:text-zinc-100 dark:text-zinc-900 text-lg tracking-tight">Open escalations</h2>
-            <p className="text-sm font-medium text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500 mt-0.5">{open.length} require attention</p>
+            <h2 className="font-semibold text-slate-900 dark:text-white text-lg tracking-tight">Open escalations</h2>
+            <p className="text-sm font-medium text-slate-500 dark:text-slate-500 mt-0.5">{open.length} require attention</p>
           </div>
           {open.length > 0 && (
-            <span className="bg-red-500 text-white dark:text-zinc-900 text-xs font-semibold w-7 h-7 flex items-center justify-center rounded-full shadow-sm animate-pulse">
+            <span className="bg-red-500 text-white text-xs font-semibold w-7 h-7 flex items-center justify-center rounded-full shadow-sm animate-pulse">
               {open.length}
             </span>
           )}
@@ -105,7 +105,7 @@ export function AssistanceRequests() {
               className={`p-6 border-l-[4px] transition-all duration-300 ${
                 e.is_resolved 
                   ? "border-emerald-400 bg-slate-50 dark:bg-zinc-900/50 opacity-60" 
-                  : "border-red-500 bg-white dark:bg-[#0a0a0a] hover:bg-slate-50 dark:hover:bg-zinc-800/50 dark:bg-zinc-900/50 dark:hover:bg-slate-800 dark:hover:bg-zinc-300/50 dark:bg-zinc-900/50"
+                  : "border-red-500 bg-white dark:bg-[#0a0a0a] hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50"
               }`}
             >
               <div className="flex justify-between items-start">
@@ -121,14 +121,14 @@ export function AssistanceRequests() {
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className={`font-semibold text-base ${e.is_resolved ? 'text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500' : 'text-slate-900 dark:text-zinc-100 dark:text-zinc-900'}`}>
+                      <span className={`font-semibold text-base ${e.is_resolved ? 'text-slate-500 dark:text-slate-500' : 'text-slate-900 dark:text-white'}`}>
                         {e.residents?.first_name} {e.residents?.last_name}
                       </span>
                       <span className="text-xs font-bold text-slate-400 bg-slate-100 dark:bg-zinc-900 px-2 py-0.5 rounded-full">
                         Room {e.residents?.room_number}
                       </span>
                     </div>
-                    <p className={`text-sm mt-1 font-medium ${e.is_resolved ? 'text-slate-400' : 'text-slate-700 dark:text-zinc-300 dark:text-slate-300'}`}>
+                    <p className={`text-sm mt-1 font-medium ${e.is_resolved ? 'text-slate-400' : 'text-slate-700 dark:text-slate-300'}`}>
                       {e.reason}
                     </p>
                     <div className="flex items-center gap-1.5 mt-2 text-xs font-medium text-slate-400">
@@ -154,8 +154,8 @@ export function AssistanceRequests() {
               <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center mb-3">
                 <Check className="w-6 h-6 text-emerald-500" />
               </div>
-              <p className="text-slate-900 dark:text-zinc-100 dark:text-zinc-900 font-semibold text-sm">All clear</p>
-              <p className="text-slate-500 dark:text-zinc-500 dark:text-slate-500 dark:text-zinc-500 text-sm mt-1">No pending escalations right now.</p>
+              <p className="text-slate-900 dark:text-white font-semibold text-sm">All clear</p>
+              <p className="text-slate-500 dark:text-slate-500 text-sm mt-1">No pending escalations right now.</p>
             </div>
           )}
         </div>
