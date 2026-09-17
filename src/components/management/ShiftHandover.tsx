@@ -125,7 +125,7 @@ export function ShiftHandover() {
   const priorityIcons = {
     critical: <AlertCircle className="w-4 h-4 text-red-600" />,
     watch: <Eye className="w-4 h-4 text-amber-600" />,
-    general: <Info className="w-4 h-4 text-slate-500 dark:text-slate-500" />
+    general: <Info className="w-4 h-4 text-slate-500 dark:text-slate-500 dark:text-zinc-400" />
   };
 
   if (loading) {
@@ -153,7 +153,7 @@ export function ShiftHandover() {
             </div>
             <div>
               <h2 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Smart Handover</h2>
-              <p className="text-[10px] text-slate-500 dark:text-slate-500 font-medium">Type @ to mention residents</p>
+              <p className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-zinc-400 font-medium">Type @ to mention residents</p>
             </div>
           </div>
         </div>
@@ -195,7 +195,7 @@ export function ShiftHandover() {
           
           {mentionQuery !== null && (
             <div className="absolute bottom-full left-4 mb-2 w-64 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl shadow-xl overflow-hidden z-50">
-              <div className="bg-slate-50 dark:bg-zinc-900/50 px-3 py-1.5 border-b border-slate-100 dark:border-zinc-800/50 text-[10px] font-bold text-slate-500 dark:text-slate-500 uppercase">
+              <div className="bg-slate-50 dark:bg-zinc-900/50 px-3 py-1.5 border-b border-slate-100 dark:border-zinc-800/50 text-[10px] font-bold text-slate-500 dark:text-slate-500 dark:text-zinc-400 uppercase">
                 Mention Resident
               </div>
               <div className="max-h-40 overflow-y-auto p-1">

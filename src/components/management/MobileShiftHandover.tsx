@@ -22,7 +22,7 @@ export function MobileShiftHandover({
 
       <div className="divide-y divide-slate-100 flex-1 overflow-y-auto">
         {notes.length === 0 ? (
-          <div className="p-6 text-center text-slate-500 dark:text-slate-500 text-xs flex flex-col items-center">
+          <div className="p-6 text-center text-slate-500 dark:text-slate-500 dark:text-zinc-400 text-xs flex flex-col items-center">
             <ClipboardList className="w-8 h-8 opacity-20 mb-2" />
             <p>No handovers found</p>
           </div>

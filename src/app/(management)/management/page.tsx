@@ -19,7 +19,7 @@ export default function ManagementDashboard() {
                 Facility Intelligence
               </h1>
             </div>
-            <div className="text-xs md:text-sm font-medium text-slate-500 dark:text-slate-500 mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
+            <div className="text-xs md:text-sm font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
               <span className="whitespace-nowrap">{dateStr}</span>
               <span className="hidden sm:block w-1 h-1 rounded-full bg-slate-300" />
               <span className="whitespace-nowrap">{timeStr}</span>

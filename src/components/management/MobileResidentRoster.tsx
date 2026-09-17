@@ -8,7 +8,7 @@ export function MobileResidentRoster({ residents, expandedId, setExpandedId }: {
         return (
           <div key={r.id} className="group">
             <div
-              className={`flex flex-col gap-1.5 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors p-3 ${r.escalations > 0 ? "bg-red-50/30 border-l-[4px] border-red-500" : "border-l-[4px] border-transparent"}`}
+              className={`flex flex-col gap-1.5 cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors p-3 ${r.escalations > 0 ? "bg-red-50/30 border-l-[4px] border-red-500" : "border-l-[4px] border-transparent"}`}
               onClick={() => setExpandedId(isExpanded ? null : r.id)}
             >
               <div className="flex items-start justify-between gap-2">
@@ -26,7 +26,7 @@ export function MobileResidentRoster({ residents, expandedId, setExpandedId }: {
                 </div>
               </div>
               
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500 dark:text-slate-500 font-medium mt-0.5">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500 dark:text-slate-500 dark:text-zinc-400 font-medium mt-0.5">
                 <div className="flex items-center gap-1.5">
                   <span className={`w-2 h-2 rounded-full ${r.seenToday ? "bg-emerald-500" : "bg-slate-300"}`} />
                   {r.lastVisit}
@@ -45,9 +45,9 @@ export function MobileResidentRoster({ residents, expandedId, setExpandedId }: {
             {/* Expanded Area */}
             {isExpanded && (
               <div className="bg-slate-50 dark:bg-zinc-900/50/80 px-4 py-4 border-t border-slate-100 dark:border-zinc-800/50 shadow-inner">
-                <p className="text-[10px] font-semibold text-slate-500 dark:text-slate-500 uppercase tracking-wider mb-2">Recent visits</p>
+                <p className="text-[10px] font-semibold text-slate-500 dark:text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-2">Recent visits</p>
                 {r.recentVisits.length === 0 ? (
-                  <p className="text-xs text-slate-500 dark:text-slate-500 italic bg-white dark:bg-[#0a0a0a] p-3 rounded-lg border border-slate-200 dark:border-zinc-800">No recent visits logged.</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-500 dark:text-zinc-400 italic bg-white dark:bg-[#0a0a0a] p-3 rounded-lg border border-slate-200 dark:border-zinc-800">No recent visits logged.</p>
                 ) : (
                   <div className="space-y-2">
                     {r.recentVisits.map((v: any, i: number) => (

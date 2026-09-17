@@ -88,7 +88,7 @@ export function FacilityOverview() {
               className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl shadow-sm p-6 flex flex-col justify-between hover:shadow-md transition-shadow"
             >
               <div className="flex items-start justify-between mb-4 gap-3">
-                <span className="text-sm font-medium text-slate-500 dark:text-slate-500 tracking-tight leading-tight pt-1">{stat.label}</span>
+                <span className="text-sm font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 tracking-tight leading-tight pt-1">{stat.label}</span>
                 <div className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center bg-gradient-to-br ${stat.gradient} ${stat.shadow} shadow-sm text-white`}>
                   {stat.icon}
                 </div>

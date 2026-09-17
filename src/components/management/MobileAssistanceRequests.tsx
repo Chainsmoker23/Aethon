@@ -22,13 +22,13 @@ export function MobileAssistanceRequests({ requests, loading }: { requests: any[
 
       <div className="divide-y divide-slate-100">
         {requests.length === 0 ? (
-          <div className="p-6 text-center text-slate-500 dark:text-slate-500 text-xs">
+          <div className="p-6 text-center text-slate-500 dark:text-slate-500 dark:text-zinc-400 text-xs">
             <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto mb-2 opacity-50" />
             <p>No active escalations</p>
           </div>
         ) : (
           requests.map((req) => (
-            <div key={req.id} className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors flex flex-col gap-2">
+            <div key={req.id} className="p-3 hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors flex flex-col gap-2">
               <div className="flex justify-between items-start gap-2">
                 <div className="flex flex-col items-start min-w-0">
                   <p className="font-semibold text-slate-900 dark:text-white text-xs line-clamp-1">{req.resident_name}</p>

@@ -65,7 +65,7 @@ export default function EscalationsPage() {
                 <AlertTriangle className="w-4 h-4 text-white" />
               </div>
             </div>
-            <p className="text-sm font-medium text-slate-500 dark:text-slate-500 mt-1">
+            <p className="text-sm font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-1">
               Historical record of all alerts and assistance requests.
             </p>
           </div>
@@ -74,19 +74,19 @@ export default function EscalationsPage() {
             <div className="flex bg-slate-100 dark:bg-zinc-900 p-1 rounded-xl shadow-inner border border-slate-200 dark:border-zinc-800">
               <button 
                 onClick={() => setFilter("all")}
-                className={`flex-1 sm:flex-none px-4 py-2 text-sm font-bold rounded-lg transition-all ${filter === "all" ? "bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white shadow-sm" : "text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:text-white"}`}
+                className={`flex-1 sm:flex-none px-4 py-2 text-sm font-bold rounded-lg transition-all ${filter === "all" ? "bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white shadow-sm" : "text-slate-500 dark:text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:text-white"}`}
               >
                 All
               </button>
               <button 
                 onClick={() => setFilter("open")}
-                className={`flex-1 sm:flex-none px-4 py-2 text-sm font-bold rounded-lg transition-all ${filter === "open" ? "bg-white dark:bg-[#0a0a0a] text-rose-600 shadow-sm" : "text-slate-500 dark:text-slate-500 hover:text-rose-600"}`}
+                className={`flex-1 sm:flex-none px-4 py-2 text-sm font-bold rounded-lg transition-all ${filter === "open" ? "bg-white dark:bg-[#0a0a0a] text-rose-600 shadow-sm" : "text-slate-500 dark:text-slate-500 dark:text-zinc-400 hover:text-rose-600"}`}
               >
                 Open
               </button>
               <button 
                 onClick={() => setFilter("resolved")}
-                className={`flex-1 sm:flex-none px-4 py-2 text-sm font-bold rounded-lg transition-all ${filter === "resolved" ? "bg-white dark:bg-[#0a0a0a] text-emerald-600 shadow-sm" : "text-slate-500 dark:text-slate-500 hover:text-emerald-600"}`}
+                className={`flex-1 sm:flex-none px-4 py-2 text-sm font-bold rounded-lg transition-all ${filter === "resolved" ? "bg-white dark:bg-[#0a0a0a] text-emerald-600 shadow-sm" : "text-slate-500 dark:text-slate-500 dark:text-zinc-400 hover:text-emerald-600"}`}
               >
                 Resolved
               </button>
@@ -118,7 +118,7 @@ export default function EscalationsPage() {
                   <Check className="w-8 h-8 text-emerald-500" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">No escalations found</h3>
-                <p className="text-sm font-medium text-slate-500 dark:text-slate-500 mt-2">Try adjusting your search or filters.</p>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-2">Try adjusting your search or filters.</p>
               </div>
             ) : (
               filtered.map((e, i) => {
@@ -126,7 +126,7 @@ export default function EscalationsPage() {
                 const isToday = date.toDateString() === new Date().toDateString();
 
                 return (
-                  <div key={e.id} className="p-6 md:p-8 hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors flex flex-col md:flex-row gap-6 md:items-start group">
+                  <div key={e.id} className="p-6 md:p-8 hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors flex flex-col md:flex-row gap-6 md:items-start group">
                     
                     {/* Status Badge */}
                     <div className="shrink-0 pt-1">
@@ -158,11 +158,11 @@ export default function EscalationsPage() {
 
                     {/* Meta Info */}
                     <div className="shrink-0 flex flex-row md:flex-col items-center md:items-end gap-4 md:gap-2 text-sm border-t border-slate-100 dark:border-zinc-800/50 md:border-t-0 pt-4 md:pt-0">
-                      <div className="flex items-center gap-2 text-slate-500 dark:text-slate-500 font-medium">
+                      <div className="flex items-center gap-2 text-slate-500 dark:text-slate-500 dark:text-zinc-400 font-medium">
                         <Calendar className="w-4 h-4" />
                         {isToday ? "Today" : date.toLocaleDateString([], { month: 'short', day: 'numeric' })}
                       </div>
-                      <div className="flex items-center gap-2 text-slate-500 dark:text-slate-500 font-medium">
+                      <div className="flex items-center gap-2 text-slate-500 dark:text-slate-500 dark:text-zinc-400 font-medium">
                         <Clock className="w-4 h-4" />
                         {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </div>

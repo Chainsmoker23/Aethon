@@ -89,7 +89,7 @@ export function AssistanceRequests() {
         <div className="px-6 py-5 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50 dark:bg-zinc-900/50">
           <div>
             <h2 className="font-semibold text-slate-900 dark:text-white text-lg tracking-tight">Open escalations</h2>
-            <p className="text-sm font-medium text-slate-500 dark:text-slate-500 mt-0.5">{open.length} require attention</p>
+            <p className="text-sm font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-0.5">{open.length} require attention</p>
           </div>
           {open.length > 0 && (
             <span className="bg-red-500 text-white text-xs font-semibold w-7 h-7 flex items-center justify-center rounded-full shadow-sm animate-pulse">
@@ -105,7 +105,7 @@ export function AssistanceRequests() {
               className={`p-6 border-l-[4px] transition-all duration-300 ${
                 e.is_resolved 
                   ? "border-emerald-400 bg-slate-50 dark:bg-zinc-900/50 opacity-60" 
-                  : "border-red-500 bg-white dark:bg-[#0a0a0a] hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50"
+                  : "border-red-500 bg-white dark:bg-[#0a0a0a] hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50"
               }`}
             >
               <div className="flex justify-between items-start">
@@ -121,7 +121,7 @@ export function AssistanceRequests() {
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className={`font-semibold text-base ${e.is_resolved ? 'text-slate-500 dark:text-slate-500' : 'text-slate-900 dark:text-white'}`}>
+                      <span className={`font-semibold text-base ${e.is_resolved ? 'text-slate-500 dark:text-slate-500 dark:text-zinc-400' : 'text-slate-900 dark:text-white'}`}>
                         {e.residents?.first_name} {e.residents?.last_name}
                       </span>
                       <span className="text-xs font-bold text-slate-400 bg-slate-100 dark:bg-zinc-900 px-2 py-0.5 rounded-full">
@@ -155,7 +155,7 @@ export function AssistanceRequests() {
                 <Check className="w-6 h-6 text-emerald-500" />
               </div>
               <p className="text-slate-900 dark:text-white font-semibold text-sm">All clear</p>
-              <p className="text-slate-500 dark:text-slate-500 text-sm mt-1">No pending escalations right now.</p>
+              <p className="text-slate-500 dark:text-slate-500 dark:text-zinc-400 text-sm mt-1">No pending escalations right now.</p>
             </div>
           )}
         </div>

@@ -92,7 +92,7 @@ export default function ClientsPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 animate-fade-in-up">
           <div className="hidden md:block">
             <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Client Directory</h1>
-            <p className="text-sm font-medium text-slate-500 dark:text-slate-500 mt-1">
+            <p className="text-sm font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-1">
               Manage residents and invite family members.
             </p>
           </div>
@@ -120,10 +120,10 @@ export default function ClientsPage() {
             {/* Add New Client Card */}
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="bg-slate-50 dark:bg-zinc-900/50 rounded-2xl p-4 md:p-6 flex flex-col items-center justify-center gap-3 md:gap-4 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-zinc-900 transition-all border-dashed border-2 border-slate-300 dark:border-slate-700 min-h-[160px] md:min-h-[200px] group cursor-pointer btn-press"
+              className="bg-slate-50 dark:bg-zinc-900/50 rounded-2xl p-4 md:p-6 flex flex-col items-center justify-center gap-3 md:gap-4 hover:bg-slate-100 dark:hover:bg-zinc-800 dark:bg-zinc-900 dark:hover:bg-slate-800 dark:bg-zinc-900 transition-all border-dashed border-2 border-slate-300 dark:border-slate-700 min-h-[160px] md:min-h-[200px] group cursor-pointer btn-press"
             >
               <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary transition-all shadow-sm">
-                <UserPlus className="w-5 h-5 md:w-6 md:h-6 text-slate-500 dark:text-slate-500 group-hover:text-white transition-colors" />
+                <UserPlus className="w-5 h-5 md:w-6 md:h-6 text-slate-500 dark:text-slate-500 dark:text-zinc-400 group-hover:text-white transition-colors" />
               </div>
               <p className="font-bold text-slate-700 dark:text-slate-300 text-sm md:text-base">Admit New Client</p>
             </button>
@@ -144,7 +144,7 @@ export default function ClientsPage() {
                   <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white truncate">{c.first_name} {c.last_name}</h3>
                   
                   <div className="flex items-center gap-3 mt-2 md:mt-3">
-                    <div className="flex items-center gap-1 text-[11px] md:text-xs font-medium text-slate-500 dark:text-slate-500">
+                    <div className="flex items-center gap-1 text-[11px] md:text-xs font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400">
                       <MapPin className="w-3 h-3 text-slate-400" />
                       Room {c.room_number || 'N/A'}
                     </div>
@@ -171,7 +171,7 @@ export default function ClientsPage() {
               onClick={() => setIsModalOpen(false)}
               className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-surface hover:bg-surface-alt transition-colors"
             >
-              <X className="w-4 h-4 text-text-muted" />
+              <X className="w-4 h-4 text-text-muted dark:text-zinc-500" />
             </button>
             
             <div className="flex items-center gap-3 mb-6">
@@ -179,15 +179,15 @@ export default function ClientsPage() {
                 <UserPlus className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-navy">Admit New Client</h2>
-                <p className="text-xs font-semibold text-text-muted mt-0.5">Add a resident to the facility.</p>
+                <h2 className="text-xl font-bold text-navy dark:text-zinc-100">Admit New Client</h2>
+                <p className="text-xs font-semibold text-text-muted dark:text-zinc-500 mt-0.5">Add a resident to the facility.</p>
               </div>
             </div>
 
             <form onSubmit={handleAddClient} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-navy mb-1.5">First Name</label>
+                  <label className="block text-xs font-bold text-navy dark:text-zinc-100 mb-1.5">First Name</label>
                   <input 
                     type="text" required
                     value={newClient.first_name}
@@ -196,7 +196,7 @@ export default function ClientsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-navy mb-1.5">Last Name</label>
+                  <label className="block text-xs font-bold text-navy dark:text-zinc-100 mb-1.5">Last Name</label>
                   <input 
                     type="text" required
                     value={newClient.last_name}
@@ -207,7 +207,7 @@ export default function ClientsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-navy mb-1.5">Room Number</label>
+                <label className="block text-xs font-bold text-navy dark:text-zinc-100 mb-1.5">Room Number</label>
                 <input 
                   type="text" required
                   value={newClient.room_number}
@@ -217,7 +217,7 @@ export default function ClientsPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-navy mb-1.5">Care Stage</label>
+                <label className="block text-xs font-bold text-navy dark:text-zinc-100 mb-1.5">Care Stage</label>
                 <select 
                   value={newClient.care_stage}
                   onChange={e => setNewClient({...newClient, care_stage: e.target.value})}
@@ -233,7 +233,7 @@ export default function ClientsPage() {
                 <button 
                   type="button" 
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 py-3 bg-surface text-navy text-sm font-bold rounded-xl hover:bg-surface-alt transition-colors"
+                  className="flex-1 py-3 bg-surface text-navy dark:text-zinc-100 text-sm font-bold rounded-xl hover:bg-surface-alt transition-colors"
                 >
                   Cancel
                 </button>

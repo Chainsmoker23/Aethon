@@ -203,7 +203,7 @@ export default function SettingsPage() {
                 className={`flex items-center gap-2 md:gap-3 px-4 py-2.5 md:py-3 rounded-xl font-semibold text-sm transition-all whitespace-nowrap shrink-0 ${
                   activeTab === tab.id 
                     ? "bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 text-primary shadow-sm" 
-                    : "text-slate-500 dark:text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-slate-900 dark:text-white"
+                    : "text-slate-500 dark:text-slate-500 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-slate-700 dark:bg-slate-700 hover:text-slate-900 dark:text-white"
                 }`}
               >
                 {tab.icon}
@@ -217,8 +217,8 @@ export default function SettingsPage() {
             {activeTab === "general" && (
               <div className="animate-fade-in space-y-8">
                 <div>
-                  <h2 className="text-xl font-bold text-navy">Facility Profile</h2>
-                  <p className="text-sm font-medium text-text-secondary mt-1">Manage your organization's core details.</p>
+                  <h2 className="text-xl font-bold text-navy dark:text-zinc-100">Facility Profile</h2>
+                  <p className="text-sm font-medium text-text-secondary dark:text-zinc-400 mt-1">Manage your organization's core details.</p>
                 </div>
                 
                 <div className="space-y-5 max-w-md">
@@ -250,26 +250,26 @@ export default function SettingsPage() {
             {activeTab === "appearance" && (
               <div className="animate-fade-in space-y-8">
                 <div>
-                  <h2 className="text-xl font-bold text-navy">Theme & Appearance</h2>
-                  <p className="text-sm font-medium text-text-secondary mt-1">Customize the look and feel of the management dashboard.</p>
+                  <h2 className="text-xl font-bold text-navy dark:text-zinc-100">Theme & Appearance</h2>
+                  <p className="text-sm font-medium text-text-secondary dark:text-zinc-400 mt-1">Customize the look and feel of the management dashboard.</p>
                 </div>
                 
                 <div className="space-y-6 max-w-xl">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl gap-4">
                     <div>
                       <p className="font-bold text-slate-900 dark:text-white text-sm">Theme Preference</p>
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-0.5">Switch between Light and Dark mode.</p>
+                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-0.5">Switch between Light and Dark mode.</p>
                     </div>
                     <div className="flex bg-slate-200 dark:bg-slate-700/50 p-1 rounded-xl">
                       <button 
                         onClick={() => setTheme('light')}
-                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'light' ? 'bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-500 hover:text-slate-700 dark:text-slate-300'}`}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'light' ? 'bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:text-slate-300'}`}
                       >
                         Light Mode
                       </button>
                       <button 
                         onClick={() => setTheme('dark')}
-                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'dark' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500 dark:text-slate-500 hover:text-slate-700 dark:text-slate-300'}`}
+                        className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${theme === 'dark' ? 'bg-slate-900 dark:bg-zinc-100 dark:text-zinc-900 text-white shadow-sm' : 'text-slate-500 dark:text-slate-500 dark:text-zinc-400 hover:text-slate-700 dark:text-slate-300'}`}
                       >
                         Dark Mode
                       </button>
@@ -283,14 +283,14 @@ export default function SettingsPage() {
               <div className="animate-fade-in space-y-8">
                 <div>
                   <h2 className="text-xl font-bold text-slate-900 dark:text-white">Alert Thresholds</h2>
-                  <p className="text-sm font-medium text-slate-500 dark:text-slate-500 mt-1">Configure when the system generates automatic escalations.</p>
+                  <p className="text-sm font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-1">Configure when the system generates automatic escalations.</p>
                 </div>
 
                 <div className="space-y-4 max-w-xl">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl gap-4">
                     <div>
                       <p className="font-bold text-slate-900 dark:text-white text-sm">Missing Visit Alert</p>
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-0.5">Trigger an escalation if a client is not seen by this time.</p>
+                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-0.5">Trigger an escalation if a client is not seen by this time.</p>
                     </div>
                     <input 
                       type="time" 
@@ -303,7 +303,7 @@ export default function SettingsPage() {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl gap-4">
                     <div>
                       <p className="font-bold text-slate-900 dark:text-white text-sm">Family Notifications</p>
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-0.5">Send a push notification to family when an escalation is resolved.</p>
+                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-0.5">Send a push notification to family when an escalation is resolved.</p>
                     </div>
                     <button 
                       onClick={() => setSettings({...settings, notifyFamily: !settings.notifyFamily})}
@@ -316,7 +316,7 @@ export default function SettingsPage() {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl gap-4">
                     <div>
                       <label className="block font-bold text-slate-900 dark:text-white text-sm">Heart Rate Threshold (BPM)</label>
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-0.5">Alert if heart rate goes outside this range.</p>
+                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-0.5">Alert if heart rate goes outside this range.</p>
                     </div>
                     <div className="flex items-center gap-2 self-start sm:self-auto">
                       <input type="number" defaultValue="45" className="w-20 px-3 py-1.5 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm text-center" />
@@ -328,7 +328,7 @@ export default function SettingsPage() {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl gap-4">
                     <div>
                       <label className="block font-bold text-slate-900 dark:text-white text-sm">Missed Medication Window</label>
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-0.5">Hours before escalation is generated.</p>
+                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-0.5">Hours before escalation is generated.</p>
                     </div>
                     <input type="number" defaultValue="2" className="w-20 px-3 py-1.5 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-sm self-start sm:self-auto text-center" />
                   </div>
@@ -341,7 +341,7 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h2 className="text-xl font-bold text-slate-900 dark:text-white">Staff & Roles</h2>
-                    <p className="text-sm font-medium text-slate-500 dark:text-slate-500 mt-1">Manage dashboard access for your team.</p>
+                    <p className="text-sm font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-1">Manage dashboard access for your team.</p>
                   </div>
                   <button className="flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-bold rounded-xl hover:bg-primary-dark transition-colors shadow-sm btn-press">
                     <Users className="w-4 h-4" />
@@ -356,7 +356,7 @@ export default function SettingsPage() {
                   </div>
                   <div className="px-5 py-4 flex items-center justify-between bg-white dark:bg-[#0a0a0a]">
                      <span className="text-sm font-bold text-slate-900 dark:text-white">Marcus Schmidt</span>
-                     <span className="text-xs font-bold text-slate-500 dark:text-slate-500 bg-slate-100 dark:bg-zinc-900 px-2 py-1 rounded-md border border-slate-200 dark:border-zinc-800">Caregiver</span>
+                     <span className="text-xs font-bold text-slate-500 dark:text-slate-500 dark:text-zinc-400 bg-slate-100 dark:bg-zinc-900 px-2 py-1 rounded-md border border-slate-200 dark:border-zinc-800">Caregiver</span>
                   </div>
                 </div>
               </div>
@@ -366,20 +366,20 @@ export default function SettingsPage() {
               <div className="animate-fade-in space-y-8">
                 <div>
                   <h2 className="text-xl font-bold text-slate-900 dark:text-white">Data & Export</h2>
-                  <p className="text-sm font-medium text-slate-500 dark:text-slate-500 mt-1">Export facility and resident data for compliance or offline backup.</p>
+                  <p className="text-sm font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-1">Export facility and resident data for compliance or offline backup.</p>
                 </div>
 
                 <div className="space-y-4">
                   <div className="bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6">
                     <div className="flex-1">
                       <h3 className="text-sm font-bold text-slate-900 dark:text-white">Resident Care Records</h3>
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-1">Download complete timeline histories.</p>
+                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-1">Download complete timeline histories.</p>
                     </div>
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto shrink-0 mt-1 sm:mt-0">
                       <button 
                         onClick={() => handleExport('records', 'pdf')}
                         disabled={isExporting !== null}
-                        className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white border border-slate-200 dark:border-zinc-800 text-sm font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors shadow-sm btn-press disabled:opacity-50 w-full sm:w-auto"
+                        className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white border border-slate-200 dark:border-zinc-800 text-sm font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors shadow-sm btn-press disabled:opacity-50 w-full sm:w-auto"
                       >
                         {isExporting === 'records-pdf' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
                         Export PDF
@@ -387,7 +387,7 @@ export default function SettingsPage() {
                       <button 
                         onClick={() => handleExport('records', 'csv')}
                         disabled={isExporting !== null}
-                        className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white border border-slate-200 dark:border-zinc-800 text-sm font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors shadow-sm btn-press disabled:opacity-50 w-full sm:w-auto"
+                        className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white border border-slate-200 dark:border-zinc-800 text-sm font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors shadow-sm btn-press disabled:opacity-50 w-full sm:w-auto"
                       >
                         {isExporting === 'records-csv' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
                         Export CSV
@@ -398,12 +398,12 @@ export default function SettingsPage() {
                   <div className="bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6">
                     <div className="flex-1">
                       <h3 className="text-sm font-bold text-slate-900 dark:text-white">Staff Audit Logs</h3>
-                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 mt-1">Security logs showing who accessed what.</p>
+                      <p className="text-xs font-medium text-slate-500 dark:text-slate-500 dark:text-zinc-400 mt-1">Security logs showing who accessed what.</p>
                     </div>
                     <button 
                       onClick={() => handleExport('logs', 'csv')}
                       disabled={isExporting !== null}
-                      className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white border border-slate-200 dark:border-zinc-800 text-sm font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors shadow-sm btn-press disabled:opacity-50 w-full sm:w-auto shrink-0 mt-1 sm:mt-0"
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 bg-white dark:bg-[#0a0a0a] text-slate-900 dark:text-white border border-slate-200 dark:border-zinc-800 text-sm font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-900 dark:bg-zinc-900/50 dark:hover:bg-slate-800/50 dark:bg-zinc-900/50 transition-colors shadow-sm btn-press disabled:opacity-50 w-full sm:w-auto shrink-0 mt-1 sm:mt-0"
                     >
                       {isExporting === 'logs-csv' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
                       Export CSV
@@ -418,7 +418,7 @@ export default function SettingsPage() {
               <button 
                 onClick={handleSave}
                 className={`flex items-center gap-2 px-6 py-2.5 text-white text-sm font-bold rounded-xl transition-all duration-300 shadow-sm btn-press w-full sm:w-auto justify-center ${
-                  saved ? "bg-emerald-500 hover:bg-emerald-600 shadow-emerald-500/20" : "bg-slate-900 hover:bg-slate-800"
+                  saved ? "bg-emerald-500 hover:bg-emerald-600 shadow-emerald-500/20" : "bg-slate-900 dark:bg-zinc-100 dark:text-zinc-900 hover:bg-slate-800"
                 }`}
               >
                 {saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}

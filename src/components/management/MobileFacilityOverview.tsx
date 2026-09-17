@@ -31,7 +31,7 @@ export function MobileFacilityOverview({ stats, loading }: { stats: any, loading
             <div className={`w-6 h-6 rounded-md flex items-center justify-center bg-gradient-to-br ${stat.gradient} shadow-sm text-white shrink-0`}>
               {stat.icon}
             </div>
-            <span className="text-[11px] font-bold text-slate-500 dark:text-slate-500 uppercase tracking-tight leading-none">{stat.label}</span>
+            <span className="text-[11px] font-bold text-slate-500 dark:text-slate-500 dark:text-zinc-400 uppercase tracking-tight leading-none">{stat.label}</span>
           </div>
           <p className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">{stat.value}</p>
         </div>

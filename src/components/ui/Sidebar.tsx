@@ -79,7 +79,7 @@ export function Sidebar() {
               className={`flex items-center gap-3 px-3 py-3 rounded-xl font-bold text-sm transition-all ${
                 isActive 
                   ? "bg-gradient-to-r from-cyan-500 to-indigo-500 text-white shadow-md shadow-indigo-500/20" 
-                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 dark:bg-zinc-900 hover:text-slate-900 dark:text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-zinc-800 dark:bg-zinc-900 dark:hover:bg-slate-800 dark:bg-zinc-900 hover:text-slate-900 dark:text-white"
               } ${mobileOpen ? `opacity-0 animate-slide-down stagger-${i + 1}` : ""}`}
               aria-current={isActive ? "page" : undefined}
             >
@@ -105,7 +105,7 @@ export function Sidebar() {
           </div>
           <div className="min-w-0">
             <p className="font-extrabold text-sm text-slate-900 dark:text-white truncate">{userName}</p>
-            <p className="text-slate-500 dark:text-slate-500 text-[10px] uppercase tracking-wider font-bold mt-0.5">Management</p>
+            <p className="text-slate-500 dark:text-slate-500 dark:text-zinc-400 text-[10px] uppercase tracking-wider font-bold mt-0.5">Management</p>
           </div>
         </div>
         <SignOutButton className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg text-sm font-bold text-rose-600 bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 hover:bg-rose-50 hover:border-rose-200 transition-all btn-press shadow-sm">
@@ -138,7 +138,7 @@ export function Sidebar() {
                   </span>
                 ) : null}
               </div>
-              <span className={`text-[10px] font-bold ${isActive ? "text-slate-900 dark:text-white" : "text-slate-500 dark:text-slate-500"}`}>
+              <span className={`text-[10px] font-bold ${isActive ? "text-slate-900 dark:text-white" : "text-slate-500 dark:text-slate-500 dark:text-zinc-400"}`}>
                 {link.name}
               </span>
             </Link>

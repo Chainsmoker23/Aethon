@@ -31,7 +31,7 @@ export function MobileNav() {
               <div className="relative">
                 {link.icon}
               </div>
-              <span className={`text-[10px] font-bold ${isActive ? "text-slate-900 dark:text-white" : "text-slate-500 dark:text-slate-500"}`}>
+              <span className={`text-[10px] font-bold ${isActive ? "text-slate-900 dark:text-white" : "text-slate-500 dark:text-slate-500 dark:text-zinc-400"}`}>
                 {link.name}
               </span>
             </Link>
