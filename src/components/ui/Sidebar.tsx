@@ -12,6 +12,7 @@ export function Sidebar() {
   const [escalationCount, setEscalationCount] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userName, setUserName] = useState("Staff User");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const supabase = createClient();
 
   useEffect(() => {
@@ -23,10 +24,13 @@ export function Sidebar() {
         .eq('is_resolved', false);
       if (count !== null) setEscalationCount(count);
 
-      // Fetch actual user name
+      // Fetch actual user name and avatar
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         setUserName(user.user_metadata?.full_name || user.email?.split('@')[0] || "Staff User");
+        if (user.user_metadata?.avatar_url) {
+          setAvatarUrl(user.user_metadata.avatar_url);
+        }
       }
     }
     fetchData();
@@ -100,9 +104,13 @@ export function Sidebar() {
       {/* User */}
       <div className="p-3 border border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 m-4 rounded-2xl shrink-0 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-black text-xs shadow-sm shrink-0">
-            {initials}
-          </div>
+          {avatarUrl ? (
+            <img src={avatarUrl} alt={userName} className="w-9 h-9 rounded-xl object-cover shadow-sm shrink-0 border border-slate-200 dark:border-zinc-800" />
+          ) : (
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-black text-xs shadow-sm shrink-0">
+              {initials}
+            </div>
+          )}
           <div className="min-w-0 pr-2">
             <p className="font-extrabold text-xs text-slate-900 dark:text-white truncate leading-tight">{userName}</p>
             <p className="text-slate-500 dark:text-zinc-400 text-[9px] uppercase tracking-wider font-bold mt-0.5">Management</p>
