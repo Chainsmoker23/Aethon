@@ -92,7 +92,7 @@ export async function POST(request: Request) {
     const { data, error: sendError } = await resend.emails.send({
       from: 'Aethon Health <noreply@alpinahealth.ch>',
       to: email,
-      subject: \`Invitation to view care updates for \${residentName || 'your loved one'}\`,
+      subject: `Invitation to view care updates for ${residentName || 'your loved one'}`,
       html: htmlEmail,
     });
 
