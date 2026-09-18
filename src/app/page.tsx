@@ -369,27 +369,37 @@ export default function LandingPage() {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="h-full glass-panel rounded-2xl md:rounded-[32px] p-6 md:p-8 flex flex-col relative overflow-hidden glass-glare shadow-lg"
             >
-              <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-emerald-400/10 rounded-bl-full blur-2xl" />
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-emerald-100 flex items-center justify-center mb-3 md:mb-4 relative z-10 animate-heartbeat">
-                <Activity className="w-5 h-5 md:w-6 md:h-6 text-emerald-600" />
+              <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-rose-500/15 rounded-bl-full blur-2xl" />
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-rose-50 dark:bg-rose-500/10 flex items-center justify-center mb-3 md:mb-4 relative z-10 animate-pulse shadow-[0_0_15px_rgba(244,63,94,0.4)] border border-rose-100 dark:border-rose-500/20">
+                <Activity className="w-5 h-5 md:w-6 md:h-6 text-rose-500" />
               </div>
               <h3 className="text-lg md:text-2xl font-extrabold text-navy mb-1.5 md:mb-2 tracking-tight relative z-10">Real-Time Vitals</h3>
               <p className="text-sm md:text-base text-text-secondary font-medium leading-relaxed relative z-10">
                 Live health tracking with intelligent alerts. Families see what matters, exactly when it matters.
               </p>
-              <div className="mt-auto relative z-10 bg-white dark:bg-[#0a0a0a]/60 border border-white/80 p-3 md:p-4 rounded-xl md:rounded-2xl shadow-sm">
-                <div className="flex justify-between items-end mb-2">
+              <div className="mt-auto relative z-10 bg-white dark:bg-[#0a0a0a]/60 border border-slate-100 dark:border-white/10 p-4 md:p-5 rounded-xl md:rounded-2xl shadow-sm">
+                <div className="flex justify-between items-end mb-3">
                   <span className="text-xs md:text-sm font-bold text-navy">Heart Rate</span>
-                  <span className="text-xl md:text-2xl font-black text-emerald-600">72 <span className="text-[10px] md:text-sm text-text-muted">bpm</span></span>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping absolute -ml-4" />
+                    <span className="w-2 h-2 rounded-full bg-rose-500 absolute -ml-4" />
+                    <span className="text-2xl md:text-3xl font-black text-rose-500 leading-none">72</span>
+                    <span className="text-[10px] md:text-xs font-semibold text-slate-400 mb-1">bpm</span>
+                  </div>
                 </div>
-                <div className="w-full h-10 md:h-12 flex items-center gap-1">
-                  {[40, 70, 45, 90, 60, 80, 50, 75].map((h, i) => (
+                <div className="w-full h-12 md:h-14 flex items-end justify-between gap-1 overflow-hidden pb-1">
+                  {[20, 40, 30, 80, 100, 60, 30, 45, 30, 20].map((h, i) => (
                     <motion.div 
                       key={i} 
-                      className="flex-1 bg-emerald-200 rounded-full" 
-                      initial={{ height: 0 }}
-                      whileInView={{ height: `${h}%` }}
-                      transition={{ type: "spring", delay: i * 0.1, bounce: 0.5 }}
+                      className="w-full rounded-t-sm bg-gradient-to-t from-rose-200 to-rose-400 dark:from-rose-500/40 dark:to-rose-500" 
+                      initial={{ height: '10%' }}
+                      animate={{ height: [`10%`, `${h}%`, `10%`] }}
+                      transition={{ 
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: i * 0.15 
+                      }}
                     />
                   ))}
                 </div>
