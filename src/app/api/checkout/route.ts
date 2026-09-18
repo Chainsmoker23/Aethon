@@ -64,8 +64,8 @@ export async function POST(request: Request) {
       throw new Error('Failed to create Stripe session URL');
     }
 
-    // Redirect the user to Stripe Checkout
-    return NextResponse.redirect(session.url, 303);
+    // Return the URL to the client
+    return NextResponse.json({ url: session.url });
 
   } catch (error: any) {
     console.error('Stripe Checkout Error:', error);

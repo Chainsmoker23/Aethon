@@ -2,6 +2,8 @@ import { CreditCard, Receipt, Building2, AlertCircle, ArrowRight, CheckCircle2 }
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 
+import { CheckoutButton } from "@/components/management/CheckoutButton";
+
 interface PageProps {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
@@ -55,11 +57,7 @@ export default async function BillingSettingsPage({ searchParams }: PageProps) {
               <h2 className="text-xl font-bold mb-1">Your trial ends in {daysLeft} days</h2>
               <p className="text-indigo-100 text-sm max-w-md">You are currently enjoying full access to Aethon Management Core. Upgrade to an annual plan to ensure uninterrupted access to resident baselines and shift handovers.</p>
             </div>
-            <form action="/api/checkout" method="POST">
-              <button type="submit" className="shrink-0 bg-white text-indigo-600 px-6 py-3 rounded-xl font-bold text-sm shadow-sm hover:scale-105 transition-transform cursor-pointer">
-                Upgrade to Annual Plan
-              </button>
-            </form>
+            <CheckoutButton />
           </div>
         </div>
       )}
