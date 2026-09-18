@@ -2,7 +2,15 @@ import { CreditCard, Receipt, Building2, AlertCircle, ArrowRight, CheckCircle2 }
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 
-export default async function BillingSettingsPage() {
+interface PageProps {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function BillingSettingsPage({ searchParams }: PageProps) {
+  const params = searchParams ? await searchParams : {};
+  const isSuccess = params.success === 'true';
+  const isCanceled = params.canceled === 'true';
+
   const supabase = await createClient();
   const { count } = await supabase.from('residents').select('*', { count: 'exact', head: true });
   
@@ -15,6 +23,21 @@ export default async function BillingSettingsPage() {
 
   return (
     <div className="max-w-4xl space-y-8 animate-fade-in pb-safe">
+      
+      {isSuccess && (
+        <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-xl flex items-center gap-3 animate-fade-in shadow-sm">
+          <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+          <p className="font-bold text-sm">Payment successful! Your Aethon Annual Plan is now active.</p>
+        </div>
+      )}
+
+      {isCanceled && (
+        <div className="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl flex items-center gap-3 animate-fade-in shadow-sm">
+          <AlertCircle className="w-5 h-5 text-amber-600 shrink-0" />
+          <p className="font-bold text-sm">Checkout was canceled. Your pilot is still active.</p>
+        </div>
+      )}
+
       <div>
         <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Subscription & Billing</h1>
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Manage your facility&apos;s Aethon plan, licenses, and invoices.</p>
@@ -32,9 +55,11 @@ export default async function BillingSettingsPage() {
               <h2 className="text-xl font-bold mb-1">Your trial ends in {daysLeft} days</h2>
               <p className="text-indigo-100 text-sm max-w-md">You are currently enjoying full access to Aethon Management Core. Upgrade to an annual plan to ensure uninterrupted access to resident baselines and shift handovers.</p>
             </div>
-            <button className="shrink-0 bg-white text-indigo-600 px-6 py-3 rounded-xl font-bold text-sm shadow-sm hover:scale-105 transition-transform">
-              Upgrade to Annual Plan
-            </button>
+            <form action="/api/checkout" method="POST">
+              <button type="submit" className="shrink-0 bg-white text-indigo-600 px-6 py-3 rounded-xl font-bold text-sm shadow-sm hover:scale-105 transition-transform cursor-pointer">
+                Upgrade to Annual Plan
+              </button>
+            </form>
           </div>
         </div>
       )}
