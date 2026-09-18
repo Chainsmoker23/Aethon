@@ -217,17 +217,29 @@ export default function ClientProfilePage() {
     if (!inviteEmail.trim()) return;
     setIsInviting(true);
     
-    // Actually insert the pending invite into the database!
-    await supabase.from('family_invitations').insert([{
-      email: inviteEmail.trim(),
-      resident_id: residentId
-    }]);
-    
-    await fetchProfile(); // Refresh the list from the database
-    
-    setIsInviting(false);
-    setIsInviteModalOpen(false);
-    setInviteEmail("");
+    try {
+      const response = await fetch('/api/invite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: inviteEmail.trim(),
+          residentId: residentId,
+          residentName: `${resident?.first_name || ''} ${resident?.last_name || ''}`.trim(),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send invitation');
+      }
+      
+      await fetchProfile(); // Refresh the list from the database
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Failed to send invitation email");
+    } finally {
+      setIsInviting(false);
+      setIsInviteModalOpen(false);
+      setInviteEmail("");
+    }
   };
 
   const openEditModal = () => {
