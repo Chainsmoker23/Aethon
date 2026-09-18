@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { createClient } from '@/utils/supabase/server';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -13,18 +12,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Email and Resident ID are required' }, { status: 400 });
     }
 
-    const cookieStore = await cookies();
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          get(name: string) {
-            return cookieStore.get(name)?.value;
-          },
-        },
-      }
-    );
+    const supabase = await createClient();
 
     // 1. Verify user is authenticated
     const { data: { user } } = await supabase.auth.getUser();
@@ -89,8 +77,9 @@ export async function POST(request: Request) {
     `;
 
     // 3. Send the email using Resend
+    // NOTE: Using onboarding@resend.dev for testing. Change to noreply@alpinahealth.ch once verified on Resend!
     const { data, error: sendError } = await resend.emails.send({
-      from: 'Aethon Health <noreply@alpinahealth.ch>',
+      from: 'Aethon Health <onboarding@resend.dev>',
       to: email,
       subject: `Invitation to view care updates for ${residentName || 'your loved one'}`,
       html: htmlEmail,
@@ -98,14 +87,13 @@ export async function POST(request: Request) {
 
     if (sendError) {
       console.error('Resend Error:', sendError);
-      // Fallback for testing before domain verification: Resend allows sending to the verified email address
-      return NextResponse.json({ error: 'Failed to send email via Resend: ' + sendError.message }, { status: 500 });
+      return NextResponse.json({ error: sendError.message }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, data });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Email send error:', error);
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
+    return NextResponse.json({ error: error.message || 'Failed to send email' }, { status: 500 });
   }
 }

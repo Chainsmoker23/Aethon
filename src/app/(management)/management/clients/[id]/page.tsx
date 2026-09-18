@@ -229,7 +229,8 @@ export default function ClientProfilePage() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to send invitation');
+        const errData = await response.json();
+        throw new Error(errData.error || 'Failed to send invitation');
       }
       
       await fetchProfile(); // Refresh the list from the database
