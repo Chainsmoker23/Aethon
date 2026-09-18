@@ -1,11 +1,17 @@
 import { CreditCard, Receipt, Building2, AlertCircle, ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import { createClient } from "@/utils/supabase/server";
 
-export default function BillingSettingsPage() {
+export default async function BillingSettingsPage() {
+  const supabase = await createClient();
+  const { count } = await supabase.from('residents').select('*', { count: 'exact', head: true });
+  
   const isPilot = true;
   const daysLeft = 42;
-  const totalBeds = 45;
+  const totalBeds = count || 0;
   const pricePerBed = 12; // CHF 12/bed/month
+  const capacity = 50; // You can also make this dynamic later
+  const usagePercentage = Math.min(100, Math.round((totalBeds / capacity) * 100));
 
   return (
     <div className="max-w-4xl space-y-8 animate-fade-in pb-safe">
@@ -40,16 +46,19 @@ export default function BillingSettingsPage() {
               <Building2 className="w-5 h-5 text-blue-500" />
               Active Licenses
             </h3>
-            <span className="text-sm font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2.5 py-1 rounded-lg">CHF {pricePerBed} / bed</span>
+            <div className="text-right">
+              <span className="text-sm font-bold text-slate-900 dark:text-white block">CHF {totalBeds * pricePerBed} <span className="text-slate-500 font-medium">/ mo</span></span>
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400">CHF {pricePerBed} / bed</span>
+            </div>
           </div>
           
           <div className="mb-6">
             <div className="flex justify-between text-sm mb-2">
               <span className="text-slate-500 dark:text-slate-400">Beds in use</span>
-              <span className="font-bold text-slate-900 dark:text-white">{totalBeds} / 50</span>
+              <span className="font-bold text-slate-900 dark:text-white">{totalBeds} / {capacity}</span>
             </div>
             <div className="w-full h-2 bg-slate-100 dark:bg-zinc-800 rounded-full overflow-hidden">
-              <div className="h-full bg-blue-500 rounded-full" style={{ width: "90%" }} />
+              <div className="h-full bg-blue-500 rounded-full" style={{ width: `${usagePercentage}%` }} />
             </div>
           </div>
 
