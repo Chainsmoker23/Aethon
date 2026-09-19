@@ -17,25 +17,54 @@ export async function GET(request: Request) {
       const { data: { user } } = await supabase.auth.getUser()
       
       if (user) {
-        // For this MVP/Demo, we trust the requested role from the login button
-        const finalRole = (role === 'management' || role === 'staff') ? 'admin' : 'family'
+        let finalRole = 'family'; // Default secure role
+
+        // 1. Check if they were invited as staff
+        const { data: invite } = await supabase
+          .from('staff_invitations')
+          .select('role')
+          .eq('email', user.email)
+          .single();
+
+        if (invite) {
+          // Grant them the invited role
+          finalRole = invite.role === 'admin' ? 'admin' : 'caregiver';
+
+          // Consume the invite
+          await supabase
+            .from('staff_invitations')
+            .delete()
+            .eq('email', user.email);
+        } else {
+          // If no invite, check if they already have a profile with a staff role
+          const { data: profile } = await supabase
+            .from('user_profiles')
+            .select('role')
+            .eq('id', user.id)
+            .single();
+            
+          if (profile?.role === 'admin' || profile?.role === 'staff' || profile?.role === 'caregiver') {
+            finalRole = profile.role;
+          }
+        }
         
         // Ensure they have a profile so the strict middleware RBAC doesn't block them
         await supabase.from('user_profiles').upsert({
           id: user.id,
           role: finalRole,
-          full_name: user.user_metadata?.full_name || user.email || 'Demo User'
-        })
-      }
+          full_name: user.user_metadata?.full_name || user.email || 'User'
+        });
 
-      if (role === 'management' || role === 'staff') {
-        const response = NextResponse.redirect(`${origin}/management`)
-        response.cookies.set('demo_role', 'admin', { path: '/' })
-        return response
+        if (finalRole === 'admin' || finalRole === 'staff' || finalRole === 'caregiver') {
+          const response = NextResponse.redirect(`${origin}/management`)
+          // We clear the demo_role since we are secure now
+          response.cookies.delete('demo_role')
+          return response
+        }
       }
       
       const response = NextResponse.redirect(`${origin}/family`)
-      response.cookies.set('demo_role', 'family', { path: '/' })
+      response.cookies.delete('demo_role')
       return response
     } else {
       console.error("Auth callback error:", error.message);

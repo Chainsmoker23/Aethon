@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Settings, Shield, Bell, Download, Building, Users, ToggleLeft, ToggleRight, Save, Check, Loader2, LogOut, User, AlertTriangle, CreditCard, Receipt, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Settings, Shield, Bell, Download, Building, Users, ToggleLeft, ToggleRight, Save, Check, Loader2, LogOut, User, AlertTriangle, CreditCard, Receipt, AlertCircle, CheckCircle2, X } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { SignOutButton } from "@/components/auth/SignOutButton";
 import { useTheme } from "next-themes";
@@ -19,6 +19,17 @@ export default function SettingsPage() {
   const [loadingInvoices, setLoadingInvoices] = useState(true);
   const [loadingCards, setLoadingCards] = useState(true);
   const supabase = createClient();
+  const [staff, setStaff] = useState<any[]>([]);
+  const [invites, setInvites] = useState<any[]>([]);
+  const [loadingStaff, setLoadingStaff] = useState(true);
+  
+  // Staff Invite Modal State
+  const [isStaffModalOpen, setIsStaffModalOpen] = useState(false);
+  const [staffInviteEmail, setStaffInviteEmail] = useState("");
+  const [staffInviteRole, setStaffInviteRole] = useState("caregiver");
+  const [isSendingInvite, setIsSendingInvite] = useState(false);
+  const [isRevoking, setIsRevoking] = useState<string | null>(null);
+
   const { theme, setTheme } = useTheme();
   
   useEffect(() => {
@@ -85,10 +96,66 @@ export default function SettingsPage() {
             console.error(err);
             setLoadingCards(false);
           });
+          
+        // Fetch staff and invites
+        fetchStaff();
       }
     }
     getUser();
   }, []);
+
+  const fetchStaff = async () => {
+    try {
+      const res = await fetch('/api/staff');
+      const data = await res.json();
+      if (data.active) setStaff(data.active);
+      if (data.pending) setInvites(data.pending);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingStaff(false);
+    }
+  };
+
+  const handleInviteStaff = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSendingInvite(true);
+    
+    try {
+      const res = await fetch('/api/invite-staff', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: staffInviteEmail, role: staffInviteRole }),
+      });
+      
+      if (res.ok) {
+        setStaffInviteEmail("");
+        setIsStaffModalOpen(false);
+        fetchStaff();
+      } else {
+        const error = await res.json();
+        alert("Failed to invite: " + error.error);
+      }
+    } catch (err) {
+      alert("Error sending invite");
+    } finally {
+      setIsSendingInvite(false);
+    }
+  };
+
+  const handleRevokeStaff = async (id: string, type: 'active' | 'invite') => {
+    if (!confirm(`Are you sure you want to revoke this ${type}?`)) return;
+    setIsRevoking(id);
+    
+    try {
+      await fetch(`/api/staff/${id}?type=${type}`, { method: 'DELETE' });
+      fetchStaff();
+    } catch (err) {
+      alert("Failed to revoke");
+    } finally {
+      setIsRevoking(null);
+    }
+  };
 
   const handleExport = async (type: 'records' | 'logs', format: 'csv' | 'pdf' = 'csv') => {
     setIsExporting(`${type}-${format}`);
@@ -234,7 +301,8 @@ export default function SettingsPage() {
   ];
 
   return (
-    <main className="p-4 md:p-6 lg:p-10 space-y-6 md:space-y-8 max-w-[1200px] mx-auto w-full pb-20 lg:pb-32">
+    <>
+      <main className="p-4 md:p-6 lg:p-10 space-y-6 md:space-y-8 max-w-[1200px] mx-auto w-full pb-20 lg:pb-32">
         
         <div className="hidden md:flex items-center gap-3 animate-fade-in-up">
           <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
@@ -583,21 +651,61 @@ export default function SettingsPage() {
                     <h2 className="text-xl font-bold text-navy dark:text-zinc-100">Staff & Roles</h2>
                     <p className="text-sm font-medium text-text-secondary dark:text-zinc-400 mt-1">Manage dashboard access for your team.</p>
                   </div>
-                  <button className="px-4 py-2 bg-slate-900 dark:bg-zinc-800 text-white dark:text-zinc-100 hover:bg-slate-800 dark:hover:bg-zinc-700 rounded-xl text-sm font-bold shadow-sm transition-all">
+                  <button 
+                    onClick={() => setIsStaffModalOpen(true)}
+                    className="px-4 py-2 bg-slate-900 dark:bg-zinc-800 text-white dark:text-zinc-100 hover:bg-slate-800 dark:hover:bg-zinc-700 rounded-xl text-sm font-bold shadow-sm transition-all"
+                  >
                     + Invite
                   </button>
                 </div>
                 
-                <div className="border border-slate-200 dark:border-zinc-800 rounded-2xl overflow-hidden">
-                  <div className="flex items-center justify-between p-4 bg-white dark:bg-[#0a0a0a] border-b border-slate-100 dark:border-zinc-800/50">
-                    <p className="font-bold text-sm text-slate-900 dark:text-white">Dr. Anna Weber</p>
-                    <span className="px-2 py-1 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 rounded-md text-[10px] font-black uppercase tracking-wider">Admin</span>
+                {loadingStaff ? (
+                  <div className="flex justify-center p-8"><Loader2 className="w-6 h-6 animate-spin text-slate-300" /></div>
+                ) : (
+                  <div className="border border-slate-200 dark:border-zinc-800 rounded-2xl overflow-hidden">
+                    {/* Active Staff */}
+                    {staff.map((s, idx) => (
+                      <div key={s.id} className={`flex items-center justify-between p-4 bg-white dark:bg-[#0a0a0a] ${idx !== staff.length - 1 || invites.length > 0 ? 'border-b border-slate-100 dark:border-zinc-800/50' : ''}`}>
+                        <div className="flex items-center gap-3">
+                          <p className="font-bold text-sm text-slate-900 dark:text-white">{s.full_name}</p>
+                          <span className={`px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-wider ${
+                            s.role === 'admin' 
+                              ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400'
+                              : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300'
+                          }`}>{s.role}</span>
+                        </div>
+                        <button 
+                          onClick={() => handleRevokeStaff(s.id, 'active')}
+                          disabled={isRevoking === s.id}
+                          className="text-xs text-red-500 hover:text-red-700 font-bold"
+                        >
+                          {isRevoking === s.id ? 'Revoking...' : 'Revoke'}
+                        </button>
+                      </div>
+                    ))}
+
+                    {/* Pending Invites */}
+                    {invites.map((inv, idx) => (
+                      <div key={inv.id} className={`flex items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900/30 ${idx !== invites.length - 1 ? 'border-b border-slate-100 dark:border-zinc-800/50' : ''}`}>
+                        <div className="flex items-center gap-3">
+                          <p className="font-bold text-sm text-slate-500 dark:text-zinc-400">{inv.email}</p>
+                          <span className="px-2 py-1 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-500 rounded-md text-[10px] font-black uppercase tracking-wider">Pending ({inv.role})</span>
+                        </div>
+                        <button 
+                          onClick={() => handleRevokeStaff(inv.id, 'invite')}
+                          disabled={isRevoking === inv.id}
+                          className="text-xs text-red-400 hover:text-red-600 font-medium"
+                        >
+                          {isRevoking === inv.id ? 'Canceling...' : 'Cancel'}
+                        </button>
+                      </div>
+                    ))}
+
+                    {staff.length === 0 && invites.length === 0 && (
+                      <div className="p-8 text-center text-slate-500 text-sm">No staff found.</div>
+                    )}
                   </div>
-                  <div className="flex items-center justify-between p-4 bg-white dark:bg-[#0a0a0a]">
-                    <p className="font-bold text-sm text-slate-900 dark:text-white">Marcus Schmidt</p>
-                    <span className="px-2 py-1 bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 rounded-md text-[10px] font-black uppercase tracking-wider">Caregiver</span>
-                  </div>
-                </div>
+                )}
               </div>
             )}
 
@@ -668,5 +776,66 @@ export default function SettingsPage() {
           </div>
       </div>
     </main>
+
+      {/* Staff Invite Modal */}
+      {isStaffModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 dark:bg-black/60 backdrop-blur-sm">
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl w-full max-w-md shadow-xl border border-slate-200 dark:border-zinc-800 animate-fade-in-up">
+            <div className="flex items-center justify-between p-5 border-b border-slate-100 dark:border-zinc-800">
+              <h3 className="font-bold text-lg text-slate-900 dark:text-white">Invite Staff</h3>
+              <button 
+                onClick={() => setIsStaffModalOpen(false)}
+                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-500"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <form onSubmit={handleInviteStaff} className="p-5 space-y-4">
+              <div>
+                <label className="block text-sm font-bold text-slate-700 dark:text-zinc-300 mb-1.5">Email Address</label>
+                <input 
+                  type="email" 
+                  required
+                  value={staffInviteEmail}
+                  onChange={e => setStaffInviteEmail(e.target.value)}
+                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none dark:text-white"
+                  placeholder="colleague@alpinahealth.ch"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-bold text-slate-700 dark:text-zinc-300 mb-1.5">Role</label>
+                <select 
+                  value={staffInviteRole}
+                  onChange={e => setStaffInviteRole(e.target.value)}
+                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none dark:text-white"
+                >
+                  <option value="caregiver">Caregiver (Limited Access)</option>
+                  <option value="admin">Facility Admin (Full Access)</option>
+                </select>
+              </div>
+
+              <div className="pt-4 flex gap-3">
+                <button 
+                  type="button"
+                  onClick={() => setIsStaffModalOpen(false)}
+                  className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 rounded-xl text-sm font-bold hover:bg-slate-200 dark:hover:bg-zinc-700 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit"
+                  disabled={isSendingInvite}
+                  className="flex-1 px-4 py-2.5 bg-blue-600 text-white rounded-xl text-sm font-bold hover:bg-blue-700 transition-colors flex items-center justify-center"
+                >
+                  {isSendingInvite ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Send Invite'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
