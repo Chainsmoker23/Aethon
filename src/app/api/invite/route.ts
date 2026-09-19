@@ -87,21 +87,21 @@ export async function POST(request: Request) {
       </div>
     `;
 
-    // 3. Send the email using Resend
-    // NOTE: Using onboarding@resend.dev for testing. Change to noreply@alpinahealth.ch once verified on Resend!
-    const { data, error: sendError } = await resend.emails.send({
-      from: 'Aethon Health <onboarding@resend.dev>',
-      to: email,
-      subject: `Invitation to view care updates for ${residentName || 'your loved one'}`,
-      html: htmlEmail,
-    });
+    // 3. Send the email using Resend (DISABLED FOR NOW)
+    // const { data, error: sendError } = await resend.emails.send({
+    //   from: 'Aethon Health <onboarding@resend.dev>',
+    //   to: email,
+    //   subject: `Invitation to view care updates for ${residentName || 'your loved one'}`,
+    //   html: htmlEmail,
+    // });
+    
+    // if (sendError) {
+    //   console.error('Resend Error:', sendError);
+    //   return NextResponse.json({ error: sendError.message }, { status: 500 });
+    // }
 
-    if (sendError) {
-      console.error('Resend Error:', sendError);
-      return NextResponse.json({ error: sendError.message }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, data });
+    // Mock success since email sending is disabled
+    return NextResponse.json({ success: true, data: { id: 'mock-id' } });
 
   } catch (error: any) {
     console.error('Email send error:', error);
