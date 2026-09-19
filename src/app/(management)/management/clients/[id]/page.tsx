@@ -6,7 +6,7 @@ import { createClient } from "@/utils/supabase/client";
 import Link from "next/link";
 import { 
   ArrowLeft, Activity, Pill, Calendar, HeartPulse, 
-  AlertTriangle, ClipboardList, Loader2, UserMinus, Edit, Plus, Users, X
+  AlertTriangle, ClipboardList, Loader2, UserMinus, Edit, Plus, Users, X, User
 } from "lucide-react";
 import { ResidentChat } from "@/components/management/ResidentChat";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -473,6 +473,66 @@ export default function ClientProfilePage() {
           {/* Left Column: Meds & Info */}
           <div className="space-y-8">
             
+            {/* Medical Profile Card */}
+            <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-2xl md:rounded-3xl p-5 md:p-6 shadow-sm">
+              <div className="flex items-center gap-3 mb-4 md:mb-5">
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center">
+                  <User className="w-4 h-4 md:w-5 md:h-5 text-purple-600 dark:text-purple-400" />
+                </div>
+                <h2 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">Medical Profile</h2>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Date of Birth</p>
+                    <p className="text-sm font-medium text-slate-900 dark:text-zinc-100">{resident.date_of_birth ? new Date(resident.date_of_birth).toLocaleDateString() : '—'}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Insurance</p>
+                    <p className="text-sm font-medium text-slate-900 dark:text-zinc-100">{resident.insurance_details || '—'}</p>
+                  </div>
+                </div>
+                
+                <div className="pt-3 border-t border-slate-100 dark:border-zinc-800">
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Primary Physician</p>
+                  <p className="text-sm font-medium text-slate-900 dark:text-zinc-100">{resident.physician_name || '—'}</p>
+                  {resident.physician_contact && (
+                    <p className="text-sm text-slate-500 mt-0.5">{resident.physician_contact}</p>
+                  )}
+                </div>
+                
+                <div className="pt-3 border-t border-slate-100 dark:border-zinc-800">
+                  <p className="text-xs font-bold text-rose-400/80 uppercase tracking-wider mb-1 flex items-center gap-1">Allergies</p>
+                  {resident.allergies && resident.allergies.length > 0 ? (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {resident.allergies.map((a: string, i: number) => (
+                         <span key={i} className="px-2 py-1 bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 rounded-md text-xs font-bold">{a}</span>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm font-medium text-slate-500 dark:text-zinc-500 italic">No known allergies</p>
+                  )}
+                </div>
+                
+                <div className="pt-3 border-t border-slate-100 dark:border-zinc-800">
+                  <p className="text-xs font-bold text-amber-500/80 uppercase tracking-wider mb-2">Emergency Contacts</p>
+                  {resident.emergency_contacts && resident.emergency_contacts.length > 0 ? (
+                    <div className="space-y-2">
+                      {resident.emergency_contacts.map((c: any, i: number) => (
+                        <div key={i} className="flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50 p-2 rounded-lg">
+                           <span className="text-sm font-bold text-slate-700 dark:text-zinc-300">{c.name}</span>
+                           <span className="text-xs font-medium text-slate-500 bg-white dark:bg-zinc-800 px-2 py-1 rounded-md border border-slate-200 dark:border-zinc-700">{c.phone}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm font-medium text-slate-500 dark:text-zinc-500 italic">None provided</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
             {/* Medications Card */}
             <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-2xl md:rounded-3xl p-5 md:p-6 shadow-sm">
               <div className="flex items-center justify-between mb-4 md:mb-5">
