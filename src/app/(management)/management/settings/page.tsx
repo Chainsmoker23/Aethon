@@ -47,14 +47,15 @@ export default function SettingsPage() {
             .eq('id', user.id)
             .single();
             
-          // @ts-ignore
-          const facility = profile?.facilities;
+          const facility: any = profile?.facilities;
+          
+          const actualFacility = Array.isArray(facility) ? facility[0] : facility;
             
-          if (facility?.plan) {
-            setPlan(facility.plan);
+          if (actualFacility?.plan) {
+            setPlan(actualFacility.plan);
           }
-          if (facility?.subscription_status) {
-            setSubscriptionStatus(facility.subscription_status);
+          if (actualFacility?.subscription_status) {
+            setSubscriptionStatus(actualFacility.subscription_status);
           }
         
         // Fetch active beds
@@ -70,7 +71,7 @@ export default function SettingsPage() {
         // to bypass any webhook delays or failures
         const params = new URLSearchParams(window.location.search);
         const sessionId = params.get('session_id');
-        if (sessionId && profile?.plan !== 'annual') {
+        if (sessionId && actualFacility?.plan !== 'annual') {
           fetch(`/api/verify-session?session_id=${sessionId}`)
             .then(res => res.json())
             .then(data => {
