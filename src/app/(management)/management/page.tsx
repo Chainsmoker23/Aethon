@@ -2,6 +2,7 @@ import { FacilityOverview } from "@/components/management/FacilityOverview";
 import { ResidentRoster } from "@/components/management/ResidentRoster";
 import { ShiftHandover } from "@/components/management/ShiftHandover";
 import { AssistanceRequests } from "@/components/management/AssistanceRequests";
+import { UpcomingVisits } from "@/components/management/UpcomingVisits";
 import { RefreshCw, Sparkles } from "lucide-react";
 
 export default function ManagementDashboard() {
@@ -39,6 +40,10 @@ export default function ManagementDashboard() {
           <div className="grid lg:grid-cols-2 gap-6 md:gap-8 animate-fade-in-up delay-400">
             <AssistanceRequests />
             <ShiftHandover />
+          </div>
+          
+          <div className="animate-fade-in-up delay-500">
+            <UpcomingVisits />
           </div>
         </div>
     </main>

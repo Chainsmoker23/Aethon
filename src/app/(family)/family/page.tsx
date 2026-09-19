@@ -2,7 +2,7 @@
 
 import { UpdatesFeed } from "@/components/family/UpdatesFeed";
 import { useFamilyResident } from "@/hooks/useFamilyResident";
-import { Heart, MessageCircle, MapPin, ShieldCheck, Loader2 } from "lucide-react";
+import { Heart, MessageCircle, MapPin, ShieldCheck, Loader2, Calendar as CalendarIcon, User } from "lucide-react";
 import Link from "next/link";
 
 export default function FamilyDashboard() {
@@ -68,7 +68,7 @@ export default function FamilyDashboard() {
         </div>
 
         {/* Quick Action Tiles */}
-        <div className="animate-fade-in-up delay-100 grid grid-cols-2 gap-4 mb-8">
+        <div className="animate-fade-in-up delay-100 grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <Link 
             href="/family/messages" 
             className="group bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-3xl p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:border-sky-200 hover:shadow-md active:scale-95 transition-all"
@@ -87,6 +87,26 @@ export default function FamilyDashboard() {
               <Heart className="w-6 h-6 text-rose-600" />
             </div>
             <span className="text-sm font-bold text-slate-900 dark:text-white">Health & Meds</span>
+          </Link>
+          
+          <Link 
+            href="/family/planner" 
+            className="group bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-3xl p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:border-indigo-200 hover:shadow-md active:scale-95 transition-all"
+          >
+            <div className="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center group-hover:scale-110 group-hover:bg-indigo-100 transition-transform">
+              <CalendarIcon className="w-6 h-6 text-indigo-600" />
+            </div>
+            <span className="text-sm font-bold text-slate-900 dark:text-white">Visit Planner</span>
+          </Link>
+          
+          <Link 
+            href="/family/profile" 
+            className="group bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-3xl p-5 flex flex-col items-center justify-center gap-3 shadow-sm hover:border-emerald-200 hover:shadow-md active:scale-95 transition-all"
+          >
+            <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-100 transition-transform">
+              <User className="w-6 h-6 text-emerald-600" />
+            </div>
+            <span className="text-sm font-bold text-slate-900 dark:text-white">Full Profile</span>
           </Link>
         </div>
 
