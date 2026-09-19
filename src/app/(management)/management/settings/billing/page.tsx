@@ -3,6 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 
 import { CheckoutButton } from "@/components/management/CheckoutButton";
+import { AddCardButton } from "@/components/management/AddCardButton";
 
 interface PageProps {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -11,6 +12,7 @@ interface PageProps {
 export default async function BillingSettingsPage({ searchParams }: PageProps) {
   const params = searchParams ? await searchParams : {};
   const isSuccess = params.success === 'true';
+  const isCardAdded = params.card_added === 'true';
   const isCanceled = params.canceled === 'true';
 
   const supabase = await createClient();
@@ -30,6 +32,13 @@ export default async function BillingSettingsPage({ searchParams }: PageProps) {
         <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-xl flex items-center gap-3 animate-fade-in shadow-sm">
           <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
           <p className="font-bold text-sm">Payment successful! Your Aethon Annual Plan is now active.</p>
+        </div>
+      )}
+
+      {isCardAdded && (
+        <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-xl flex items-center gap-3 animate-fade-in shadow-sm">
+          <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+          <p className="font-bold text-sm">Payment method saved successfully!</p>
         </div>
       )}
 
@@ -107,9 +116,7 @@ export default async function BillingSettingsPage({ searchParams }: PageProps) {
             <p className="text-xs text-slate-400 mt-1">Add a card to smoothly transition after your pilot.</p>
           </div>
           
-          <button className="w-full py-2.5 bg-slate-50 dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-900 dark:text-white text-sm font-bold rounded-xl transition-colors border border-slate-200 dark:border-zinc-800">
-            Add Payment Method
-          </button>
+          <AddCardButton />
         </div>
       </div>
 
