@@ -7,24 +7,33 @@ export function CheckoutButton() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const handleCheckout = async () => {
+  const handleCheckout = async (e: React.MouseEvent) => {
+    e.preventDefault();
     try {
       setLoading(true);
       setErrorMsg(null);
+      
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
-      const data = await res.json();
       
-      if (data.url) {
-        window.location.href = data.url;
+      let data;
+      try {
+        data = await res.json();
+      } catch (err) {
+        throw new Error(`Server returned a non-JSON response (Status: ${res.status})`);
+      }
+      
+      if (res.ok && data.url) {
+        window.location.assign(data.url);
       } else {
-        throw new Error(data.error || "Failed to create checkout session");
+        throw new Error(data.error || `Server Error ${res.status}: Failed to create session`);
       }
     } catch (error: any) {
       console.error(error);
       setErrorMsg(error.message);
+      alert("Error: " + error.message);
       setLoading(false);
     }
   };

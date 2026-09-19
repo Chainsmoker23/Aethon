@@ -7,24 +7,33 @@ export function AddCardButton() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const handleSetup = async () => {
+  const handleSetup = async (e: React.MouseEvent) => {
+    e.preventDefault();
     try {
       setLoading(true);
       setErrorMsg(null);
+      
       const res = await fetch("/api/setup-card", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
-      const data = await res.json();
+      
+      let data;
+      try {
+        data = await res.json();
+      } catch (err) {
+        throw new Error(`Server returned a non-JSON response (Status: ${res.status})`);
+      }
 
-      if (data.url) {
-        window.location.href = data.url;
+      if (res.ok && data.url) {
+        window.location.assign(data.url);
       } else {
-        throw new Error(data.error || "Failed to open card setup");
+        throw new Error(data.error || `Server Error ${res.status}: Failed to open setup`);
       }
     } catch (error: any) {
       console.error(error);
       setErrorMsg(error.message);
+      alert("Error: " + error.message);
       setLoading(false);
     }
   };
