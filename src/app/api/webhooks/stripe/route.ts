@@ -31,23 +31,23 @@ export async function POST(req: Request) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
         
-        // This is the user_id we passed in the metadata when creating the session
-        const userId = session.metadata?.userId;
+        // This is the facility_id we passed in the metadata when creating the session
+        const facilityId = session.metadata?.facilityId;
         const customerId = session.customer as string;
         
-        if (userId) {
-          // Update the user's profile with their new subscription status
+        if (facilityId) {
+          // Update the facility with their new subscription status
           const { error } = await supabase
-            .from('user_profiles')
+            .from('facilities')
             .update({ 
               plan: 'annual', 
               stripe_customer_id: customerId,
               subscription_status: 'active' 
             })
-            .eq('id', userId);
+            .eq('id', facilityId);
             
           if (error) {
-            console.error('Error updating user profile in Supabase:', error);
+            console.error('Error updating facility in Supabase:', error);
           }
         }
         break;
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
         const plan = (status === 'active' || status === 'past_due') ? 'annual' : 'pilot';
         
         await supabase
-          .from('user_profiles')
+          .from('facilities')
           .update({ subscription_status: status, plan: plan })
           .eq('stripe_customer_id', customerId);
           

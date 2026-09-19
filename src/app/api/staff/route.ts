@@ -15,11 +15,11 @@ export async function GET() {
 
     const { data: profile } = await supabase
       .from('user_profiles')
-      .select('role')
+      .select('role, facility_id')
       .eq('id', user.id)
       .single();
 
-    if (profile?.role !== 'admin' && profile?.role !== 'staff') {
+    if (profile?.role !== 'superadmin' && profile?.role !== 'admin' && profile?.role !== 'staff') {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
@@ -29,16 +29,18 @@ export async function GET() {
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
 
-    // 2. Fetch active staff
+    // 2. Fetch active staff (ONLY for this facility)
     const { data: activeStaff } = await supabaseAdmin
       .from('user_profiles')
       .select('id, full_name, role')
-      .in('role', ['admin', 'staff', 'caregiver']);
+      .in('role', ['admin', 'staff', 'caregiver'])
+      .eq('facility_id', profile.facility_id);
 
-    // 3. Fetch pending invites
+    // 3. Fetch pending invites (ONLY for this facility)
     const { data: pendingInvites } = await supabaseAdmin
       .from('staff_invitations')
-      .select('id, email, role, created_at');
+      .select('id, email, role, created_at')
+      .eq('facility_id', profile.facility_id);
 
     return NextResponse.json({ 
       active: activeStaff || [],

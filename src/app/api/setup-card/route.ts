@@ -41,16 +41,25 @@ export async function GET(request: Request) {
     // 3. Save customerId to Supabase if it's not already there
     const { data: profile } = await supabase
       .from('user_profiles')
-      .select('stripe_customer_id')
+      .select('facility_id')
       .eq('id', user.id)
       .single();
-      
-    if (profile?.stripe_customer_id !== customerId) {
-      await supabase
-        .from('user_profiles')
-        .update({ stripe_customer_id: customerId })
-        .eq('id', user.id);
+
+    if (!profile?.facility_id) {
+       return new NextResponse('User not attached to a facility', { status: 400 });
     }
+    
+    // We need service role to update facilities table
+    const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+    const supabaseAdmin = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+      
+    await supabaseAdmin
+        .from('facilities')
+        .update({ stripe_customer_id: customerId })
+        .eq('id', profile.facility_id);
 
     // 4. Create a Stripe Checkout Session in 'setup' mode to save a card
     const session = await stripe.checkout.sessions.create({
@@ -61,6 +70,7 @@ export async function GET(request: Request) {
       cancel_url: `${returnUrl}?canceled=true`,
       metadata: {
         userId: user.id,
+        facilityId: profile.facility_id
       }
     });
 

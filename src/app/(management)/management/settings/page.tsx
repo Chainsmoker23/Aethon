@@ -38,19 +38,24 @@ export default function SettingsPage() {
       if (user) {
         setUserName(user.user_metadata?.full_name || user.email?.split('@')[0] || "Staff User");
         
-        // Also fetch subscription status
-        const { data: profile } = await supabase
-          .from('user_profiles')
-          .select('plan, subscription_status')
-          .eq('id', user.id)
-          .single();
-          
-        if (profile?.plan) {
-          setPlan(profile.plan);
-        }
-        if (profile?.subscription_status) {
-          setSubscriptionStatus(profile.subscription_status);
-        }
+          // Also fetch subscription status from their facility
+          const { data: profile } = await supabase
+            .from('user_profiles')
+            .select(`
+              facilities ( plan, subscription_status )
+            `)
+            .eq('id', user.id)
+            .single();
+            
+          // @ts-ignore
+          const facility = profile?.facilities;
+            
+          if (facility?.plan) {
+            setPlan(facility.plan);
+          }
+          if (facility?.subscription_status) {
+            setSubscriptionStatus(facility.subscription_status);
+          }
         
         // Fetch active beds
         const { count } = await supabase

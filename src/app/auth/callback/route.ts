@@ -29,7 +29,7 @@ export async function GET(request: Request) {
         const targetEmail = user.email?.toLowerCase().trim() || '';
         const { data: invite, error: inviteError } = await supabaseAdmin
           .from('staff_invitations')
-          .select('role')
+          .select('role, facility_id')
           .ilike('email', targetEmail)
           .single();
 
@@ -38,9 +38,12 @@ export async function GET(request: Request) {
            return NextResponse.redirect(`${origin}/family?err=invite_fetch_failed_${encodeURIComponent(inviteError.message)}`);
         }
 
+        let facilityId = null;
+
         if (invite) {
           // Grant them the invited role
           finalRole = invite.role === 'admin' ? 'admin' : 'caregiver';
+          facilityId = invite.facility_id;
 
           // Consume the invite
           await supabaseAdmin
@@ -51,21 +54,28 @@ export async function GET(request: Request) {
           // If no invite, check if they already have a profile with a staff role
           const { data: profile, error: profileErr } = await supabaseAdmin
             .from('user_profiles')
-            .select('role')
+            .select('role, facility_id')
             .eq('id', user.id)
             .single();
             
           if (profile?.role === 'superadmin' || profile?.role === 'admin' || profile?.role === 'staff' || profile?.role === 'caregiver') {
             finalRole = profile.role;
           }
+          facilityId = profile?.facility_id || null;
         }
         
         // Ensure they have a profile so the strict middleware RBAC doesn't block them
-        const { error: upsertErr } = await supabaseAdmin.from('user_profiles').upsert({
+        const profileUpdate: any = {
           id: user.id,
           role: finalRole,
           full_name: user.user_metadata?.full_name || user.email || 'User'
-        });
+        };
+        
+        if (facilityId) {
+          profileUpdate.facility_id = facilityId;
+        }
+
+        const { error: upsertErr } = await supabaseAdmin.from('user_profiles').upsert(profileUpdate);
 
         if (upsertErr) {
            return NextResponse.redirect(`${origin}/family?err=upsert_failed_${encodeURIComponent(upsertErr.message)}`);

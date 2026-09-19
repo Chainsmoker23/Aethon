@@ -84,7 +84,11 @@ export async function middleware(request: NextRequest) {
   if (user) {
     const { data: profile } = await supabase
       .from('user_profiles')
-      .select('role, subscription_status')
+      .select(`
+        role, 
+        facility_id,
+        facilities ( subscription_status )
+      `)
       .eq('id', user.id)
       .single()
 
@@ -92,6 +96,9 @@ export async function middleware(request: NextRequest) {
     const isSuperAdmin = role === 'superadmin'
     const isStaff = role === 'staff' || role === 'admin' || role === 'caregiver'
     const isFamily = role === 'family'
+    
+    // @ts-ignore
+    const facilityStatus = profile?.facilities?.subscription_status || 'pilot';
 
     const path = request.nextUrl.pathname
 
@@ -112,7 +119,7 @@ export async function middleware(request: NextRequest) {
     }
 
     // 0. LOCKOUT: If subscription is past due, force them to the settings page
-    if (isStaff && profile?.subscription_status === 'past_due' && path !== '/management/settings') {
+    if (isStaff && facilityStatus === 'past_due' && path !== '/management/settings') {
       const url = request.nextUrl.clone()
       url.pathname = '/management/settings'
       return NextResponse.redirect(url)

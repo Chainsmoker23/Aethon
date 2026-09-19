@@ -18,8 +18,34 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // 2. Count active residents (beds) for dynamic pricing
-    const { count, error: countError } = await supabase.from('residents').select('*', { count: 'exact', head: true });
+    // 2. Fetch the user's facility
+    const { data: profile } = await supabase
+      .from('user_profiles')
+      .select('facility_id')
+      .eq('id', user.id)
+      .single();
+
+    if (!profile?.facility_id) {
+       return new NextResponse('User not attached to a facility', { status: 400 });
+    }
+
+    const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+    const supabaseAdmin = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
+    const { data: facility } = await supabaseAdmin
+      .from('facilities')
+      .select('stripe_customer_id')
+      .eq('id', profile.facility_id)
+      .single();
+
+    // 3. Count active residents (beds) for dynamic pricing for THIS FACILITY
+    const { count, error: countError } = await supabaseAdmin
+      .from('residents')
+      .select('*', { count: 'exact', head: true })
+      .eq('facility_id', profile.facility_id);
     
     if (countError) {
       console.error('Supabase count error:', countError);
@@ -35,10 +61,9 @@ export async function GET(request: Request) {
     const siteUrl = getSiteUrl();
     const returnUrl = `${siteUrl}/management/settings`;
 
-    // 3. Create Stripe Checkout Session
-    const session = await stripe.checkout.sessions.create({
+    // 4. Create Stripe Checkout Session
+    const sessionConfig: Stripe.Checkout.SessionCreateParams = {
       payment_method_types: ['card'],
-      customer_email: user.email,
       line_items: [
         {
           price_data: {
@@ -60,9 +85,18 @@ export async function GET(request: Request) {
       cancel_url: `${returnUrl}?canceled=true`,
       metadata: {
         userId: user.id,
+        facilityId: profile.facility_id,
         beds: billableBeds.toString(),
       },
-    });
+    };
+
+    if (facility?.stripe_customer_id) {
+       sessionConfig.customer = facility.stripe_customer_id;
+    } else {
+       sessionConfig.customer_email = user.email;
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionConfig);
 
     if (!session.url) {
       throw new Error('Stripe did not return a checkout URL');

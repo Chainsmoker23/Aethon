@@ -14,21 +14,39 @@ export async function POST() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // 2. Fetch the user's customer ID and plan
+    // 2. Fetch the user's facility ID
     const { data: profile } = await supabase
       .from('user_profiles')
-      .select('stripe_customer_id, plan')
+      .select('facility_id')
       .eq('id', user.id)
       .single();
+      
+    if (!profile?.facility_id) {
+       return NextResponse.json({ message: 'User not linked to a facility.' });
+    }
+    
+    // Fetch the facility's stripe customer id using service role
+    const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+    const supabaseAdmin = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+    
+    const { data: facility } = await supabaseAdmin
+      .from('facilities')
+      .select('stripe_customer_id, plan')
+      .eq('id', profile.facility_id)
+      .single();
 
-    if (!profile?.stripe_customer_id || profile.plan !== 'annual') {
-      return NextResponse.json({ message: 'User is not on an active annual plan, skipping sync.' });
+    if (!facility?.stripe_customer_id || facility.plan !== 'annual') {
+      return NextResponse.json({ message: 'Facility is not on an active annual plan, skipping sync.' });
     }
 
-    // 3. Count exact active residents (beds)
-    const { count, error: countError } = await supabase
+    // 3. Count exact active residents (beds) for THIS facility
+    const { count, error: countError } = await supabaseAdmin
       .from('residents')
-      .select('*', { count: 'exact', head: true });
+      .select('*', { count: 'exact', head: true })
+      .eq('facility_id', profile.facility_id);
       
     if (countError) throw countError;
     
@@ -36,7 +54,7 @@ export async function POST() {
 
     // 4. Retrieve their active Stripe subscription
     const subscriptions = await stripe.subscriptions.list({
-      customer: profile.stripe_customer_id,
+      customer: facility.stripe_customer_id,
       status: 'active',
       limit: 1,
     });

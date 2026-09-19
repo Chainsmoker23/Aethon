@@ -22,12 +22,16 @@ export async function POST(request: Request) {
 
     const { data: profile } = await supabase
       .from('user_profiles')
-      .select('role')
+      .select('role, facility_id')
       .eq('id', user.id)
       .single();
 
-    if (profile?.role !== 'admin' && profile?.role !== 'staff') {
+    if (profile?.role !== 'superadmin' && profile?.role !== 'admin' && profile?.role !== 'staff') {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
+    if (!profile?.facility_id) {
+      return NextResponse.json({ error: 'Your account is not linked to a facility.' }, { status: 400 });
     }
 
     // Insert into Supabase using the Service Role Key to bypass strict RLS
@@ -44,7 +48,8 @@ export async function POST(request: Request) {
         {
           email: email.trim().toLowerCase(),
           role: role,
-          invited_by: user.id
+          invited_by: user.id,
+          facility_id: profile.facility_id
         }
       ]);
 
