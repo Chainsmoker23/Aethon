@@ -232,9 +232,9 @@ export default function SettingsPage() {
                       <h2 className="text-xl font-bold mb-1">Your trial ends in 42 days</h2>
                       <p className="text-indigo-100 text-sm max-w-md">You are currently enjoying full access to Aethon Management Core. Upgrade to an annual plan to ensure uninterrupted access to resident baselines and shift handovers.</p>
                     </div>
-                    <button className="shrink-0 bg-white text-indigo-600 px-6 py-3 rounded-xl font-bold text-sm shadow-sm hover:scale-105 transition-transform">
+                    <a href="/api/checkout" className="shrink-0 bg-white text-indigo-600 px-6 py-3 rounded-xl font-bold text-sm shadow-sm hover:scale-105 transition-transform flex items-center justify-center">
                       Upgrade to Annual Plan
-                    </button>
+                    </a>
                   </div>
                 </div>
 
@@ -280,9 +280,9 @@ export default function SettingsPage() {
                       <p className="text-xs text-slate-400 mt-1">Add a card to smoothly transition after your pilot.</p>
                     </div>
                     
-                    <button className="w-full py-2.5 bg-slate-50 dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-900 dark:text-white text-sm font-bold rounded-xl transition-colors border border-slate-200 dark:border-zinc-800">
+                    <a href="/api/setup-card" className="w-full py-2.5 bg-slate-50 dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-900 dark:text-white text-sm font-bold rounded-xl transition-colors border border-slate-200 dark:border-zinc-800 flex items-center justify-center">
                       Add Payment Method
-                    </button>
+                    </a>
                   </div>
                 </div>
 
