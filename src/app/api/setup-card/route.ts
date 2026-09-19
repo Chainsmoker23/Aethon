@@ -14,14 +14,14 @@ function getSiteUrl(): string {
   return 'https://aethon-amber.vercel.app';
 }
 
-export async function POST() {
+export async function GET(request: Request) {
   try {
     const supabase = await createClient();
 
     // 1. Verify user is authenticated
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return new NextResponse('Unauthorized', { status: 401 });
     }
 
     const siteUrl = getSiteUrl();
@@ -57,10 +57,10 @@ export async function POST() {
       throw new Error('Stripe did not return a setup URL');
     }
 
-    return NextResponse.json({ url: session.url });
+    return NextResponse.redirect(session.url, 303);
 
   } catch (error: any) {
     console.error('Stripe Setup Error:', error);
-    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
+    return new NextResponse(`Error: ${error.message || 'Internal server error'}`, { status: 500 });
   }
 }

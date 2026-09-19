@@ -15,7 +15,7 @@ function getSiteUrl(): string {
   return 'https://aethon-amber.vercel.app';
 }
 
-export async function POST() {
+export async function GET(request: Request) {
   try {
     const supabase = await createClient();
 
@@ -75,10 +75,10 @@ export async function POST() {
       throw new Error('Stripe did not return a checkout URL');
     }
 
-    return NextResponse.json({ url: session.url });
+    return NextResponse.redirect(session.url, 303);
 
   } catch (error: any) {
     console.error('Stripe Checkout Error:', error);
-    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
+    return new NextResponse(`Error: ${error.message || 'Internal server error'}`, { status: 500 });
   }
 }

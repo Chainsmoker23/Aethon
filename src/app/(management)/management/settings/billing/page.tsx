@@ -66,7 +66,9 @@ export default async function BillingSettingsPage({ searchParams }: PageProps) {
               <h2 className="text-xl font-bold mb-1">Your trial ends in {daysLeft} days</h2>
               <p className="text-indigo-100 text-sm max-w-md">You are currently enjoying full access to Aethon Management Core. Upgrade to an annual plan to ensure uninterrupted access to resident baselines and shift handovers.</p>
             </div>
-            <CheckoutButton />
+            <a href="/api/checkout" className="shrink-0 bg-white text-indigo-600 px-6 py-3 rounded-xl font-bold text-sm shadow-sm hover:scale-105 transition-transform cursor-pointer flex items-center justify-center min-w-[200px]">
+              Upgrade to Annual Plan
+            </a>
           </div>
         </div>
       )}
@@ -116,7 +118,9 @@ export default async function BillingSettingsPage({ searchParams }: PageProps) {
             <p className="text-xs text-slate-400 mt-1">Add a card to smoothly transition after your pilot.</p>
           </div>
           
-          <AddCardButton />
+          <a href="/api/setup-card" className="w-full py-2.5 bg-slate-50 dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-900 dark:text-white text-sm font-bold rounded-xl transition-colors border border-slate-200 dark:border-zinc-800 cursor-pointer flex items-center justify-center gap-2">
+            Add Payment Method
+          </a>
         </div>
       </div>
 
