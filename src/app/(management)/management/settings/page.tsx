@@ -12,6 +12,8 @@ export default function SettingsPage() {
   const [isExporting, setIsExporting] = useState<string | null>(null);
   const [userName, setUserName] = useState("Staff User");
   const [plan, setPlan] = useState("pilot");
+  const [invoices, setInvoices] = useState<any[]>([]);
+  const [loadingInvoices, setLoadingInvoices] = useState(true);
   const supabase = createClient();
   const { theme, setTheme } = useTheme();
   
@@ -44,6 +46,17 @@ export default function SettingsPage() {
             })
             .catch(console.error);
         }
+        // Fetch invoices
+        fetch('/api/invoices')
+          .then(res => res.json())
+          .then(data => {
+            if (data.invoices) setInvoices(data.invoices);
+            setLoadingInvoices(false);
+          })
+          .catch(err => {
+            console.error(err);
+            setLoadingInvoices(false);
+          });
       }
     }
     getUser();
@@ -321,10 +334,46 @@ export default function SettingsPage() {
                     </h3>
                     <a href="/api/customer-portal" className="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline">View all in Stripe</a>
                   </div>
-                  <div className="p-12 flex flex-col items-center justify-center text-center">
-                    <Receipt className="w-12 h-12 text-slate-200 dark:text-zinc-800 mb-3" />
-                    <h4 className="font-bold text-slate-900 dark:text-white mb-1">No invoices yet</h4>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm">Once your pilot ends and your annual subscription begins, your invoices will appear here.</p>
+                  <div className="p-0 flex flex-col">
+                    {loadingInvoices ? (
+                      <div className="p-12 flex justify-center items-center">
+                        <Loader2 className="w-8 h-8 animate-spin text-slate-300" />
+                      </div>
+                    ) : invoices.length > 0 ? (
+                      <div className="divide-y divide-slate-100 dark:divide-zinc-800/50">
+                        {invoices.map((inv: any) => (
+                          <div key={inv.id} className="p-4 md:p-6 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-zinc-900/50 transition-colors">
+                            <div className="flex items-center gap-4">
+                              <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center shrink-0">
+                                <Receipt className="w-5 h-5 text-blue-500" />
+                              </div>
+                              <div>
+                                <p className="font-bold text-sm text-slate-900 dark:text-white">
+                                  {(inv.amount_paid / 100).toLocaleString('en-CH', { style: 'currency', currency: inv.currency.toUpperCase() })}
+                                </p>
+                                <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+                                  {new Date(inv.created * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                </p>
+                              </div>
+                            </div>
+                            <a 
+                              href={inv.hosted_invoice_url} 
+                              target="_blank" 
+                              rel="noreferrer"
+                              className="px-4 py-2 text-xs font-bold bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 rounded-lg hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors shadow-sm"
+                            >
+                              Download PDF
+                            </a>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="p-12 flex flex-col items-center justify-center text-center">
+                        <Receipt className="w-12 h-12 text-slate-200 dark:text-zinc-800 mb-3" />
+                        <h4 className="font-bold text-slate-900 dark:text-white mb-1">No invoices yet</h4>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm">Once your pilot ends and your annual subscription begins, your invoices will appear here.</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
