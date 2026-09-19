@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     if (dbError) {
       if (dbError.code !== '23505') { 
          console.error('DB Error:', dbError);
-         return NextResponse.json({ error: 'Failed to save invitation' }, { status: 500 });
+         return NextResponse.json({ error: 'Database Error: ' + dbError.message }, { status: 500 });
       }
     }
 
