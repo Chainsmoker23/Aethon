@@ -21,7 +21,7 @@ export default function SettingsPage() {
       if (user) {
         setUserName(user.user_metadata?.full_name || user.email?.split('@')[0] || "Staff User");
         
-        // Fetch subscription status
+        // Also fetch subscription status
         const { data: profile } = await supabase
           .from('user_profiles')
           .select('plan')
@@ -30,6 +30,19 @@ export default function SettingsPage() {
           
         if (profile?.plan) {
           setPlan(profile.plan);
+        }
+        
+        // Fallback: If we just returned from Stripe, verify the session directly
+        // to bypass any webhook delays or failures
+        const params = new URLSearchParams(window.location.search);
+        const sessionId = params.get('session_id');
+        if (sessionId && profile?.plan !== 'annual') {
+          fetch(`/api/verify-session?session_id=${sessionId}`)
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) setPlan('annual');
+            })
+            .catch(console.error);
         }
       }
     }

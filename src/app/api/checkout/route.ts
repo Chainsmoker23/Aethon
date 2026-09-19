@@ -59,7 +59,7 @@ export async function GET(request: Request) {
         },
       ],
       mode: 'subscription',
-      success_url: `${returnUrl}?success=true`,
+      success_url: `${returnUrl}?success=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${returnUrl}?canceled=true`,
       metadata: {
         userId: user.id,
