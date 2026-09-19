@@ -35,6 +35,7 @@ export async function GET(request: Request) {
 
         if (inviteError && inviteError.code !== 'PGRST116') {
            console.error("Invite fetch error:", inviteError);
+           return NextResponse.redirect(`${origin}/family?err=invite_fetch_failed_${encodeURIComponent(inviteError.message)}`);
         }
 
         if (invite) {
@@ -48,7 +49,7 @@ export async function GET(request: Request) {
             .ilike('email', targetEmail);
         } else {
           // If no invite, check if they already have a profile with a staff role
-          const { data: profile } = await supabase
+          const { data: profile, error: profileErr } = await supabaseAdmin
             .from('user_profiles')
             .select('role')
             .eq('id', user.id)
@@ -60,21 +61,28 @@ export async function GET(request: Request) {
         }
         
         // Ensure they have a profile so the strict middleware RBAC doesn't block them
-        await supabaseAdmin.from('user_profiles').upsert({
+        const { error: upsertErr } = await supabaseAdmin.from('user_profiles').upsert({
           id: user.id,
           role: finalRole,
           full_name: user.user_metadata?.full_name || user.email || 'User'
         });
 
+        if (upsertErr) {
+           return NextResponse.redirect(`${origin}/family?err=upsert_failed_${encodeURIComponent(upsertErr.message)}`);
+        }
+
         if (finalRole === 'admin' || finalRole === 'staff' || finalRole === 'caregiver') {
           const response = NextResponse.redirect(`${origin}/management`)
-          // We clear the demo_role since we are secure now
+          response.cookies.delete('demo_role')
+          return response
+        } else {
+          const response = NextResponse.redirect(`${origin}/family?err=final_role_was_${finalRole}`)
           response.cookies.delete('demo_role')
           return response
         }
       }
       
-      const response = NextResponse.redirect(`${origin}/family`)
+      const response = NextResponse.redirect(`${origin}/family?err=no_user`)
       response.cookies.delete('demo_role')
       return response
     } else {
