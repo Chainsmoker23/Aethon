@@ -88,12 +88,27 @@ export async function middleware(request: NextRequest) {
       .eq('id', user.id)
       .single()
 
-    const demoRole = request.cookies.get('demo_role')?.value
-    const role = demoRole || profile?.role || 'family' // Respect demo cookie if DB is locked
-    const isStaff = role === 'staff' || role === 'admin'
+    const role = profile?.role || 'family' 
+    const isSuperAdmin = role === 'superadmin'
+    const isStaff = role === 'staff' || role === 'admin' || role === 'caregiver'
     const isFamily = role === 'family'
 
     const path = request.nextUrl.pathname
+
+    // SUPER ADMIN ROUTING
+    if (path.startsWith('/superadmin') && !isSuperAdmin) {
+      const url = request.nextUrl.clone()
+      url.pathname = isStaff ? '/management' : '/family'
+      return NextResponse.redirect(url)
+    }
+
+    if (isSuperAdmin && (path.startsWith('/management') || path.startsWith('/family') || isAuthRoute)) {
+      if (path !== '/superadmin') {
+         const url = request.nextUrl.clone()
+         url.pathname = '/superadmin'
+         return NextResponse.redirect(url)
+      }
+    }
 
     // 0. LOCKOUT: If subscription is past due, force them to the settings page
     if (isStaff && profile?.subscription_status === 'past_due' && path !== '/management/settings') {
@@ -103,21 +118,21 @@ export async function middleware(request: NextRequest) {
     }
 
     // 1. Logged-in users hitting auth routes get redirected to their specific dashboard
-    if (isAuthRoute) {
+    if (isAuthRoute && !isSuperAdmin) {
       const url = request.nextUrl.clone()
       url.pathname = isStaff ? '/management' : '/family'
       return NextResponse.redirect(url)
     }
 
     // 2. Prevent family from accessing management routes
-    if (path.startsWith('/management') && !isStaff) {
+    if (path.startsWith('/management') && !isStaff && !isSuperAdmin) {
       const url = request.nextUrl.clone()
       url.pathname = '/family'
       return NextResponse.redirect(url)
     }
 
     // 3. Prevent staff from accessing family routes (optional, but good for separation)
-    if (path.startsWith('/family') && isStaff) {
+    if (path.startsWith('/family') && isStaff && !isSuperAdmin) {
       const url = request.nextUrl.clone()
       url.pathname = '/management'
       return NextResponse.redirect(url)
