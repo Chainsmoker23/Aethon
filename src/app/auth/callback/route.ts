@@ -55,7 +55,7 @@ export async function GET(request: Request) {
             .eq('id', user.id)
             .single();
             
-          if (profile?.role === 'admin' || profile?.role === 'staff' || profile?.role === 'caregiver') {
+          if (profile?.role === 'superadmin' || profile?.role === 'admin' || profile?.role === 'staff' || profile?.role === 'caregiver') {
             finalRole = profile.role;
           }
         }
@@ -71,7 +71,11 @@ export async function GET(request: Request) {
            return NextResponse.redirect(`${origin}/family?err=upsert_failed_${encodeURIComponent(upsertErr.message)}`);
         }
 
-        if (finalRole === 'admin' || finalRole === 'staff' || finalRole === 'caregiver') {
+        if (finalRole === 'superadmin') {
+          const response = NextResponse.redirect(`${origin}/superadmin`)
+          response.cookies.delete('demo_role')
+          return response
+        } else if (finalRole === 'admin' || finalRole === 'staff' || finalRole === 'caregiver') {
           const response = NextResponse.redirect(`${origin}/management`)
           response.cookies.delete('demo_role')
           return response
