@@ -58,9 +58,9 @@ export async function POST(req: Request) {
         const subscription = event.data.object as Stripe.Subscription;
         const customerId = subscription.customer as string;
         
-        // Update status based on subscription state
-        const status = subscription.status === 'active' ? 'active' : 'canceled';
-        const plan = status === 'active' ? 'annual' : 'pilot';
+        // Exact status from Stripe ('active', 'past_due', 'canceled', 'unpaid', etc)
+        const status = subscription.status;
+        const plan = (status === 'active' || status === 'past_due') ? 'annual' : 'pilot';
         
         await supabase
           .from('user_profiles')

@@ -84,7 +84,7 @@ export async function middleware(request: NextRequest) {
   if (user) {
     const { data: profile } = await supabase
       .from('user_profiles')
-      .select('role')
+      .select('role, subscription_status')
       .eq('id', user.id)
       .single()
 
@@ -94,6 +94,13 @@ export async function middleware(request: NextRequest) {
     const isFamily = role === 'family'
 
     const path = request.nextUrl.pathname
+
+    // 0. LOCKOUT: If subscription is past due, force them to the settings page
+    if (isStaff && profile?.subscription_status === 'past_due' && path !== '/management/settings') {
+      const url = request.nextUrl.clone()
+      url.pathname = '/management/settings'
+      return NextResponse.redirect(url)
+    }
 
     // 1. Logged-in users hitting auth routes get redirected to their specific dashboard
     if (isAuthRoute) {

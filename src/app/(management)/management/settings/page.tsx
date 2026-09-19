@@ -12,6 +12,7 @@ export default function SettingsPage() {
   const [isExporting, setIsExporting] = useState<string | null>(null);
   const [userName, setUserName] = useState("Staff User");
   const [plan, setPlan] = useState("pilot");
+  const [subscriptionStatus, setSubscriptionStatus] = useState("trialing");
   const [invoices, setInvoices] = useState<any[]>([]);
   const [cards, setCards] = useState<any[]>([]);
   const [totalBeds, setTotalBeds] = useState(0);
@@ -29,12 +30,15 @@ export default function SettingsPage() {
         // Also fetch subscription status
         const { data: profile } = await supabase
           .from('user_profiles')
-          .select('plan')
+          .select('plan, subscription_status')
           .eq('id', user.id)
           .single();
           
         if (profile?.plan) {
           setPlan(profile.plan);
+        }
+        if (profile?.subscription_status) {
+          setSubscriptionStatus(profile.subscription_status);
         }
         
         // Fetch active beds
@@ -255,7 +259,28 @@ export default function SettingsPage() {
           </SignOutButton>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 animate-fade-in-up delay-100">
+        {/* Lockout Banner */}
+        {subscriptionStatus === 'past_due' && (
+          <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-6 rounded-xl shadow-sm mb-8 animate-fade-in flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex gap-4">
+              <AlertTriangle className="w-8 h-8 text-red-500 shrink-0" />
+              <div>
+                <h2 className="text-red-800 dark:text-red-200 font-bold text-lg mb-1">Payment Declined: Access Restricted</h2>
+                <p className="text-red-700 dark:text-red-300/80 text-sm">
+                  We were unable to process the charge for a recently added active bed. Your access to the Client Directory and Shift Handovers has been temporarily locked. Please update your payment method to automatically process the open invoice and instantly restore access.
+                </p>
+              </div>
+            </div>
+            <a 
+              href="/api/customer-portal" 
+              className="shrink-0 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold shadow-sm transition-colors flex items-center justify-center text-sm"
+            >
+              Update Payment Method
+            </a>
+          </div>
+        )}
+
+        <div className="flex flex-col md:flex-row gap-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
           
           {/* Settings Sidebar */}
           <div className="w-full lg:w-64 shrink-0 flex flex-row lg:flex-col gap-2 overflow-x-auto hide-scrollbar pb-2 lg:pb-0">
