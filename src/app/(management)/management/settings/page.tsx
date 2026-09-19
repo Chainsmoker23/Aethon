@@ -13,7 +13,9 @@ export default function SettingsPage() {
   const [userName, setUserName] = useState("Staff User");
   const [plan, setPlan] = useState("pilot");
   const [invoices, setInvoices] = useState<any[]>([]);
+  const [cards, setCards] = useState<any[]>([]);
   const [loadingInvoices, setLoadingInvoices] = useState(true);
+  const [loadingCards, setLoadingCards] = useState(true);
   const supabase = createClient();
   const { theme, setTheme } = useTheme();
   
@@ -56,6 +58,18 @@ export default function SettingsPage() {
           .catch(err => {
             console.error(err);
             setLoadingInvoices(false);
+          });
+          
+        // Fetch saved cards
+        fetch('/api/payment-methods')
+          .then(res => res.json())
+          .then(data => {
+            if (data.cards) setCards(data.cards);
+            setLoadingCards(false);
+          })
+          .catch(err => {
+            console.error(err);
+            setLoadingCards(false);
           });
       }
     }
@@ -315,10 +329,33 @@ export default function SettingsPage() {
                     </div>
                     <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Powered securely by Stripe</p>
                     
-                    <div className="flex-1 flex flex-col items-center justify-center text-center p-6 border-2 border-dashed border-slate-100 dark:border-zinc-800/80 rounded-xl mb-4">
-                      <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">No payment method added yet.</p>
-                      <p className="text-xs text-slate-400 mt-1">Add a card to smoothly transition after your pilot.</p>
-                    </div>
+                    {loadingCards ? (
+                      <div className="flex-1 flex items-center justify-center p-6 border-2 border-dashed border-slate-100 dark:border-zinc-800/80 rounded-xl mb-4">
+                        <Loader2 className="w-6 h-6 animate-spin text-slate-300" />
+                      </div>
+                    ) : cards.length > 0 ? (
+                      <div className="flex-1 flex flex-col gap-3 mb-4">
+                        {cards.map((card, idx) => (
+                          <div key={idx} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-6 bg-white dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700 flex items-center justify-center shrink-0">
+                                <span className="text-[10px] font-black uppercase text-slate-600 dark:text-zinc-300">{card.brand}</span>
+                              </div>
+                              <div>
+                                <p className="text-sm font-bold text-slate-900 dark:text-white">•••• {card.last4}</p>
+                                <p className="text-xs text-slate-500 dark:text-zinc-400">Expires {card.exp_month}/{card.exp_year}</p>
+                              </div>
+                            </div>
+                            {idx === 0 && <span className="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded-md">Default</span>}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="flex-1 flex flex-col items-center justify-center text-center p-6 border-2 border-dashed border-slate-100 dark:border-zinc-800/80 rounded-xl mb-4">
+                        <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">No payment method added yet.</p>
+                        <p className="text-xs text-slate-400 mt-1">Add a card to smoothly transition after your pilot.</p>
+                      </div>
+                    )}
                     
                     <a href="/api/setup-card" className="w-full py-2.5 bg-slate-50 dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-900 dark:text-white text-sm font-bold rounded-xl transition-colors border border-slate-200 dark:border-zinc-800 flex items-center justify-center">
                       Add Payment Method

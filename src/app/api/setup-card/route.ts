@@ -38,13 +38,30 @@ export async function GET(request: Request) {
       customerId = customer.id;
     }
 
-    // 3. Create a Stripe Checkout Session in 'setup' mode to save a card
+    // 3. Save customerId to Supabase if it's not already there
+    const { data: profile } = await supabase
+      .from('user_profiles')
+      .select('stripe_customer_id')
+      .eq('id', user.id)
+      .single();
+      
+    if (profile?.stripe_customer_id !== customerId) {
+      await supabase
+        .from('user_profiles')
+        .update({ stripe_customer_id: customerId })
+        .eq('id', user.id);
+    }
+
+    // 4. Create a Stripe Checkout Session in 'setup' mode to save a card
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'setup',
       customer: customerId,
       success_url: `${returnUrl}?card_added=true`,
       cancel_url: `${returnUrl}?canceled=true`,
+      metadata: {
+        userId: user.id,
+      }
     });
 
     if (!session.url) {
