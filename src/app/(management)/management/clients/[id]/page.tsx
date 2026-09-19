@@ -297,7 +297,10 @@ export default function ClientProfilePage() {
       return;
     }
 
-    // 3. Navigate back to the directory
+    // 3. Sync billing to decrease bed count
+    fetch('/api/billing/sync', { method: 'POST' }).catch(console.error);
+
+    // 4. Navigate back to the directory
     router.push('/management/clients');
   };
 

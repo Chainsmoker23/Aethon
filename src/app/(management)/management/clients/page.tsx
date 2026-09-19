@@ -75,6 +75,10 @@ export default function ClientsPage() {
     }]);
 
     await fetchClients(); // Refresh list to get new client
+    
+    // Silently sync billing quantity with Stripe
+    fetch('/api/billing/sync', { method: 'POST' }).catch(console.error);
+    
     setIsSubmitting(false);
     setIsModalOpen(false);
     setNewClient({ first_name: "", last_name: "", room_number: "", care_stage: "Independent" }); // reset
