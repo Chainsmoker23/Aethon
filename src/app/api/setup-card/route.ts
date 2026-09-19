@@ -5,12 +5,6 @@ import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 function getSiteUrl(): string {
-  if (process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL !== 'http://localhost:3000') {
-    return process.env.NEXT_PUBLIC_SITE_URL;
-  }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
   return 'https://aethon-amber.vercel.app';
 }
 
@@ -25,7 +19,7 @@ export async function GET(request: Request) {
     }
 
     const siteUrl = getSiteUrl();
-    const returnUrl = `${siteUrl}/management/settings/billing`;
+    const returnUrl = `${siteUrl}/management/settings`;
 
     // 2. Find or create a Stripe customer for this user
     const existingCustomers = await stripe.customers.list({

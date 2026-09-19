@@ -5,13 +5,6 @@ import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 function getSiteUrl(): string {
-  // Vercel provides this automatically in production
-  if (process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL !== 'http://localhost:3000') {
-    return process.env.NEXT_PUBLIC_SITE_URL;
-  }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
   return 'https://aethon-amber.vercel.app';
 }
 
@@ -43,7 +36,7 @@ export async function GET(request: Request) {
     const totalAnnualCostInRappen = billableBeds * annualPricePerBedCHF * 100;
 
     const siteUrl = getSiteUrl();
-    const returnUrl = `${siteUrl}/management/settings/billing`;
+    const returnUrl = `${siteUrl}/management/settings`;
 
     // 3. Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
