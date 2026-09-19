@@ -19,8 +19,14 @@ export async function GET(request: Request) {
       if (user) {
         let finalRole = 'family'; // Default secure role
 
-        // 1. Check if they were invited as staff
-        const { data: invite } = await supabase
+        const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+        const supabaseAdmin = createSupabaseClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.SUPABASE_SERVICE_ROLE_KEY!
+        );
+
+        // 1. Check if they were invited as staff using Service Role (since new users don't have RLS read access yet)
+        const { data: invite } = await supabaseAdmin
           .from('staff_invitations')
           .select('role')
           .eq('email', user.email)
@@ -31,7 +37,7 @@ export async function GET(request: Request) {
           finalRole = invite.role === 'admin' ? 'admin' : 'caregiver';
 
           // Consume the invite
-          await supabase
+          await supabaseAdmin
             .from('staff_invitations')
             .delete()
             .eq('email', user.email);
@@ -49,7 +55,7 @@ export async function GET(request: Request) {
         }
         
         // Ensure they have a profile so the strict middleware RBAC doesn't block them
-        await supabase.from('user_profiles').upsert({
+        await supabaseAdmin.from('user_profiles').upsert({
           id: user.id,
           role: finalRole,
           full_name: user.user_metadata?.full_name || user.email || 'User'
