@@ -102,7 +102,8 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(url)
     }
 
-    if (isSuperAdmin && (path.startsWith('/management') || path.startsWith('/family') || isAuthRoute)) {
+    // Super Admins are allowed in /management, but not /family or auth routes
+    if (isSuperAdmin && (path.startsWith('/family') || isAuthRoute)) {
       if (path !== '/superadmin') {
          const url = request.nextUrl.clone()
          url.pathname = '/superadmin'

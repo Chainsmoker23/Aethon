@@ -84,9 +84,11 @@ export default function SuperAdminPage() {
                       <span className="px-2.5 py-1 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-md text-xs font-black uppercase tracking-wider">Active</span>
                     </td>
                     <td className="p-4">
-                      <button className="flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
-                        Manage <ArrowRight className="w-4 h-4" />
-                      </button>
+                      <div className="flex items-center gap-4">
+                        <a href="/management" className="flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
+                          Enter Portal <ArrowRight className="w-4 h-4" />
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
