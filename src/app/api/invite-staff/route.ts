@@ -30,8 +30,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    // Insert into Supabase
-    const { error: dbError } = await supabase
+    // Insert into Supabase using the Service Role Key to bypass strict RLS
+    // (We already verified their admin permissions above)
+    const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+    const supabaseAdmin = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
+    const { error: dbError } = await supabaseAdmin
       .from('staff_invitations')
       .insert([
         {

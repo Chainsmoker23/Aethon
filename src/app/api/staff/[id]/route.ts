@@ -28,12 +28,18 @@ export async function DELETE(
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type');
 
+    const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+    const supabaseAdmin = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
     if (type === 'invite') {
-      await supabase.from('staff_invitations').delete().eq('id', targetId);
+      await supabaseAdmin.from('staff_invitations').delete().eq('id', targetId);
     } else {
       // It's an active staff member. We don't delete them from auth.users (requires service key).
       // We just downgrade their role so they can't access management anymore.
-      await supabase.from('user_profiles').update({ role: 'family' }).eq('id', targetId);
+      await supabaseAdmin.from('user_profiles').update({ role: 'family' }).eq('id', targetId);
     }
 
     return NextResponse.json({ success: true });
