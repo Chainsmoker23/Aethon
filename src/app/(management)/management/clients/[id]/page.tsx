@@ -126,21 +126,23 @@ export default function ClientProfilePage() {
 
   const handleAddNote = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newNote.trim()) return;
+    if (!newNote.trim() || !resident?.facility_id) return;
     setIsSubmittingNote(true);
 
     if (noteMode === "escalation") {
       await supabase.from('escalations').insert([{
         resident_id: residentId,
         reason: newNote.trim(),
-        is_resolved: false
+        is_resolved: false,
+        facility_id: resident.facility_id
       }]);
     } else {
       await supabase.from('visit_notes').insert([{
         resident_id: residentId,
         visit_type: 'Direct Note',
         tasks_completed: newNote.trim(),
-        is_escalation: false
+        is_escalation: false,
+        facility_id: resident.facility_id
       }]);
     }
 
@@ -152,13 +154,15 @@ export default function ClientProfilePage() {
 
   const handleAddMed = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!resident?.facility_id) return;
     setIsSubmittingMed(true);
     await supabase.from('medications').insert([{
       resident_id: residentId,
       name: newMed.name,
       dosage: newMed.dosage,
       scheduled_time: newMed.scheduled_time,
-      status: 'due'
+      status: 'due',
+      facility_id: resident.facility_id
     }]);
     
     await fetchProfile();

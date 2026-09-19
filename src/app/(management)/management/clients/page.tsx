@@ -67,11 +67,27 @@ export default function ClientsPage() {
     e.preventDefault();
     setIsSubmitting(true);
     
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    
+    const { data: profile } = await supabase
+      .from('user_profiles')
+      .select('facility_id')
+      .eq('id', user.id)
+      .single();
+      
+    if (!profile?.facility_id) {
+       console.error("No facility ID found for user");
+       setIsSubmitting(false);
+       return;
+    }
+    
     await supabase.from('residents').insert([{
       first_name: newClient.first_name,
       last_name: newClient.last_name,
       room_number: newClient.room_number,
-      care_stage: newClient.care_stage
+      care_stage: newClient.care_stage,
+      facility_id: profile.facility_id
     }]);
 
     await fetchClients(); // Refresh list to get new client

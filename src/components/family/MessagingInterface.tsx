@@ -57,12 +57,14 @@ export function MessagingInterface() {
     setSent(true);
 
     const { data: { user } } = await supabase.auth.getUser();
+    const { data: profile } = await supabase.from('user_profiles').select('facility_id').eq('id', user?.id).single();
 
     const newMsg = {
       resident_id: residentId,
       sender_id: user?.id,
       sender_role: 'family',
-      content: message.trim()
+      content: message.trim(),
+      facility_id: profile?.facility_id
     };
 
     const { error: dbError } = await supabase.from('messages').insert([newMsg]);

@@ -34,7 +34,7 @@ export function useFamilyResident() {
         // Check if this email was invited by the facility
         const { data: inviteData } = await supabase
           .from('family_invitations')
-          .select('resident_id')
+          .select('resident_id, facility_id')
           .eq('email', user.email)
           .single();
 
@@ -45,13 +45,15 @@ export function useFamilyResident() {
           await supabase.from('user_profiles').upsert({
             id: user.id,
             role: 'family',
-            full_name: user.user_metadata?.full_name || user.email || 'Family Member'
+            full_name: user.user_metadata?.full_name || user.email || 'Family Member',
+            facility_id: inviteData.facility_id
           });
 
           // Link them permanently in family_access
           await supabase.from('family_access').upsert({
             user_id: user.id,
-            resident_id: targetResidentId
+            resident_id: targetResidentId,
+            facility_id: inviteData.facility_id
           });
 
           // Consume the invite (delete it)

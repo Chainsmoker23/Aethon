@@ -20,6 +20,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { data: profile } = await supabase
+      .from('user_profiles')
+      .select('facility_id')
+      .eq('id', user.id)
+      .single();
+
+    if (!profile?.facility_id) {
+       return NextResponse.json({ error: 'User not attached to a facility' }, { status: 400 });
+    }
+
     // Insert into Supabase
     const { error: dbError } = await supabase
       .from('family_invitations')
@@ -27,6 +37,7 @@ export async function POST(request: Request) {
         {
           email: email.trim(),
           resident_id: residentId,
+          facility_id: profile.facility_id
         }
       ]);
 
