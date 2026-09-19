@@ -46,7 +46,18 @@ export default function ClientProfilePage() {
   // Edit Modal State
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [editForm, setEditForm] = useState({ first_name: "", last_name: "", room_number: "", care_stage: "Independent" });
+  const [editForm, setEditForm] = useState({ 
+    first_name: "", 
+    last_name: "", 
+    room_number: "", 
+    care_stage: "Independent",
+    date_of_birth: "",
+    physician_name: "",
+    physician_contact: "",
+    insurance_details: "",
+    allergies: "",
+    emergency_contacts: ""
+  });
 
   // Discharge Modal State
   const [isDischargeModalOpen, setIsDischargeModalOpen] = useState(false);
@@ -249,11 +260,30 @@ export default function ClientProfilePage() {
 
   const openEditModal = () => {
     if (!resident) return;
+    
+    // Parse emergency contacts back to string for the form
+    let ecString = "";
+    if (resident.emergency_contacts && Array.isArray(resident.emergency_contacts)) {
+      ecString = resident.emergency_contacts.map((c: any) => `${c.name}: ${c.phone}`).join('\n');
+    }
+    
+    // Parse allergies back to string
+    let algString = "";
+    if (resident.allergies && Array.isArray(resident.allergies)) {
+      algString = resident.allergies.join(', ');
+    }
+
     setEditForm({
-      first_name: resident.first_name,
-      last_name: resident.last_name,
+      first_name: resident.first_name || "",
+      last_name: resident.last_name || "",
       room_number: resident.room_number || "",
-      care_stage: resident.care_stage || "Independent"
+      care_stage: resident.care_stage || "Independent",
+      date_of_birth: resident.date_of_birth || "",
+      physician_name: resident.physician_name || "",
+      physician_contact: resident.physician_contact || "",
+      insurance_details: resident.insurance_details || "",
+      allergies: algString,
+      emergency_contacts: ecString
     });
     setIsEditModalOpen(true);
   };
@@ -262,13 +292,37 @@ export default function ClientProfilePage() {
     e.preventDefault();
     setIsUpdating(true);
     
+    // Process allergies string into array
+    const algArray = editForm.allergies
+      .split(',')
+      .map(s => s.trim())
+      .filter(s => s !== '');
+      
+    // Process emergency contacts string into JSON array
+    const ecArray = editForm.emergency_contacts
+      .split('\n')
+      .map(line => {
+        const parts = line.split(':');
+        if (parts.length >= 2) {
+           return { name: parts[0].trim(), phone: parts.slice(1).join(':').trim() };
+        }
+        return { name: line.trim(), phone: "" };
+      })
+      .filter(c => c.name !== '');
+
     const { error } = await supabase
       .from('residents')
       .update({
         first_name: editForm.first_name.trim(),
         last_name: editForm.last_name.trim(),
         room_number: editForm.room_number.trim() || null,
-        care_stage: editForm.care_stage
+        care_stage: editForm.care_stage,
+        date_of_birth: editForm.date_of_birth || null,
+        physician_name: editForm.physician_name.trim() || null,
+        physician_contact: editForm.physician_contact.trim() || null,
+        insurance_details: editForm.insurance_details.trim() || null,
+        allergies: algArray,
+        emergency_contacts: ecArray
       })
       .eq('id', residentId);
 
@@ -873,6 +927,73 @@ export default function ClientProfilePage() {
                     <option value="Facility">Facility</option>
                   </select>
                 </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Date of Birth</label>
+                  <input 
+                    type="date" 
+                    value={editForm.date_of_birth}
+                    onChange={e => setEditForm({...editForm, date_of_birth: e.target.value})}
+                    className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Insurance No.</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. 756.xxxx.xxxx.xx"
+                    value={editForm.insurance_details}
+                    onChange={e => setEditForm({...editForm, insurance_details: e.target.value})}
+                    className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
+                  />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Primary Physician</label>
+                  <input 
+                    type="text" 
+                    placeholder="e.g. Dr. Schmidt"
+                    value={editForm.physician_name}
+                    onChange={e => setEditForm({...editForm, physician_name: e.target.value})}
+                    className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Physician Email</label>
+                  <input 
+                    type="email" 
+                    placeholder="e.g. info@clinic.ch"
+                    value={editForm.physician_contact}
+                    onChange={e => setEditForm({...editForm, physician_contact: e.target.value})}
+                    className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Allergies (comma separated)</label>
+                <input 
+                  type="text" 
+                  placeholder="e.g. Penicillin, Peanuts"
+                  value={editForm.allergies}
+                  onChange={e => setEditForm({...editForm, allergies: e.target.value})}
+                  className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Emergency Contacts (one per line: Name: Phone)</label>
+                <textarea 
+                  placeholder="e.g. John Doe: +41 79 123 45 67"
+                  value={editForm.emergency_contacts}
+                  rows={2}
+                  onChange={e => setEditForm({...editForm, emergency_contacts: e.target.value})}
+                  className="w-full bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white dark:bg-[#0a0a0a] transition-colors"
+                />
               </div>
 
               <div className="pt-4">
