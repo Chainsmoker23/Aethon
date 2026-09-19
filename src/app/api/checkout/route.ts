@@ -31,9 +31,6 @@ export async function GET(request: Request) {
     
     // CHF 12 per bed per month, billed annually
     const annualPricePerBedCHF = 12 * 12; // 144 CHF per bed per year
-    
-    // Stripe expects amounts in the smallest currency unit (Rappen for CHF)
-    const totalAnnualCostInRappen = billableBeds * annualPricePerBedCHF * 100;
 
     const siteUrl = getSiteUrl();
     const returnUrl = `${siteUrl}/management/settings`;
@@ -47,15 +44,15 @@ export async function GET(request: Request) {
           price_data: {
             currency: 'chf',
             product_data: {
-              name: 'Aethon Health - Annual Plan',
-              description: `Annual SaaS License for ${billableBeds} active bed${billableBeds > 1 ? 's' : ''} (CHF 12/bed/month × 12 months).`,
+              name: 'Aethon Health - Active Bed License',
+              description: 'Annual SaaS License per active bed (CHF 12/bed/month x 12 months).',
             },
-            unit_amount: totalAnnualCostInRappen,
+            unit_amount: annualPricePerBedCHF * 100,
             recurring: {
               interval: 'year',
             },
           },
-          quantity: 1,
+          quantity: billableBeds,
         },
       ],
       mode: 'subscription',

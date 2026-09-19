@@ -313,16 +313,15 @@ export default function SettingsPage() {
                     </div>
                     
                     <div className="mb-6">
-                      <div className="flex justify-between text-sm mb-2">
-                        <span className="text-slate-500 dark:text-slate-400">Beds in use</span>
-                        <span className="font-bold text-slate-900 dark:text-white">{totalBeds} / 50</span>
+                      <div className="flex justify-between items-center text-sm mb-4">
+                        <span className="text-slate-500 dark:text-slate-400 font-medium">Total Active Beds</span>
+                        <span className="text-lg font-black text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-lg">
+                          {totalBeds}
+                        </span>
                       </div>
-                      <div className="w-full h-2 bg-slate-100 dark:bg-zinc-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-blue-500 rounded-full transition-all duration-1000" style={{ width: `${Math.min(100, (totalBeds / 50) * 100)}%` }} />
-                      </div>
-                      <div className="mt-4 flex items-center justify-between text-sm">
-                        <span className="text-slate-500 dark:text-slate-400">Monthly Cost Estimate</span>
-                        <span className="font-black text-slate-900 dark:text-white">CHF {Math.max(1, totalBeds) * 12}.00</span>
+                      <div className="flex items-center justify-between text-sm bg-slate-50 dark:bg-zinc-800/80 border border-slate-100 dark:border-zinc-700 p-4 rounded-xl">
+                        <span className="text-slate-600 dark:text-slate-300 font-medium">Monthly Cost (CHF 12/bed)</span>
+                        <span className="font-black text-slate-900 dark:text-white text-lg">CHF {Math.max(1, totalBeds) * 12}.00</span>
                       </div>
                     </div>
 
