@@ -51,11 +51,14 @@ export async function GET(request: Request) {
               description: `Annual SaaS License for ${billableBeds} active bed${billableBeds > 1 ? 's' : ''} (CHF 12/bed/month × 12 months).`,
             },
             unit_amount: totalAnnualCostInRappen,
+            recurring: {
+              interval: 'year',
+            },
           },
           quantity: 1,
         },
       ],
-      mode: 'payment',
+      mode: 'subscription',
       success_url: `${returnUrl}?success=true`,
       cancel_url: `${returnUrl}?canceled=true`,
       metadata: {

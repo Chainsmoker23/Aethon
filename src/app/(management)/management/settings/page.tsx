@@ -11,6 +11,7 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
   const [isExporting, setIsExporting] = useState<string | null>(null);
   const [userName, setUserName] = useState("Staff User");
+  const [plan, setPlan] = useState("pilot");
   const supabase = createClient();
   const { theme, setTheme } = useTheme();
   
@@ -19,6 +20,17 @@ export default function SettingsPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         setUserName(user.user_metadata?.full_name || user.email?.split('@')[0] || "Staff User");
+        
+        // Fetch subscription status
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('plan')
+          .eq('id', user.id)
+          .single();
+          
+        if (profile?.plan) {
+          setPlan(profile.plan);
+        }
       }
     }
     getUser();
@@ -221,22 +233,24 @@ export default function SettingsPage() {
                   <p className="text-sm font-medium text-text-secondary dark:text-zinc-400 mt-1">Manage your facility&apos;s Aethon plan, licenses, and invoices.</p>
                 </div>
 
-                <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-                  <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div>
-                      <div className="inline-flex items-center gap-1.5 bg-white/20 px-2.5 py-1 rounded-full text-xs font-bold mb-3">
-                        <AlertCircle className="w-3.5 h-3.5" />
-                        90-Day Free Pilot
+                {plan !== 'annual' && (
+                  <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                      <div>
+                        <div className="inline-flex items-center gap-1.5 bg-white/20 px-2.5 py-1 rounded-full text-xs font-bold mb-3">
+                          <AlertCircle className="w-3.5 h-3.5" />
+                          90-Day Free Pilot
+                        </div>
+                        <h2 className="text-xl font-bold mb-1">Your trial ends in 42 days</h2>
+                        <p className="text-indigo-100 text-sm max-w-md">You are currently enjoying full access to Aethon Management Core. Upgrade to an annual plan to ensure uninterrupted access to resident baselines and shift handovers.</p>
                       </div>
-                      <h2 className="text-xl font-bold mb-1">Your trial ends in 42 days</h2>
-                      <p className="text-indigo-100 text-sm max-w-md">You are currently enjoying full access to Aethon Management Core. Upgrade to an annual plan to ensure uninterrupted access to resident baselines and shift handovers.</p>
+                      <a href="/api/checkout" className="shrink-0 bg-white text-indigo-600 px-6 py-3 rounded-xl font-bold text-sm shadow-sm hover:scale-105 transition-transform flex items-center justify-center">
+                        Upgrade to Annual Plan
+                      </a>
                     </div>
-                    <a href="/api/checkout" className="shrink-0 bg-white text-indigo-600 px-6 py-3 rounded-xl font-bold text-sm shadow-sm hover:scale-105 transition-transform flex items-center justify-center">
-                      Upgrade to Annual Plan
-                    </a>
                   </div>
-                </div>
+                )}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm">
@@ -292,7 +306,7 @@ export default function SettingsPage() {
                       <Receipt className="w-5 h-5 text-slate-400" />
                       Billing History
                     </h3>
-                    <button className="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline">View all in Stripe</button>
+                    <a href="/api/customer-portal" className="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline">View all in Stripe</a>
                   </div>
                   <div className="p-12 flex flex-col items-center justify-center text-center">
                     <Receipt className="w-12 h-12 text-slate-200 dark:text-zinc-800 mb-3" />
