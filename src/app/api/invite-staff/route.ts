@@ -42,7 +42,7 @@ export async function POST(request: Request) {
       .from('staff_invitations')
       .insert([
         {
-          email: email.trim(),
+          email: email.trim().toLowerCase(),
           role: role,
           invited_by: user.id
         }

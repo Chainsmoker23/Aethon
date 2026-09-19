@@ -25,12 +25,17 @@ export async function GET(request: Request) {
           process.env.SUPABASE_SERVICE_ROLE_KEY!
         );
 
-        // 1. Check if they were invited as staff using Service Role (since new users don't have RLS read access yet)
-        const { data: invite } = await supabaseAdmin
+        // 1. Check if they were invited as staff using Service Role
+        const targetEmail = user.email?.toLowerCase().trim() || '';
+        const { data: invite, error: inviteError } = await supabaseAdmin
           .from('staff_invitations')
           .select('role')
-          .eq('email', user.email)
+          .ilike('email', targetEmail)
           .single();
+
+        if (inviteError && inviteError.code !== 'PGRST116') {
+           console.error("Invite fetch error:", inviteError);
+        }
 
         if (invite) {
           // Grant them the invited role
@@ -40,7 +45,7 @@ export async function GET(request: Request) {
           await supabaseAdmin
             .from('staff_invitations')
             .delete()
-            .eq('email', user.email);
+            .ilike('email', targetEmail);
         } else {
           // If no invite, check if they already have a profile with a staff role
           const { data: profile } = await supabase
