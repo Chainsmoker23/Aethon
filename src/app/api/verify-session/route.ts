@@ -31,17 +31,32 @@ export async function GET(request: Request) {
     // If payment was successful, update the database directly! 
     // This acts as a reliable fallback if the webhook fails or is delayed.
     if (session.payment_status === 'paid' || session.status === 'complete') {
-      const { error } = await supabase
+      const { data: profile } = await supabase
         .from('user_profiles')
-        .update({ 
-          plan: 'annual', 
-          stripe_customer_id: session.customer as string,
-          subscription_status: 'active' 
-        })
-        .eq('id', user.id);
+        .select('facility_id')
+        .eq('id', user.id)
+        .single();
 
-      if (error) {
-        throw error;
+      if (profile?.facility_id) {
+        // Use service role to bypass RLS for facilities update
+        const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+        const supabaseAdmin = createSupabaseClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.SUPABASE_SERVICE_ROLE_KEY!
+        );
+
+        const { error } = await supabaseAdmin
+          .from('facilities')
+          .update({ 
+            plan: 'annual', 
+            stripe_customer_id: session.customer as string,
+            subscription_status: 'active' 
+          })
+          .eq('id', profile.facility_id);
+
+        if (error) {
+          throw error;
+        }
       }
       
       return NextResponse.json({ success: true, plan: 'annual' });

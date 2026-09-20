@@ -141,6 +141,25 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: 'Cannot delete the facility you are currently in. Switch to another facility first.' }, { status: 400 });
     }
 
+    // 1. Fetch facility to get stripe_customer_id before deletion
+    const { data: facilityToDelete } = await supabaseAdmin
+      .from('facilities')
+      .select('stripe_customer_id')
+      .eq('id', facility_id)
+      .single();
+
+    // 2. Delete from Stripe to cancel subscriptions and avoid ghost billing
+    if (facilityToDelete?.stripe_customer_id) {
+      try {
+        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+        await stripe.customers.del(facilityToDelete.stripe_customer_id);
+        console.log(`Deleted Stripe customer ${facilityToDelete.stripe_customer_id} for facility ${facility_id}`);
+      } catch (stripeError) {
+        console.error('Failed to delete Stripe customer:', stripeError);
+        // Continue with DB deletion even if Stripe fails, but log it heavily
+      }
+    }
+
     // Cascade delete all data belonging to this facility
     await supabaseAdmin.from('family_visits').delete().eq('facility_id', facility_id);
     await supabaseAdmin.from('messages').delete().eq('facility_id', facility_id);
