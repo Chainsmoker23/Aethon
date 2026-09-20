@@ -1,6 +1,6 @@
 "use client";
 
-import { Building, Users, CreditCard, Plus, ArrowRight, Settings, Loader2 } from "lucide-react";
+import { Building, Users, CreditCard, Plus, ArrowRight, Settings, Loader2, Trash2 } from "lucide-react";
 import { SignOutButton } from "@/components/auth/SignOutButton";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -78,6 +78,24 @@ export default function SuperAdminPage() {
     if (fac.subscription_status === 'active' && fac.plan === 'pilot') return sum + 499;
     return sum;
   }, 0);
+
+  const handleDeleteFacility = async (facilityId: string, facilityName: string) => {
+    if (!confirm(`⚠️ Are you sure you want to permanently delete "${facilityName}"?\n\nThis will destroy ALL residents, notes, escalations, messages, and visits belonging to this facility. This action cannot be undone.`)) {
+      return;
+    }
+    try {
+      const res = await fetch('/api/facilities', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ facility_id: facilityId })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      await fetchFacilities();
+    } catch (error: any) {
+      alert("Failed to delete facility: " + error.message);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-zinc-100 p-8 relative">
@@ -182,6 +200,9 @@ export default function SuperAdminPage() {
                           <div className="flex items-center gap-4">
                             <button onClick={() => handleSwitchFacility(fac.id)} className="flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors cursor-pointer">
                               Enter Portal <ArrowRight className="w-4 h-4" />
+                            </button>
+                            <button onClick={() => handleDeleteFacility(fac.id, fac.name)} className="flex items-center gap-1.5 text-sm font-bold text-red-500 hover:text-red-600 transition-colors cursor-pointer">
+                              <Trash2 className="w-3.5 h-3.5" />
                             </button>
                           </div>
                         </td>

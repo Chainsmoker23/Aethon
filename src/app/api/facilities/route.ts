@@ -108,3 +108,55 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const { facility_id } = await request.json();
+    
+    if (!facility_id) {
+      return NextResponse.json({ error: 'Facility ID is required' }, { status: 400 });
+    }
+
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    
+    const supabaseAdmin = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+    
+    const { data: profile } = await supabaseAdmin
+      .from('user_profiles')
+      .select('role, facility_id')
+      .eq('id', user.id)
+      .single();
+      
+    if (profile?.role !== 'superadmin') {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
+    // Prevent deleting the facility the superadmin is currently in
+    if (profile.facility_id === facility_id) {
+      return NextResponse.json({ error: 'Cannot delete the facility you are currently in. Switch to another facility first.' }, { status: 400 });
+    }
+
+    // Cascade delete all data belonging to this facility
+    await supabaseAdmin.from('family_visits').delete().eq('facility_id', facility_id);
+    await supabaseAdmin.from('messages').delete().eq('facility_id', facility_id);
+    await supabaseAdmin.from('medications').delete().eq('facility_id', facility_id);
+    await supabaseAdmin.from('escalations').delete().eq('facility_id', facility_id);
+    await supabaseAdmin.from('visit_notes').delete().eq('facility_id', facility_id);
+    await supabaseAdmin.from('family_access').delete().eq('facility_id', facility_id);
+    await supabaseAdmin.from('family_invitations').delete().eq('facility_id', facility_id);
+    await supabaseAdmin.from('residents').delete().eq('facility_id', facility_id);
+    await supabaseAdmin.from('staff_invitations').delete().eq('facility_id', facility_id);
+    await supabaseAdmin.from('user_profiles').update({ facility_id: null }).eq('facility_id', facility_id);
+    await supabaseAdmin.from('facilities').delete().eq('id', facility_id);
+
+    return NextResponse.json({ success: true });
+  } catch (error: any) {
+    console.error('Error deleting facility:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
