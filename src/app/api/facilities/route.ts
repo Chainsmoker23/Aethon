@@ -27,15 +27,21 @@ export async function GET() {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    // Fetch all facilities
+    // Fetch all facilities with their resident counts
     const { data, error } = await supabaseAdmin
       .from('facilities')
-      .select('*')
+      .select('*, residents(count)')
       .order('created_at', { ascending: false });
 
     if (error) throw error;
     
-    return NextResponse.json({ facilities: data });
+    // Format the response to easily access the count
+    const formattedData = data.map(fac => ({
+      ...fac,
+      resident_count: fac.residents?.[0]?.count || 0
+    }));
+    
+    return NextResponse.json({ facilities: formattedData });
   } catch (error: any) {
     console.error('Error fetching facilities:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });

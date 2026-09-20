@@ -54,6 +54,31 @@ export default function SuperAdminPage() {
     }
   };
 
+  const handleSwitchFacility = async (facilityId: string) => {
+    try {
+      const res = await fetch('/api/facilities/switch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ facility_id: facilityId })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      
+      // Navigate to management
+      window.location.href = '/management';
+    } catch (error: any) {
+      alert("Failed to switch facility: " + error.message);
+    }
+  };
+
+  // Calculate live metrics
+  const totalBeds = facilities.reduce((sum, fac) => sum + (fac.resident_count || 0), 0);
+  const mrr = facilities.reduce((sum, fac) => {
+    if (fac.subscription_status === 'active' && fac.plan === 'annual') return sum + 1999;
+    if (fac.subscription_status === 'active' && fac.plan === 'pilot') return sum + 499;
+    return sum;
+  }, 0);
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-zinc-100 p-8 relative">
       <div className="max-w-7xl mx-auto space-y-12">
@@ -89,14 +114,14 @@ export default function SuperAdminPage() {
               <Users className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
             </div>
             <h3 className="text-slate-500 dark:text-zinc-400 font-bold text-sm uppercase tracking-wider mb-1">Total Billable Beds</h3>
-            <p className="text-3xl font-black">--</p>
+            <p className="text-3xl font-black">{loading ? '-' : totalBeds}</p>
           </div>
           <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-6 rounded-2xl shadow-sm">
             <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl flex items-center justify-center mb-4">
               <CreditCard className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
             </div>
             <h3 className="text-slate-500 dark:text-zinc-400 font-bold text-sm uppercase tracking-wider mb-1">Monthly Recurring Revenue</h3>
-            <p className="text-3xl font-black">--</p>
+            <p className="text-3xl font-black">{loading ? '-' : `$${mrr.toLocaleString()}`}</p>
           </div>
         </div>
 
@@ -155,9 +180,9 @@ export default function SuperAdminPage() {
                         </td>
                         <td className="p-4">
                           <div className="flex items-center gap-4">
-                            <Link href="/management" className="flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
+                            <button onClick={() => handleSwitchFacility(fac.id)} className="flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors cursor-pointer">
                               Enter Portal <ArrowRight className="w-4 h-4" />
-                            </Link>
+                            </button>
                           </div>
                         </td>
                       </tr>
