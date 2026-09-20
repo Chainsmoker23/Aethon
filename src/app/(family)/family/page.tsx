@@ -3,6 +3,7 @@
 import { UpdatesFeed } from "@/components/family/UpdatesFeed";
 import { useFamilyResident } from "@/hooks/useFamilyResident";
 import { Heart, MessageCircle, MapPin, ShieldCheck, Loader2, Calendar as CalendarIcon, User } from "lucide-react";
+import { FamilyOnboarding } from "@/components/family/FamilyOnboarding";
 import Link from "next/link";
 
 export default function FamilyDashboard() {
@@ -34,6 +35,7 @@ export default function FamilyDashboard() {
   return (
     <div className="relative min-h-full pb-6">
       <main className="px-5 py-6">
+        <FamilyOnboarding />
 
         {/* Premium iOS-style Header Card */}
         <div className="animate-fade-in-up bg-white dark:bg-[#0a0a0a] rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-zinc-800 mb-6 relative overflow-hidden">

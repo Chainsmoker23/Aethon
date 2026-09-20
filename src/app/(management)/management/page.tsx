@@ -3,6 +3,7 @@ import { ResidentRoster } from "@/components/management/ResidentRoster";
 import { ShiftHandover } from "@/components/management/ShiftHandover";
 import { AssistanceRequests } from "@/components/management/AssistanceRequests";
 import { UpcomingVisits } from "@/components/management/UpcomingVisits";
+import { ManagementOnboarding } from "@/components/management/ManagementOnboarding";
 import { RefreshCw, Sparkles } from "lucide-react";
 
 export default function ManagementDashboard() {
@@ -12,6 +13,8 @@ export default function ManagementDashboard() {
 
   return (
     <main className="p-4 md:p-6 lg:p-10 space-y-6 md:space-y-8 max-w-[1200px] mx-auto w-full pb-20 lg:pb-32">
+        <ManagementOnboarding />
+        
         {/* Header */}
         <div className="hidden md:flex items-start justify-between animate-fade-in-up">
           <div className="w-full">
