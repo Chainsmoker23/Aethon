@@ -1,9 +1,9 @@
 import { CreditCard, Receipt, Building2, AlertCircle, ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
-
 import { CheckoutButton } from "@/components/management/CheckoutButton";
 import { AddCardButton } from "@/components/management/AddCardButton";
+import { ManageBillingButton } from "@/components/management/ManageBillingButton";
 
 interface PageProps {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -16,14 +16,57 @@ export default async function BillingSettingsPage({ searchParams }: PageProps) {
   const isCanceled = params.canceled === 'true';
 
   const supabase = await createClient();
-  const { count } = await supabase.from('residents').select('*', { count: 'exact', head: true });
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    return <div>Unauthorized</div>;
+  }
+
+  // Get user profile to find facility
+  const { data: profile } = await supabase
+    .from('user_profiles')
+    .select('facility_id')
+    .eq('id', user.id)
+    .single();
+
+  let facilityData = null;
+  let totalBeds = 0;
+
+  if (profile?.facility_id) {
+    // We need service role to read facilities and residents count bypassing some RLS if needed, 
+    // but standard RLS for residents count is fine here.
+    const { count } = await supabase.from('residents').select('*', { count: 'exact', head: true });
+    totalBeds = count || 0;
+
+    const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+    const supabaseAdmin = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+    
+    const { data } = await supabaseAdmin
+      .from('facilities')
+      .select('*')
+      .eq('id', profile.facility_id)
+      .single();
+    
+    facilityData = data;
+  }
   
-  const isPilot = true;
-  const daysLeft = 42;
-  const totalBeds = count || 0;
+  const isPilot = facilityData?.plan === 'pilot';
+  
+  // Calculate days left in pilot (90 days from created_at)
+  let daysLeft = 90;
+  if (facilityData?.created_at) {
+    const createdDate = new Date(facilityData.created_at);
+    const endDate = new Date(createdDate.getTime() + (90 * 24 * 60 * 60 * 1000));
+    const today = new Date();
+    daysLeft = Math.max(0, Math.ceil((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)));
+  }
+
   const pricePerBed = 12; // CHF 12/bed/month
-  const capacity = 50; // You can also make this dynamic later
-  const usagePercentage = Math.min(100, Math.round((totalBeds / capacity) * 100));
+  const capacity = 50; 
+  const usagePercentage = Math.min(100, Math.round((totalBeds / Math.max(capacity, totalBeds)) * 100));
 
   return (
     <div className="max-w-4xl space-y-8 animate-fade-in pb-safe">
@@ -66,9 +109,7 @@ export default async function BillingSettingsPage({ searchParams }: PageProps) {
               <h2 className="text-xl font-bold mb-1">Your trial ends in {daysLeft} days</h2>
               <p className="text-indigo-100 text-sm max-w-md">You are currently enjoying full access to Aethon Management Core. Upgrade to an annual plan to ensure uninterrupted access to resident baselines and shift handovers.</p>
             </div>
-            <a href="/api/checkout" className="shrink-0 bg-white text-indigo-600 px-6 py-3 rounded-xl font-bold text-sm shadow-sm hover:scale-105 transition-transform cursor-pointer flex items-center justify-center min-w-[200px]">
-              Upgrade to Annual Plan
-            </a>
+            <CheckoutButton />
           </div>
         </div>
       )}
@@ -89,7 +130,7 @@ export default async function BillingSettingsPage({ searchParams }: PageProps) {
           <div className="mb-6">
             <div className="flex justify-between text-sm mb-2">
               <span className="text-slate-500 dark:text-slate-400">Beds in use</span>
-              <span className="font-bold text-slate-900 dark:text-white">{totalBeds} / {capacity}</span>
+              <span className="font-bold text-slate-900 dark:text-white">{totalBeds} / {Math.max(capacity, totalBeds)}</span>
             </div>
             <div className="w-full h-2 bg-slate-100 dark:bg-zinc-800 rounded-full overflow-hidden">
               <div className="h-full bg-blue-500 rounded-full" style={{ width: `${usagePercentage}%` }} />
@@ -107,20 +148,21 @@ export default async function BillingSettingsPage({ searchParams }: PageProps) {
         </div>
 
         <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm flex flex-col">
-          <div className="flex items-center gap-2 mb-2">
-            <CreditCard className="w-5 h-5 text-slate-400" />
-            <h3 className="font-bold text-slate-900 dark:text-white">Payment Method</h3>
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-slate-400" />
+              <h3 className="font-bold text-slate-900 dark:text-white">Payment Method</h3>
+            </div>
+            <ManageBillingButton />
           </div>
           <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Powered securely by Stripe</p>
           
           <div className="flex-1 flex flex-col items-center justify-center text-center p-6 border-2 border-dashed border-slate-100 dark:border-zinc-800/80 rounded-xl mb-4">
-            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">No payment method added yet.</p>
-            <p className="text-xs text-slate-400 mt-1">Add a card to smoothly transition after your pilot.</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">To manage existing cards, click Manage Portal.</p>
+            <p className="text-xs text-slate-400 mt-1">Add a new card below to transition after your pilot.</p>
           </div>
           
-          <a href="/api/setup-card" className="w-full py-2.5 bg-slate-50 dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-900 dark:text-white text-sm font-bold rounded-xl transition-colors border border-slate-200 dark:border-zinc-800 cursor-pointer flex items-center justify-center gap-2">
-            Add Payment Method
-          </a>
+          <AddCardButton />
         </div>
       </div>
 
@@ -130,12 +172,12 @@ export default async function BillingSettingsPage({ searchParams }: PageProps) {
             <Receipt className="w-5 h-5 text-slate-400" />
             Billing History
           </h3>
-          <button className="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline">View all in Stripe</button>
+          <ManageBillingButton label="View all in Stripe" />
         </div>
         <div className="p-12 flex flex-col items-center justify-center text-center">
           <Receipt className="w-12 h-12 text-slate-200 dark:text-zinc-800 mb-3" />
-          <h4 className="font-bold text-slate-900 dark:text-white mb-1">No invoices yet</h4>
-          <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm">Once your pilot ends and your annual subscription begins, your invoices will appear here.</p>
+          <h4 className="font-bold text-slate-900 dark:text-white mb-1">Invoices appear in Settings</h4>
+          <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm">Please refer to the main Settings page to view your recent invoices, or open the Stripe Portal.</p>
         </div>
       </div>
     </div>

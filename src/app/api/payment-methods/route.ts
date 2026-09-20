@@ -15,16 +15,32 @@ export async function GET() {
 
     const { data: profile } = await supabase
       .from('user_profiles')
-      .select('stripe_customer_id')
+      .select('facility_id')
       .eq('id', user.id)
       .single();
 
-    if (!profile?.stripe_customer_id) {
+    if (!profile?.facility_id) {
+      return NextResponse.json({ cards: [] });
+    }
+
+    const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+    const supabaseAdmin = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
+    const { data: facility } = await supabaseAdmin
+      .from('facilities')
+      .select('stripe_customer_id')
+      .eq('id', profile.facility_id)
+      .single();
+
+    if (!facility?.stripe_customer_id) {
       return NextResponse.json({ cards: [] });
     }
 
     const paymentMethods = await stripe.paymentMethods.list({
-      customer: profile.stripe_customer_id,
+      customer: facility.stripe_customer_id,
       type: 'card',
     });
 

@@ -70,7 +70,7 @@ export async function POST() {
     if (subscription.items.data[0].quantity !== totalBeds) {
       await stripe.subscriptionItems.update(subscriptionItemId, {
         quantity: totalBeds,
-        proration_behavior: 'always_invoice', // Instantly bills or credits the prorated difference
+        proration_behavior: 'create_prorations', // Consolidate charges to next billing cycle to avoid spamming the credit card
       });
       console.log(`Synced Stripe quantity to ${totalBeds}`);
     }

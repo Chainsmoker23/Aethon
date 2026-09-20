@@ -4,51 +4,65 @@ import { createClient } from '@/utils/supabase/server';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
-export async function GET(request: Request) {
+function getSiteUrl(request: Request): string {
+  const host = request.headers.get('host') || 'localhost:3000';
+  const protocol = host.includes('localhost') ? 'http' : 'https';
+  return `${protocol}://${host}`;
+}
+
+export async function POST(request: Request) {
   try {
     const supabase = await createClient();
 
     // 1. Verify user is authenticated
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      return new NextResponse('Unauthorized', { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // 2. We need the customer's Stripe ID. 
-    // Ideally this is saved in Supabase user_profiles via the webhook!
+    // 2. Fetch the user's facility ID
     const { data: profile } = await supabase
       .from('user_profiles')
-      .select('stripe_customer_id')
+      .select('facility_id')
       .eq('id', user.id)
       .single();
 
-    let customerId = profile?.stripe_customer_id;
-
-    // Fallback: If not in DB, try to find them by email in Stripe
-    if (!customerId) {
-      const existingCustomers = await stripe.customers.list({
-        email: user.email!,
-        limit: 1,
-      });
-      if (existingCustomers.data.length > 0) {
-        customerId = existingCustomers.data[0].id;
-      }
+    if (!profile?.facility_id) {
+       return NextResponse.json({ error: 'User not attached to a facility' }, { status: 400 });
     }
 
+    // Use service role to check facilities table for stripe_customer_id
+    const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+    const supabaseAdmin = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
+    const { data: facility } = await supabaseAdmin
+      .from('facilities')
+      .select('stripe_customer_id')
+      .eq('id', profile.facility_id)
+      .single();
+
+    const customerId = facility?.stripe_customer_id;
+
     if (!customerId) {
-      return new NextResponse('No billing account found for this user', { status: 404 });
+      return NextResponse.json({ error: 'No billing account found for this facility' }, { status: 404 });
     }
+
+    const siteUrl = getSiteUrl(request);
+    const returnUrl = `${siteUrl}/management/settings/billing`;
 
     // 3. Create a Customer Portal session
     const session = await stripe.billingPortal.sessions.create({
       customer: customerId,
-      return_url: 'https://aethon-amber.vercel.app/management/settings',
+      return_url: returnUrl,
     });
 
-    return NextResponse.redirect(session.url, 303);
+    return NextResponse.json({ url: session.url });
 
   } catch (error: any) {
     console.error('Customer Portal Error:', error);
-    return new NextResponse(`Error: ${error.message || 'Internal server error'}`, { status: 500 });
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

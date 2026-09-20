@@ -17,25 +17,42 @@ export async function GET() {
     // 2. Get customer ID
     const { data: profile } = await supabase
       .from('user_profiles')
-      .select('stripe_customer_id')
+      .select('facility_id')
       .eq('id', user.id)
       .single();
 
-    if (!profile?.stripe_customer_id) {
+    if (!profile?.facility_id) {
+      return NextResponse.json({ invoices: [] });
+    }
+
+    const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+    const supabaseAdmin = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
+    const { data: facility } = await supabaseAdmin
+      .from('facilities')
+      .select('stripe_customer_id')
+      .eq('id', profile.facility_id)
+      .single();
+
+    if (!facility?.stripe_customer_id) {
       return NextResponse.json({ invoices: [] });
     }
 
     // 3. Fetch past paid invoices from Stripe
     const invoices = await stripe.invoices.list({
-      customer: profile.stripe_customer_id,
+      customer: facility.stripe_customer_id,
       limit: 5,
-      status: 'paid', // Only show paid invoices
+      // No status filter to ensure we can see unpaid/past_due invoices as well
     });
 
     // 4. Map them to a simpler format for the frontend
     const formattedInvoices = invoices.data.map(inv => ({
       id: inv.id,
       amount_paid: inv.amount_paid,
+      amount_due: inv.amount_due,
       currency: inv.currency,
       status: inv.status,
       created: inv.created,

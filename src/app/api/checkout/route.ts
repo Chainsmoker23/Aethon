@@ -4,11 +4,13 @@ import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
-function getSiteUrl(): string {
-  return 'https://aethon-amber.vercel.app';
+function getSiteUrl(request: Request): string {
+  const host = request.headers.get('host') || 'localhost:3000';
+  const protocol = host.includes('localhost') ? 'http' : 'https';
+  return `${protocol}://${host}`;
 }
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   try {
     const supabase = await createClient();
 
@@ -18,15 +20,19 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // 2. Fetch the user's facility
+    // 2. Fetch the user's facility and role
     const { data: profile } = await supabase
       .from('user_profiles')
-      .select('facility_id')
+      .select('facility_id, role')
       .eq('id', user.id)
       .single();
 
     if (!profile?.facility_id) {
-       return new NextResponse('User not attached to a facility', { status: 400 });
+       return NextResponse.json({ error: 'User not attached to a facility' }, { status: 400 });
+    }
+    
+    if (profile.role !== 'admin' && profile.role !== 'superadmin') {
+       return NextResponse.json({ error: 'Forbidden: Only admins can manage billing' }, { status: 403 });
     }
 
     const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
@@ -58,8 +64,8 @@ export async function GET(request: Request) {
     // CHF 12 per bed per month, billed annually
     const annualPricePerBedCHF = 12 * 12; // 144 CHF per bed per year
 
-    const siteUrl = getSiteUrl();
-    const returnUrl = `${siteUrl}/management/settings`;
+    const siteUrl = getSiteUrl(request);
+    const returnUrl = `${siteUrl}/management/settings/billing`;
 
     // 4. Create Stripe Checkout Session
     const sessionConfig: Stripe.Checkout.SessionCreateParams = {
@@ -102,10 +108,10 @@ export async function GET(request: Request) {
       throw new Error('Stripe did not return a checkout URL');
     }
 
-    return NextResponse.redirect(session.url, 303);
+    return NextResponse.json({ url: session.url });
 
   } catch (error: any) {
     console.error('Stripe Checkout Error:', error);
-    return new NextResponse(`Error: ${error.message || 'Internal server error'}`, { status: 500 });
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

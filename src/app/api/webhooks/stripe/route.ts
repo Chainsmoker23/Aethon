@@ -8,7 +8,7 @@ const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 // We need a service role key to bypass RLS in webhooks
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 export async function POST(req: Request) {
@@ -36,18 +36,20 @@ export async function POST(req: Request) {
         const customerId = session.customer as string;
         
         if (facilityId) {
-          // Update the facility with their new subscription status
-          const { error } = await supabase
-            .from('facilities')
-            .update({ 
-              plan: 'annual', 
-              stripe_customer_id: customerId,
-              subscription_status: 'active' 
-            })
-            .eq('id', facilityId);
-            
-          if (error) {
-            console.error('Error updating facility in Supabase:', error);
+          // IMPORTANT: Only upgrade plan if this was an actual subscription purchase
+          if (session.mode === 'subscription') {
+            const { error } = await supabase
+              .from('facilities')
+              .update({ 
+                plan: 'annual', 
+                stripe_customer_id: customerId,
+                subscription_status: 'active' 
+              })
+              .eq('id', facilityId);
+              
+            if (error) {
+              console.error('Error updating facility in Supabase:', error);
+            }
           }
         }
         break;
