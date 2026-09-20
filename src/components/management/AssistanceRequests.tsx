@@ -1,9 +1,10 @@
 "use client";
 
-import { AlertTriangle, Check, Clock, Loader2 } from "lucide-react";
+import { AlertTriangle, Check, Clock, Loader2, FileText } from "lucide-react";
 import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { MobileAssistanceRequests } from "./MobileAssistanceRequests";
+import jsPDF from 'jspdf';
 
 type Escalation = {
   id: string;
@@ -56,6 +57,34 @@ export function AssistanceRequests() {
       .from('escalations')
       .update({ is_resolved: true, resolved_at: new Date().toISOString() })
       .eq('id', id);
+  };
+
+  const exportPhysicianFlag = (e: Escalation) => {
+    const doc = new jsPDF();
+    
+    doc.setFontSize(22);
+    doc.setTextColor(220, 38, 38); // Red
+    doc.text('MEDICAL ESCALATION FLAG', 14, 22);
+    
+    doc.setFontSize(12);
+    doc.setTextColor(50);
+    doc.text(`Date Generated: ${new Date().toLocaleString()}`, 14, 32);
+    
+    doc.setFontSize(14);
+    doc.setTextColor(0);
+    doc.text(`Patient: ${e.residents?.first_name} ${e.residents?.last_name}`, 14, 45);
+    doc.text(`Room: ${e.residents?.room_number || 'N/A'}`, 14, 53);
+    doc.text(`Escalation Date: ${new Date(e.created_at).toLocaleString()}`, 14, 61);
+    doc.text(`Status: ${e.is_resolved ? 'Resolved' : 'Active / Unresolved'}`, 14, 69);
+    
+    doc.setFontSize(12);
+    doc.text('Clinical Notes / Reason for Escalation:', 14, 85);
+    
+    doc.setFont('helvetica', 'italic');
+    const splitNotes = doc.splitTextToSize(e.reason, 180);
+    doc.text(splitNotes, 14, 95);
+    
+    doc.save(`physician-flag-${e.residents?.last_name}-${new Date().toISOString().split('T')[0]}.pdf`);
   };
 
   const open = escalations.filter(e => !e.is_resolved);
@@ -137,14 +166,22 @@ export function AssistanceRequests() {
                     </div>
                   </div>
                 </div>
-                {!e.is_resolved && (
+                <div className="flex flex-col gap-2 items-end">
+                  {!e.is_resolved && (
+                    <button 
+                      onClick={() => resolve(e.id)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-sm font-bold hover:bg-emerald-100 transition-colors border border-emerald-200/50"
+                    >
+                      <Check className="w-4 h-4" /> Resolve
+                    </button>
+                  )}
                   <button 
-                    onClick={() => resolve(e.id)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-sm font-bold hover:bg-emerald-100 transition-colors border border-emerald-200/50"
+                    onClick={() => exportPhysicianFlag(e)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 text-sm font-bold hover:bg-slate-100 dark:hover:bg-zinc-700 transition-colors border border-slate-200 dark:border-zinc-700"
                   >
-                    <Check className="w-4 h-4" /> Resolve
+                    <FileText className="w-4 h-4" /> Export PDF
                   </button>
-                )}
+                </div>
               </div>
             </div>
           ))}

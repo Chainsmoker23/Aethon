@@ -1,9 +1,11 @@
 "use client";
 
-import { ClipboardList, Send, Loader2, AlertCircle, Eye, Info } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
-import { createClient } from "@/utils/supabase/client";
-import { MobileShiftHandover } from "./MobileShiftHandover";
+import { useState, useEffect, useRef } from 'react';
+import { createClient } from '@/utils/supabase/client';
+import { Send, AlertCircle, Info, Eye, ClipboardList, Loader2, FileText, Download } from 'lucide-react';
+import { MobileShiftHandover } from './MobileShiftHandover';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 export function ShiftHandover() {
   const [notes, setNotes] = useState<any[]>([]);
@@ -128,6 +130,53 @@ export function ShiftHandover() {
     general: <Info className="w-4 h-4 text-slate-500 dark:text-slate-500 dark:text-zinc-400" />
   };
 
+  const exportHandoverPDF = () => {
+    const doc = new jsPDF();
+    
+    // Header
+    doc.setFontSize(20);
+    doc.text('Shift Handover Report', 14, 22);
+    
+    doc.setFontSize(11);
+    doc.setTextColor(100);
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 30);
+    
+    // Process notes for table
+    const tableData = notes.map(n => {
+      const pType = n.visit_type?.toLowerCase().includes('critical') ? 'CRITICAL' : 
+                    n.visit_type?.toLowerCase().includes('watch') ? 'WATCH' : 'GENERAL';
+      const time = new Date(n.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      return [time, pType, n.tasks_completed];
+    });
+
+    // @ts-ignore - jspdf-autotable adds autoTable to jsPDF prototype
+    doc.autoTable({
+      startY: 40,
+      head: [['Time', 'Priority', 'Note / Tasks Completed']],
+      body: tableData,
+      theme: 'grid',
+      headStyles: { fillColor: [79, 70, 229] }, // Indigo 600
+      columnStyles: {
+        0: { cellWidth: 30 },
+        1: { cellWidth: 30 },
+        2: { cellWidth: 'auto' }
+      },
+      didParseCell: function(data: any) {
+        if (data.section === 'body' && data.column.index === 1) {
+          if (data.cell.raw === 'CRITICAL') {
+            data.cell.styles.textColor = [220, 38, 38]; // Red
+            data.cell.styles.fontStyle = 'bold';
+          } else if (data.cell.raw === 'WATCH') {
+            data.cell.styles.textColor = [217, 119, 6]; // Amber
+            data.cell.styles.fontStyle = 'bold';
+          }
+        }
+      }
+    });
+
+    doc.save(`handover-report-${new Date().toISOString().split('T')[0]}.pdf`);
+  };
+
   if (loading) {
     return (
       <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-xl shadow-sm h-64 flex items-center justify-center w-full relative z-10">
@@ -156,6 +205,12 @@ export function ShiftHandover() {
               <p className="text-[10px] text-slate-500 dark:text-slate-500 dark:text-zinc-400 font-medium">Type @ to mention residents</p>
             </div>
           </div>
+          <button 
+            onClick={exportHandoverPDF}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg text-[11px] font-bold text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-700 transition-colors shadow-sm"
+          >
+            <Download className="w-3.5 h-3.5" /> Export PDF
+          </button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50 dark:bg-[#0a0a0a]">

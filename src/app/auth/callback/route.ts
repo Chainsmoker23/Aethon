@@ -90,7 +90,7 @@ export async function GET(request: Request) {
           response.cookies.delete('demo_role')
           return response
         } else {
-          const response = NextResponse.redirect(`${origin}/family?err=final_role_was_${finalRole}`)
+          const response = NextResponse.redirect(`${origin}/family`)
           response.cookies.delete('demo_role')
           return response
         }
