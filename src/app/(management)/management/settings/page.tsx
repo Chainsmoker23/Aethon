@@ -38,11 +38,11 @@ export default function SettingsPage() {
       if (user) {
         setUserName(user.user_metadata?.full_name || user.email?.split('@')[0] || "Staff User");
         
-          // Also fetch subscription status from their facility
+          // Also fetch subscription status, name and settings from their facility
           const { data: profile } = await supabase
             .from('user_profiles')
             .select(`
-              facilities ( plan, subscription_status )
+              facilities ( name, plan, subscription_status, settings )
             `)
             .eq('id', user.id)
             .single();
@@ -56,6 +56,17 @@ export default function SettingsPage() {
           }
           if (actualFacility?.subscription_status) {
             setSubscriptionStatus(actualFacility.subscription_status);
+          }
+          if (actualFacility?.name || actualFacility?.settings) {
+            const dbSettings = actualFacility?.settings || {};
+            setSettings(prev => ({
+              ...prev,
+              facilityName: actualFacility?.name || prev.facilityName,
+              ...dbSettings
+            }));
+            if (dbSettings.theme && dbSettings.theme !== theme) {
+              setTheme(dbSettings.theme);
+            }
           }
         
         // Fetch active beds
@@ -292,9 +303,34 @@ export default function SettingsPage() {
     requireHandoverSignoff: true
   });
 
-  const handleSave = () => {
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      const res = await fetch('/api/facilities/settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(settings),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Failed to save settings');
+      }
+
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+      
+      if (settings.theme && settings.theme !== theme) {
+        setTheme(settings.theme);
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const tabs = [
@@ -770,12 +806,13 @@ export default function SettingsPage() {
             <div className="mt-8 pt-6 border-t border-slate-200 dark:border-zinc-800 flex justify-end">
               <button 
                 onClick={handleSave}
+                disabled={isSaving || saved}
                 className={`flex items-center gap-2 px-6 py-2.5 text-white text-sm font-bold rounded-xl transition-all duration-300 shadow-sm btn-press w-full sm:w-auto justify-center ${
                   saved ? "bg-emerald-500 hover:bg-emerald-600 shadow-emerald-500/20" : "bg-slate-900 dark:bg-zinc-100 dark:text-zinc-900 hover:bg-slate-800"
-                }`}
+                } disabled:opacity-70`}
               >
-                {saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
-                {saved ? "Saved" : "Save changes"}
+                {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
+                {isSaving ? "Saving..." : saved ? "Saved" : "Save changes"}
               </button>
             </div>
 
