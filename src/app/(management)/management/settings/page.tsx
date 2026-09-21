@@ -165,10 +165,14 @@ export default function SettingsPage() {
     setIsRevoking(id);
     
     try {
-      await fetch(`/api/staff/${id}?type=${type}`, { method: 'DELETE' });
+      const res = await fetch(`/api/staff/${id}?type=${type}`, { method: 'DELETE' });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Failed to revoke');
+      }
       fetchStaff();
-    } catch (err) {
-      alert("Failed to revoke");
+    } catch (err: any) {
+      alert(`Error: ${err.message}`);
     } finally {
       setIsRevoking(null);
     }
