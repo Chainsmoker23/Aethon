@@ -14,12 +14,22 @@ export default function SuperAdminPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [newFacility, setNewFacility] = useState({ name: "", plan: "pilot", adminEmail: "" });
 
+  const [userStats, setUserStats] = useState<any>(null);
+
   const fetchFacilities = async () => {
     try {
-      const res = await fetch('/api/facilities');
-      const data = await res.json();
-      if (data.facilities) {
-        setFacilities(data.facilities);
+      const [facRes, statsRes] = await Promise.all([
+        fetch('/api/facilities'),
+        fetch('/api/superadmin/stats')
+      ]);
+      const facData = await facRes.json();
+      const statsData = await statsRes.json();
+      
+      if (facData.facilities) {
+        setFacilities(facData.facilities);
+      }
+      if (statsData.stats) {
+        setUserStats(statsData.stats);
       }
     } catch (error) {
       console.error(error);
@@ -142,6 +152,29 @@ export default function SuperAdminPage() {
             <p className="text-3xl font-black">{loading ? '-' : `$${mrr.toLocaleString()}`}</p>
           </div>
         </div>
+
+        {/* System Demographics */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6">User Demographics</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-5 rounded-2xl shadow-sm flex flex-col justify-center items-center">
+              <h4 className="text-slate-500 dark:text-zinc-400 font-bold text-xs uppercase tracking-wider mb-2">Total System Users</h4>
+              <p className="text-2xl font-black text-slate-900 dark:text-white">{loading || !userStats ? '-' : userStats.total}</p>
+            </div>
+            <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-5 rounded-2xl shadow-sm flex flex-col justify-center items-center">
+              <h4 className="text-slate-500 dark:text-zinc-400 font-bold text-xs uppercase tracking-wider mb-2">Clients / Family</h4>
+              <p className="text-2xl font-black text-blue-600 dark:text-blue-400">{loading || !userStats ? '-' : userStats.family}</p>
+            </div>
+            <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-5 rounded-2xl shadow-sm flex flex-col justify-center items-center">
+              <h4 className="text-slate-500 dark:text-zinc-400 font-bold text-xs uppercase tracking-wider mb-2">Facility Staff</h4>
+              <p className="text-2xl font-black text-indigo-600 dark:text-indigo-400">{loading || !userStats ? '-' : (userStats.staff + userStats.caregiver + userStats.admin)}</p>
+            </div>
+            <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-5 rounded-2xl shadow-sm flex flex-col justify-center items-center">
+              <h4 className="text-slate-500 dark:text-zinc-400 font-bold text-xs uppercase tracking-wider mb-2">Super Admins</h4>
+              <p className="text-2xl font-black text-rose-600 dark:text-rose-400">{loading || !userStats ? '-' : userStats.superadmin}</p>
+            </div>
+          </div>
+        </section>
 
         {/* Facilities List */}
         <section>
