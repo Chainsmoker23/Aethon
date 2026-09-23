@@ -1,0 +1,1 @@
+ALTER TABLE public.user_profiles ADD COLUMN IF NOT EXISTS nurse_id VARCHAR(10); ALTER TABLE public.user_profiles ADD COLUMN IF NOT EXISTS pin_change_required BOOLEAN DEFAULT TRUE; CREATE UNIQUE INDEX IF NOT EXISTS idx_user_profiles_nurse_id ON public.user_profiles(nurse_id) WHERE nurse_id IS NOT NULL;

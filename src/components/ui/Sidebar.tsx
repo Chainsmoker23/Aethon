@@ -44,6 +44,7 @@ export function Sidebar() {
   const links = [
     { name: "Overview", href: "/management", icon: <LayoutDashboard className="w-5 h-5" /> },
     { name: "Clients", href: "/management/clients", icon: <Users className="w-5 h-5" /> },
+    { name: "Staff", href: "/management/staff", icon: <Users className="w-5 h-5" /> },
     { name: "Escalations", href: "/management/escalations", icon: <AlertTriangle className="w-5 h-5" />, badge: escalationCount },
     { name: "Settings", href: "/management/settings", icon: <Settings className="w-5 h-5" /> },
   ];
